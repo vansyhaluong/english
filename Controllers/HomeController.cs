@@ -1,29 +1,22 @@
 using System.Diagnostics;
+using English.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using English.Data;
 
-namespace EnglishHub.Controllers;
+namespace English.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ApplicationDbContext _context;
-    public HomeController(ApplicationDbContext context)
+    public IActionResult Index()
     {
-        _context = context;
+        return View();
     }
 
-    public async Task<IActionResult> Index()
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
     {
-        var levels = await _context.Levels
-            .OrderBy(x => x.SortOrder)
-            .ToListAsync();
-
-        foreach (var level in levels)
+        return View(new ErrorViewModel
         {
-            Console.WriteLine($"{level.Id} - {level.Code}");
-        }
-
-        return View();
+            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+        });
     }
 }

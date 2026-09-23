@@ -1,4 +1,4 @@
-namespace EnglishHub.Models;
+namespace English.Models;
 
 public class ErrorViewModel
 {

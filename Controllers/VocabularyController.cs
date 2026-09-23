@@ -1,9 +1,9 @@
-using EnglishHub.Models;
-using EnglishHub.Data;
+using English.Models;
+using English.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
-namespace EnglishHub.Controllers;
+namespace English.Controllers;
 
 public class VocabularyController : Controller
 {

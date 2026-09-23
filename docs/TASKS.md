@@ -3,15 +3,15 @@
 Trạng thái: **Approved**. Revision TASKS: **2 — refactor theo feature/phase**.
 Quy mô: **49 → 36 task**, giữ đủ Phase P0–P9; Phase Gate không tính là task. Cơ cấu chi tiết được yêu cầu cộng thành 36 task, nên ưu tiên giữ ranh giới kiểm soát rủi ro thay vì gộp thêm để đạt khoảng 28–32.
 Cơ sở: [PLAN.md revision 1.1 — Approved/Baselined Architecture Plan](PLAN.md).
-Tất cả task dưới đây **chưa bắt đầu**. Việc liệt kê task không có nghĩa được phép thực thi.
+P1-01 đã hoàn thành theo nền tảng Database First hiện có; các task còn lại chưa bắt đầu. Việc liệt kê task không có nghĩa được phép thực thi.
 
 ## 1. Phạm vi và cổng phê duyệt
 
 - PLAN đã được duyệt sau ba sửa đổi: VocabularyMeaning quan hệ 1-N có thứ tự; Practice TOEIC tối thiểu một câu hợp lệ là rule riêng MVP; Reading bắt buộc Level nhưng Topic optional.
-- Lượt refactor này chỉ cập nhật TASKS.md; không sửa PLAN.md hoặc baseline nghiệp vụ. Chưa sửa source, cài package, tạo migration hoặc dữ liệu.
+- Kiến trúc hiện tại dùng Database First với `ApplicationDbContext` và entities đã scaffold từ SQL Server; không dùng EF migrations để tạo schema hiện có.
 - **Dừng sau khi tạo TASKS để người dùng duyệt.** Duyệt TASKS không tự khởi động implementation; cần yêu cầu bắt đầu riêng.
 - Quyết định mới nhất của người dùng > PLAN/baseline được duyệt > REQUIREMENT.md cũ. Không tự thêm tính năng từ landing hoặc nội dung ngoài MVP.
-- Task có migration/install/test ở dưới chỉ được thực hiện sau cổng implementation. Không chạy trước để “chuẩn bị”.
+- Task có thay đổi schema/install/test ở dưới chỉ được thực hiện sau cổng implementation. Mọi thay đổi schema phải theo quy trình Database First và được phê duyệt rõ ràng; không chạy trước để “chuẩn bị”.
 - Phạm vi thư mục trong task là nơi dự kiến sửa khi thực hiện, không phải các file đã được tạo.
 
 ## 2. Cách thực hiện và cập nhật trạng thái
@@ -31,7 +31,7 @@ Quy tắc chung:
 - **Repository:** không tạo GenericRepository<T> hoặc UnitOfWork mặc định. Application services được dùng ApplicationDbContext trực tiếp; chỉ thêm repository/query abstraction chuyên biệt khi có lý do kỹ thuật cụ thể được ghi nhận, không thêm để đủ layer.
 - Giữ build được; chỉ chạy kiểm tra thích hợp sau thay đổi. Không tạo tests chỉ kiểm tra property/getter.
 - Integration dùng SQL Server riêng cho test, không dùng EF InMemory để chứng minh constraint/concurrency.
-- Không chạy migration trên DB người dùng nếu chưa kiểm tra target/backup; không drop/reset để chữa lỗi.
+- Không tự ý thay đổi schema DB người dùng; khi được phê duyệt phải kiểm tra target/backup và cập nhật model bằng reverse engineering có kiểm soát. Không drop/reset để chữa lỗi.
 - Fixture nhỏ đi cùng module. Demo không có AI key vẫn chạy phần còn lại, không báo AI thành công giả.
 
 ## 3. Bản đồ phase và phụ thuộc
@@ -49,7 +49,7 @@ Quy tắc chung:
 | P8 | Dashboard/Progress/Admin kết quả | Gate P7 | §4.4, §6 |
 | P9 | Demo, hồi quy, tài liệu vận hành | Gate P8 | §10–12 |
 
-Migrations theo PLAN chia nhóm nhưng có thể tách file nhỏ theo module để giữ mỗi phase chạy được: M1 nền tảng; M2 nội dung/progress (P2–P3); M3 exercise/attempt; M4 Writing; M5 TOEIC. Không thay đổi ý nghĩa schema chỉ để khớp tên nhóm.
+Database hiện có là nguồn sự thật cho persistence. Schema nền tảng đã tồn tại nên không có migration M1. Nếu task tương lai thực sự cần đổi schema, phải được phê duyệt riêng, thay đổi SQL Server trước, rồi reverse engineer `ApplicationDbContext`/entities có kiểm soát; không tạo EF migration hoặc tự động cập nhật production.
 
 ## 4. P0 — Chuẩn bị khi được phép implementation
 
@@ -71,16 +71,18 @@ Migrations theo PLAN chia nhóm nhưng có thể tách file nhỏ theo module đ
 
 ## 5. P1 — Nền tảng, tài khoản và layout
 
-- [ ] **P1-01 — Host, DbContext và migration M1**
+- [x] **P1-01 — Host ASP.NET Core và Database First foundation**
   - Phụ thuộc: P0-01.
-  - Phạm vi: Program.cs, Data, Domain, Options, project dependencies cần thiết.
-  - Đầu ra: IdentityDbContext, User/Role, Level/Topic/GrammarGroup, StoredFile, DI/HTTP client/clock, cấu hình môi trường; migration nền.
-  - Nghiệm thu: reviewed SQL, apply DB sạch; unique normalized email và unique role membership/UserId; secrets không vào source, không tự migrate production startup.
-  - Quy ước repository: application services dùng ApplicationDbContext trực tiếp; không scaffold GenericRepository<T>/UnitOfWork để đủ layer.
+  - Phạm vi: .NET 10 / ASP.NET Core MVC host, EF Core 10 SQL Server provider, cấu hình môi trường và lớp truy cập dữ liệu Database First.
+  - Đầu ra: database SQL Server hiện có; `ApplicationDbContext` và entities được reverse engineer; `AddDbContext` đăng ký DI và đọc `DefaultConnection` từ configuration.
+  - Nghiệm thu: build thành công; kết nối database và đọc dữ liệu `Level` đã được xác minh; connection string máy phát triển nằm ngoài `appsettings.json` được commit; không cần EF migration cho schema hiện có.
+  - Quy ước repository: application services dùng `ApplicationDbContext` trực tiếp; không tạo `GenericRepository<T>`/`UnitOfWork` để đủ layer.
+  - Bằng chứng: project target `net10.0`, EF Core SQL Server 10.0.12, scaffold namespace `English.Data`/`English.Models.Entities`, DI trong `Program.cs`, kiểm tra kết nối `Level` đã thành công và `dotnet build` pass sau foundation cleanup.
 
 - [ ] **P1-02 — Đăng ký/đăng nhập/đăng xuất**
   - Phụ thuộc: P1-01.
-  - Phạm vi: Account controller/views/ViewModels, Identity configuration.
+  - Phạm vi: Account controller/views/ViewModels, Cookie Authentication, custom authentication service và bảng `AspNetUsers` hiện có.
+  - Kiến trúc: dùng `IPasswordHasher<AspNetUser>` để hash/verify mật khẩu và claims tối thiểu cho danh tính/role; không dùng `IdentityDbContext`, không kế thừa `IdentityUser<Guid>` và không tạo schema/tables ASP.NET Core Identity mặc định.
   - Nghiệm thu: đăng ký chỉ Student, chuyển login, không tự login; mật khẩu >=6 không complexity; không temporary lockout/email confirmation/CAPTCHA; login role redirect đúng; logout POST+CSRF. Email trùng bị chặn kể cả request đồng thời.
   - Form/input: register/login dùng input model/DTO riêng, explicit mapping; không bind domain entity.
 
@@ -111,7 +113,7 @@ Migrations theo PLAN chia nhóm nhưng có thể tách file nhỏ theo module đ
 
 ## 6. P2 — Phân loại, Vocabulary và Grammar
 
-- [ ] **P2-01 — Schema Content và migration**
+- [ ] **P2-01 — Schema Content theo Database First**
   - Phụ thuộc: Gate P1.
   - Đầu ra: LearningItem/shared PK subtype Vocabulary/Grammar, VocabularyMeaning, basic UserLearningProgress; mapping Topic/Group và Admin CRUD phân loại.
   - Nghiệm thu: Level required; VocabularyMeaning FK thật, MeaningVi nonempty, DisplayOrder dương/unique mỗi từ. Topic Vocabulary required, GrammarGroup rule; không MeaningVi đơn hoặc serialized meanings trên Vocabulary. Xóa nhóm có nội dung bị chặn đến khi chuyển, A1–C2 cố định.
@@ -189,7 +191,7 @@ Migrations theo PLAN chia nhóm nhưng có thể tách file nhỏ theo module đ
 
 ## 9. P5 — Writing và AI
 
-- [ ] **P5-01 — WritingTopic, versioning và migration M4**
+- [ ] **P5-01 — WritingTopic và versioning**
   - Phụ thuộc: Gate P4.
   - Đầu ra: WritingTopic theo Topic/Level bắt buộc; UserWriting, WritingVersion, current-version; Admin đề/Student write/save/history.
   - Nghiệm thu: nhiều bài trên một đề, text thuần/đếm từ, 20.000 ký tự; rỗng từ chối, không word-count gate. Save y hệt không duplicate version; manual save/cảnh báo chưa lưu; soft delete Admin vẫn xem.
@@ -311,12 +313,12 @@ Migrations theo PLAN chia nhóm nhưng có thể tách file nhỏ theo module đ
 
 - [ ] **P9-03 — Hồi quy security/database/logic**
   - Phụ thuộc: P9-02.
-  - Nghiệm thu: build + relevant/full regression pass, SQL migrations clean/incremental, FK/index/transaction verified. Upload/XSS/CSRF/owner/active user, keys không leak, AI failures và deadline tests pass; không secret trong repo/log.
+  - Nghiệm thu: build + relevant/full regression pass, database deployment scripts clean/incremental khi có thay đổi schema được phê duyệt, FK/index/transaction verified. Upload/XSS/CSRF/owner/active user, keys không leak, AI failures và deadline tests pass; không secret trong repo/log.
   - Rà quy ước code: mọi form MVC/AJAX dùng input model/DTO phù hợp; không bind domain entity; không GenericRepository<T>/UnitOfWork mặc định. Query abstraction chuyên biệt nếu có phải ghi lý do kỹ thuật.
 
 - [ ] **P9-04 — Hướng dẫn chạy, backup/restore và demo**
   - Phụ thuộc: P9-03.
-  - Đầu ra: tài liệu cấu hình DB/uploads/AI secrets, apply migration/seed có kiểm soát, cách chạy Student/Admin; backup DB+files và restore thử.
+  - Đầu ra: tài liệu cấu hình DB/uploads/AI secrets, apply schema script/seed có kiểm soát khi được phê duyệt, cách chạy Student/Admin; backup DB+files và restore thử.
   - Nghiệm thu: run được trên máy cá nhân theo hướng dẫn; thiếu key/media báo đúng; demo Practice partial và timing Full fixture phân biệt dữ liệu minh họa với đề thật. Ghi bằng chứng và giới hạn còn lại, không tuyên bố sản phẩm production-ready.
 
 ### Phase Acceptance Criteria / Gate P9
@@ -325,16 +327,16 @@ Migrations theo PLAN chia nhóm nhưng có thể tách file nhỏ theo module đ
 
 - Seed/demo, UI, hồi quy và run guide/backup đạt các nghiệm thu P9-01 đến P9-04; có bằng chứng build/tests/demo/restore và giới hạn còn lại, không tuyên bố production-ready.
 
-## 14. Checklist migration dùng chung
+## 14. Checklist thay đổi schema theo Database First
 
-Chỉ áp dụng khi được phép implementation, gắn vào task có schema:
+Chỉ áp dụng khi thay đổi schema đã được phê duyệt rõ ràng, gắn vào task có schema:
 
-- Hoàn tất field/nullability/PK/FK/index/delete matrix trước khi sinh migration.
-- Kiểm tra SQL và snapshot model, đặc biệt VocabularyMeaning FK/order; Reading.TopicId nullable, Topic module khác Required.
+- Hoàn tất field/nullability/PK/FK/index/delete matrix trước khi sửa SQL Server.
+- Kiểm tra SQL và model scaffold, đặc biệt VocabularyMeaning FK/order; Reading.TopicId nullable, Topic module khác Required.
 - Chạy trên DB test sạch và nâng từ phase trước có dữ liệu; unique filtered indexes/rowversion dùng SQL Server thực.
 - Xác định DB đích, backup trước thay đổi có dữ liệu; không tự drop/reset hoặc hard delete lịch sử.
-- Dùng script idempotent hoặc command apply có kiểm soát; không auto migrate production startup.
-- Migration chứa schema; demo seed opt-in, không secrets; verify seed chạy lại không duplicate/overwrite.
+- Dùng script SQL idempotent hoặc command apply có kiểm soát; không auto update schema khi production startup.
+- Reverse engineer lại `ApplicationDbContext`/entities từ schema đã xác minh, bảo toàn phần application-owned; không dùng `--force` khi chưa kiểm tra thay đổi. Demo seed opt-in, không secrets; verify seed chạy lại không duplicate/overwrite.
 
 ## 15. Truy vết các yêu cầu dễ sai
 
@@ -361,7 +363,7 @@ Mã task và Gate dưới đây dùng revision 2 hiện tại; không dùng ID c
 
 Khi implementation được cho phép, một task hoàn thành khi: đầu ra đúng PLAN, build hoạt động, authorization/validation/UI/localization tương ứng đầy đủ, test có ý nghĩa pass, không phá dữ liệu/landing, có ghi bằng chứng. Không đánh dấu complete chỉ vì tạo file hoặc xong happy path.
 
-**Hiện tại tất cả task chưa bắt đầu. Chỉ refactor tài liệu TASKS này để người dùng duyệt. Không tiếp tục cài package, tạo code/migration, chạy seed hoặc bắt đầu P0 cho đến khi có yêu cầu implementation riêng.**
+**Hiện tại P1-01 đã hoàn thành; P1-02 và các task chức năng còn lại chưa bắt đầu. Không tiếp tục authentication, thay đổi schema, tạo migration hoặc chạy seed cho đến khi có yêu cầu implementation riêng.**
 
 
 ## 17. Tổng kết refactor revision 2

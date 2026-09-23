@@ -1,6 +1,6 @@
-using EnglishHub.Models;
+using English.Models;
 
-namespace EnglishHub.Data;
+namespace English.Data;
 
 // Curated preview content. Replace through the content service when persistence is implemented.
 public static class VocabularySamples
