@@ -29,7 +29,16 @@
                 <span class="language-label d-none-mobile" lang="vi" aria-label="Ngôn ngữ: Tiếng Việt">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg> VI
                 </span>
-                <button type="button" class="btn-login" data-open-login>Đăng nhập</button>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="account-nav-form">
+                        <button type="submit" class="btn-login">Đăng xuất</button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="btn-login">Đăng nhập</a>
+                }
             </nav>
         </header>
         <main id="main-content" class="site-main" tabindex="-1">
@@ -43,13 +52,6 @@
             </nav>
         </footer>
     </div>
-    <dialog id="loginModal" class="modal-card" aria-labelledby="login-title" aria-describedby="login-description">
-        <button type="button" class="modal-close" data-close-login aria-label="Đóng hộp đăng nhập">&times;</button>
-        <img src="~/images/learning-mascot.png" alt="" width="80" height="80" class="login-mascot" />
-        <h2 id="login-title">Đăng nhập EnglishHub</h2>
-        <p id="login-description">Tính năng đăng nhập và lưu tiến độ chưa được kết nối. Bạn có thể khám phá nội dung ngay trên trang chủ.</p>
-        <a href="@Url.Action("Index", "Home")#features" class="btn-brand-primary" data-close-login>Khám phá nội dung <span aria-hidden="true">→</span></a>
-    </dialog>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

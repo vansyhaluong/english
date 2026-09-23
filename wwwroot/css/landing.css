@@ -125,6 +125,23 @@
 .modal-card h2 { font-size: var(--text-2xl); }
 .modal-card p { font-size: var(--text-sm); color: var(--foreground-muted); margin: var(--space-3) 0 var(--space-7); }
 .login-mascot { display: block; margin: 0 auto var(--space-3); }
+.account-nav-form { margin: 0; }
+.account-page { min-height: calc(100dvh - 12rem); display: grid; place-items: center; padding: var(--space-7) 0; }
+.account-card { width: min(30rem, 100%); padding: calc(2 * var(--space-5)); color: var(--foreground); background: var(--glass-3); border: 1px solid var(--glass-border); border-radius: var(--radius-md); box-shadow: var(--shadow-card); }
+.account-card h1 { margin: 0; text-align: center; font-size: var(--text-2xl); }
+.account-intro, .account-switch { color: var(--foreground-muted); text-align: center; }
+.account-form { display: grid; gap: var(--space-5); margin-top: var(--space-7); }
+.account-field { display: grid; gap: var(--space-2); }
+.account-field label { font-size: var(--text-sm); font-weight: 700; }
+.account-field input { width: 100%; min-height: 46px; padding: var(--space-3); color: var(--foreground); background: rgb(0 0 0 / 22%); border: 1px solid var(--glass-border); border-radius: var(--radius-xs); }
+.account-field input:focus { border-color: var(--brand); }
+.account-field span, .account-validation { color: #ffb4b4; font-size: var(--text-sm); }
+.account-validation:empty { display: none; }
+.account-validation ul { margin: 0; padding-left: var(--space-5); }
+.account-success { padding: var(--space-3); color: #baf7c6; background: rgb(37 115 55 / 25%); border: 1px solid rgb(116 220 139 / 40%); border-radius: var(--radius-xs); }
+.account-submit { width: 100%; }
+.account-switch { margin: var(--space-5) 0 0; }
+.account-switch a { color: var(--brand); font-weight: 700; }
 @media (min-width: 640px) {
     .site-wrapper { padding-inline: var(--space-7); }
     .hero-section { padding-top: var(--section-space); padding-bottom: calc(4 * var(--space-6)); }

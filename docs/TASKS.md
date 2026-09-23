@@ -3,7 +3,7 @@
 Trạng thái: **Approved**. Revision TASKS: **2 — refactor theo feature/phase**.
 Quy mô: **49 → 36 task**, giữ đủ Phase P0–P9; Phase Gate không tính là task. Cơ cấu chi tiết được yêu cầu cộng thành 36 task, nên ưu tiên giữ ranh giới kiểm soát rủi ro thay vì gộp thêm để đạt khoảng 28–32.
 Cơ sở: [PLAN.md revision 1.1 — Approved/Baselined Architecture Plan](PLAN.md).
-P1-01 đã hoàn thành theo nền tảng Database First hiện có; các task còn lại chưa bắt đầu. Việc liệt kê task không có nghĩa được phép thực thi.
+P1-01 và P1-02 đã hoàn thành; các task còn lại chưa bắt đầu. Việc liệt kê task không có nghĩa được phép thực thi.
 
 ## 1. Phạm vi và cổng phê duyệt
 
@@ -79,12 +79,13 @@ Database hiện có là nguồn sự thật cho persistence. Schema nền tảng
   - Quy ước repository: application services dùng `ApplicationDbContext` trực tiếp; không tạo `GenericRepository<T>`/`UnitOfWork` để đủ layer.
   - Bằng chứng: project target `net10.0`, EF Core SQL Server 10.0.12, scaffold namespace `English.Data`/`English.Models.Entities`, DI trong `Program.cs`, kiểm tra kết nối `Level` đã thành công và `dotnet build` pass sau foundation cleanup.
 
-- [ ] **P1-02 — Đăng ký/đăng nhập/đăng xuất**
+- [x] **P1-02 — Đăng ký/đăng nhập/đăng xuất**
   - Phụ thuộc: P1-01.
   - Phạm vi: Account controller/views/ViewModels, Cookie Authentication, custom authentication service và bảng `AspNetUsers` hiện có.
   - Kiến trúc: dùng `IPasswordHasher<AspNetUser>` để hash/verify mật khẩu và claims tối thiểu cho danh tính/role; không dùng `IdentityDbContext`, không kế thừa `IdentityUser<Guid>` và không tạo schema/tables ASP.NET Core Identity mặc định.
   - Nghiệm thu: đăng ký chỉ Student, chuyển login, không tự login; mật khẩu >=6 không complexity; không temporary lockout/email confirmation/CAPTCHA; login role redirect đúng; logout POST+CSRF. Email trùng bị chặn kể cả request đồng thời.
   - Form/input: register/login dùng input model/DTO riêng, explicit mapping; không bind domain entity.
+  - Bằng chứng: Cookie Authentication và middleware đúng thứ tự; `AuthService` dùng `ApplicationDbContext` + `IPasswordHasher<AspNetUser>`; duplicate email được kiểm tra sớm và chặn cuối bằng unique-key 2601/2627; claims tối thiểu, local return URL, logout POST+CSRF; `dotnet build` pass và GET smoke test cho Login/Register/landing pass. Không tạo Identity schema hoặc migration; POST có ghi DB chưa được manual-test để tránh tạo dữ liệu thử.
 
 - [ ] **P1-03 — Policies, hồ sơ và quản lý user**
   - Phụ thuộc: P1-02.
@@ -363,7 +364,7 @@ Mã task và Gate dưới đây dùng revision 2 hiện tại; không dùng ID c
 
 Khi implementation được cho phép, một task hoàn thành khi: đầu ra đúng PLAN, build hoạt động, authorization/validation/UI/localization tương ứng đầy đủ, test có ý nghĩa pass, không phá dữ liệu/landing, có ghi bằng chứng. Không đánh dấu complete chỉ vì tạo file hoặc xong happy path.
 
-**Hiện tại P1-01 đã hoàn thành; P1-02 và các task chức năng còn lại chưa bắt đầu. Không tiếp tục authentication, thay đổi schema, tạo migration hoặc chạy seed cho đến khi có yêu cầu implementation riêng.**
+**Hiện tại P1-01 và P1-02 đã hoàn thành; các task chức năng còn lại chưa bắt đầu. Không tiếp tục P1-03, thay đổi schema, tạo migration hoặc chạy seed cho đến khi có yêu cầu implementation riêng.**
 
 
 ## 17. Tổng kết refactor revision 2

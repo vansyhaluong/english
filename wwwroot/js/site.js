@@ -1,24 +1,4 @@
-﻿const loginDialog = document.getElementById('loginModal');
-if (loginDialog) {
-    document.querySelectorAll('[data-open-login]').forEach(button => {
-        button.addEventListener('click', () => {
-            loginDialog.showModal();
-            document.body.classList.add('dialog-open');
-        });
-    });
-    document.querySelectorAll('[data-close-login]').forEach(button => {
-        button.addEventListener('click', () => loginDialog.close());
-    });
-    loginDialog.addEventListener('close', () => document.body.classList.remove('dialog-open'));
-    loginDialog.addEventListener('click', event => {
-        const bounds = loginDialog.getBoundingClientRect();
-        if (event.target === loginDialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) {
-            loginDialog.close();
-        }
-    });
-}
-
-// Expand an in-page disclosure before navigating to its content.
+﻿// Expand an in-page disclosure before navigating to its content.
 document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', () => {
         const target = document.getElementById(link.getAttribute('href').slice(1));
