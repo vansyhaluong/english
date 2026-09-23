@@ -1,0 +1,62 @@
+@model VocabularyViewModel
+@{
+    ViewData["Title"] = "Từ vựng";
+    ViewData["PageClass"] = "vocabulary-page";
+}
+@section Styles { <link rel="stylesheet" href="~/css/vocabulary.css" asp-append-version="true" /> }
+<div class="vocabulary">
+    <header class="vocab-heading">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 6v15 M12 6C9 3 5 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-3-1-7-1-10 2" /></svg>
+        <div><h1>Từ vựng</h1><p>Bộ thẻ theo chủ đề giúp xây nền tảng tiếng Anh</p></div>
+    </header>
+    <div class="vocab-highlights">
+        <section class="vocab-panel">
+            <div class="vocab-panel-heading"><span class="vocab-symbol" aria-hidden="true">◎</span><div><h2>Mục tiêu hôm nay</h2><p>Bắt đầu với một bộ thẻ nhỏ, nhớ thêm một chút mỗi ngày</p></div></div>
+            <p class="vocab-goal">👋 Chào hỏi &amp; Hằng ngày <strong>4 thẻ</strong></p>
+            <div class="vocab-goal-track" aria-hidden="true"></div>
+            <a href="/vocabulary?search=Chào+hỏi#decks" class="vocab-text-link">Bắt đầu học <span aria-hidden="true">→</span></a>
+        </section>
+        <section class="vocab-panel">
+            <div class="vocab-panel-heading"><span class="vocab-symbol" aria-hidden="true">♧</span><div><h2>Học từ trong ngữ cảnh</h2><p>Đọc ví dụ, nghe phát âm và tự kiểm tra nghĩa của từ</p></div></div>
+            <p class="vocab-example" lang="en">“A little progress every day adds up.”</p>
+            <div class="vocab-panel-footer"><span>Từ cơ bản A1 đến nâng cao C2</span><a href="#decks" class="vocab-text-link">Khám phá bộ thẻ <span aria-hidden="true">→</span></a></div>
+        </section>
+    </div>
+    <p class="vocab-notice"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 8v5m0 3v1"/><circle cx="12" cy="12" r="9"/></svg>Bạn đang học với bộ thẻ mẫu. Tiến độ chưa được lưu vào tài khoản.</p>
+    <section id="decks" aria-labelledby="decks-title">
+        <div class="vocab-section-heading"><h2 id="decks-title"><span aria-hidden="true">▱</span> Bộ thẻ từ vựng</h2><span>@Model.TotalCount bộ thẻ</span></div>
+        <form method="get" action="/vocabulary" class="vocab-filters" role="search">
+            <label class="vocab-level"><span class="visually-hidden">Trình độ</span><select name="level" aria-label="Lọc theo trình độ"><option value="">Tất cả cấp độ</option>@foreach (var level in new[] { "A1", "A2", "B1", "B2", "C1", "C2" }) { <option value="@level" selected="@(Model.Level == level)">@level</option> }</select></label>
+            <label class="vocab-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><span class="visually-hidden">Tìm bộ thẻ, từ hoặc nghĩa tiếng Việt</span><input type="search" name="search" value="@Model.Search" placeholder="Tìm bộ thẻ, từ hoặc nghĩa…" maxlength="150" /></label>
+            <button class="vocab-filter-button" type="submit">Tìm kiếm</button>
+            @if (Model.Level != null || !string.IsNullOrEmpty(Model.Search)) { <a class="vocab-reset" href="/vocabulary#decks">Xóa bộ lọc</a> }
+        </form>
+        <div class="vocab-grid">
+            @foreach (var deck in Model.Decks)
+            {
+                <article class="vocab-deck">
+                    <div class="vocab-deck-heading"><span class="vocab-deck-icon" aria-hidden="true">@deck.Icon</span><div><h3><a href="#words-@deck.Id">@deck.Title</a></h3><div class="vocab-deck-meta"><span class="vocab-badge" data-level="@deck.Level">@deck.Level</span><span>@deck.Words.Count thẻ</span></div></div></div>
+                    <p class="vocab-deck-description">@deck.Description</p>
+                    <div class="vocab-deck-actions"><button type="button" class="vocab-study" data-study="@deck.Id" data-title="@deck.Title" hidden><span aria-hidden="true">▷</span> Học</button><a href="#words-@deck.Id"><span aria-hidden="true">☷</span> Xem từ</a></div>
+                    <details id="words-@deck.Id" class="vocab-words"><summary>Danh sách từ</summary><dl>@foreach (var word in deck.Words) { <div data-word><dt lang="en">@word.Word</dt><dd><span data-ipa>@word.Pronunciation</span> · <span data-pos>@word.PartOfSpeech</span><strong data-meaning>@word.Meaning</strong><span data-example lang="en">@word.Example</span></dd></div> }</dl></details>
+                </article>
+            }
+        </div>
+        @if (Model.TotalCount == 0) { <div class="vocab-empty"><span aria-hidden="true">⌕</span><h3>Chưa tìm thấy bộ thẻ phù hợp</h3><p>Thử một từ khác hoặc chọn tất cả cấp độ.</p><a href="/vocabulary" class="vocab-text-link">Xem tất cả bộ thẻ →</a></div> }
+        <nav class="vocab-pagination" aria-label="Phân trang bộ thẻ">
+            @if (Model.Page > 1) { <a href="@Url.Action("Index", new { level = Model.Level, search = Model.Search, page = Model.Page - 1 })#decks" aria-label="Trang trước">‹</a> } else { <span aria-disabled="true">‹</span> }
+            <p aria-current="page">@Model.Page <span>/ @Model.TotalPages</span></p>
+            @if (Model.Page < Model.TotalPages) { <a href="@Url.Action("Index", new { level = Model.Level, search = Model.Search, page = Model.Page + 1 })#decks" aria-label="Trang sau">›</a> } else { <span aria-disabled="true">›</span> }
+        </nav>
+    </section>
+</div>
+<dialog class="vocab-dialog" id="study-dialog" aria-labelledby="study-title">
+    <div class="study-header"><h2 id="study-title"></h2><button type="button" data-study-close aria-label="Đóng bộ thẻ">×</button></div>
+    <p class="study-counter" aria-live="polite"></p>
+    <div class="study-card"><span class="study-label">TỪ TIẾNG ANH</span><h3 lang="en" data-study-word></h3><p data-study-ipa></p><button type="button" data-speak hidden>♫ Nghe phát âm</button><div data-answer hidden><strong data-study-meaning></strong><p data-study-pos></p><p lang="en" data-study-example></p></div></div>
+    <p class="study-status" role="status"></p>
+    <button type="button" class="study-reveal" data-reveal>Hiện nghĩa</button>
+    <div class="study-navigation"><button type="button" data-previous>← Thẻ trước</button><button type="button" data-next>Thẻ tiếp →</button></div>
+    <p class="study-note">Tự ôn tập · Tiến độ chỉ có trong lần học này</p>
+</dialog>
+@section Scripts { <script src="~/js/vocabulary.js" asp-append-version="true" defer></script> }

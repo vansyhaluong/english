@@ -1,0 +1,158 @@
+﻿/* EnglishHub landing page — semantic foundations from docs/DESIGN.md. */
+:root {
+    color-scheme: dark;
+    --font-sans: 'Mulish', system-ui, -apple-system, sans-serif;
+    --font-display: 'Be Vietnam Pro', 'Mulish', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --background: #fcfaf6;
+    --card-foreground: #231f19;
+    --card: #fefdfb;
+    --background: #000;
+    --foreground: #231f19;
+    --secondary-foreground: #fffbf4;
+    --secondary: #a26403;
+    --primary: #2a2620;
+    --primary-foreground: #fcfaf6;
+    --foreground-muted: #c9c5d2;
+    --foreground-subtle: #bab6c4;
+    --brand: #7046cf;
+    --brand-foreground: #211039;
+    --button-glass-bg: rgba(255, 255, 255, 0.10);
+    --brand-fill: #732cf9;
+    --reward: #b47806;
+    --reward-foreground: #2e1a01;
+    --streak: #e06d00;
+    --accent: #f1ebff;
+    --accent-foreground: #603aa2;
+    --success: #348f4f;
+    --success-foreground: #f7fef8;
+    --destructive: #d73337;
+    --destructive-foreground: snow;
+    --warning: #e18528;
+    --info: #3c7ebe;
+    --info-foreground: #f9fcff;
+    --gender-der: #1f6cb0;
+    --gender-die: #ca435f;
+    --gender-das: #007e46;
+    --ok: #348f4f;
+    --nok: #d73337;
+    --cefr-a1: #11bc6d;
+    --cefr-a2: #009edb;
+    --cefr-b1: #ed990e;
+    --cefr-b2: #e4405e;
+    --cefr-c1: #7b53dd;
+    --cefr-c2: #4c5666;
+    --note-butter: #f5e5a8eb;
+    --note-mint: #c3f2d7eb;
+    --note-sky: #cbe9ffeb;
+    --note-rose: #ffdad9eb;
+    --note-foreground: #362c1c;
+    --border: #e3e1dd;
+    --input: #e3e1dd;
+    --ring: #732cf9;
+    --sidebar: #fdfcf9;
+    --sidebar-foreground: #231f19;
+    --sidebar-muted: #68625b;
+    --sidebar-accent: #732cf9;
+    --sidebar-accent-foreground: #fcfbff;
+    --tint-violet: #f4efff;
+    --tint-sky: #e8f6ff;
+    --tint-peach: #ffefe8;
+    --tint-butter: #fdf5dd;
+    --tint-mint: #e3faef;
+    --blur-1: 0px;
+    --blur-2: 0px;
+    --glass-0: #f4f1ed;
+    --glass-1: #fefdfb;
+    --glass-2: #fefdfb;
+    --glass-3: #fefdfb;
+    --glass-border: #e3e1dd;
+    --glass-highlight: 0 0 #0000;
+    --shadow-card: 0 14px 44px -14px rgb(0 0 0 / 55%);
+    --shadow-text: 0 1px 3px rgb(0 0 0 / 45%);
+    --scene-overlay: linear-gradient(180deg, rgb(0 0 0 / 48%), rgb(0 0 0 / 32%) 45%, rgb(0 0 0 / 58%));
+    --space-1: 8px; --space-2: 10px; --space-3: 12px; --space-4: 14px;
+    --space-5: 16px; --space-6: 20px; --space-7: 24px; --space-8: 28px;
+    --section-space: 64px; --section-heading-gap: 36px;
+    --radius-xs: 12.8px; --radius-sm: 20px; --radius-md: 24px;
+    --text-xs: 12px; --text-sm: 14px; --text-md: 16px; --text-lg: 18px;
+    --text-xl: 20px; --text-2xl: 24px; --text-3xl: 30px; --text-4xl: 60px;
+    --duration: 150ms; --ease: cubic-bezier(.2, 0, 0, 1);
+    --canvas: #f4effe;
+    --canvas-gradient: radial-gradient(60rem 60rem at 15% -10%, #e3d6ffb3, transparent 60%), radial-gradient(50rem 50rem at 100% 20%, #ffd2c299, transparent 60%), linear-gradient(160deg, #feeadb, #ebe3ff 55%, #d5ecf8);
+    --scrim: linear-gradient(180deg, #ffffff47, #ffffff1a 45%, #302a3b38);
+    --scrim-boost: 0;
+    --radius: 1rem;
+    --radius-xl-base: 1.25rem;
+    --radius-2xl-base: 1.5rem;
+    --shadow-overlay: 0 10px 34px -6px #251e152e;
+    --shadow-glass: 0 10px 36px -14px #29253b42;
+    --ease: cubic-bezier(.2, 0, 0, 1);
+    --dur-1: .15s;
+    --dur-2: .24s;
+    --dur-3: .4s;
+    --shell-top: 3.5rem;
+    --z-dock: 40;
+    --z-drawer: 60;
+    --z-modal: 100;
+    --z-focus: 75;
+    --z-toast: 120;
+    --paper-h: 300;
+    --paper-c: .036;
+    --paper: oklch(92.5% var(--paper-c) var(--paper-h));
+    --paper-fold: oklch(86.5% var(--paper-c) var(--paper-h));
+    --paper-ink: oklch(28% .03 var(--paper-h));
+    --nb-paper: oklch(96.2% .016 var(--paper-h));
+    --nb-ink: oklch(26% .03 var(--paper-h));
+    --nb-ink-soft: oklch(47.5% .022 var(--paper-h));
+    --nb-ink-red: #97182b;
+    --nb-ink-green: #135c2c;
+    --nb-ink-blue: #135298;
+    --nb-ink-violet: #613897;
+    --nb-ink-amber: #72480b;
+    --nb-mark-butter: #f9d5448c;
+    --nb-mark-mint: #5efb8d8c;
+    --nb-mark-sky: #b6ddfa8c;
+    --nb-mark-rose: #fbc8cf8c
+}
+/* .glass */
+.glass-1 {
+        background-color: var(--glass-1);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-highlight)
+    }
+
+    .glass-2 {
+        background-color: var(--glass-2);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-highlight)
+    }
+
+    .glass-3 {
+        background-color: var(--glass-3);
+        border: 1px solid var(--glass-border)
+    }
+
+    .glass-interactive {
+        transition: background-color var(--dur-1) var(--ease)
+    }
+
+    .glass-interactive:hover {
+        background-color: var(--glass-0)
+    }
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: var(--text-md); scroll-behavior: smooth; }
+body { margin: 0; background: var(--background); color: var(--foreground); font: 400 var(--text-md)/1.6 var(--font-sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, p, dl, dd { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+svg { flex-shrink: 0; vertical-align: middle; }
+:where(a, button, summary, input):focus-visible { outline: 3px solid var(--brand); outline-offset: 4px; }
+:where(a, button):active { opacity: .8; }
+:where(button, input):disabled, [aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+[aria-busy="true"] { cursor: progress; }
+[id] { scroll-margin-top: var(--space-7); }
+.skip-link { position: fixed; top: var(--space-3); left: var(--space-3); z-index: 10; padding: var(--space-3) var(--space-5); background: var(--glass-3); border-radius: var(--radius-xs); transform: translateY(-200%); }
+.skip-link:focus { transform: translateY(0); }

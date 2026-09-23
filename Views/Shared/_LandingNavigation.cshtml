@@ -1,0 +1,26 @@
+@{
+    var links = new[]
+    {
+        (Target: "desk", Label: "Bàn học", Icon: "M3 10 12 3l9 7v10H3z M9 20v-7h6v7"),
+        (Target: "levels", Label: "Lộ trình", Icon: "M6 5h11a4 4 0 0 1 0 8H7a3 3 0 0 0 0 6h11 M3 3h4v4H3z M17 17h4v4h-4z"),
+        (Target: "vocab-showcase", Label: "Từ vựng", Icon: "M12 6v15 M12 6C9 3 5 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-3-1-7-1-10 2"),
+        (Target: "grammar-showcase", Label: "Ngữ pháp", Icon: "M5 3h15v18H5a2 2 0 0 1 0-4h15 M5 3a2 2 0 0 0-2 2v14 M8 7h8 M8 11h6"),
+        (Target: "listening-showcase", Label: "Luyện nghe", Icon: "M3 14v-2a9 9 0 0 1 18 0v2 M3 13h4v8H3z M17 13h4v8h-4z"),
+        (Target: "reading-showcase", Label: "Luyện đọc", Icon: "M4 3h16v18H4z M8 3v7l3-2 3 2V3 M8 15h8 M8 18h5"),
+        (Target: "exam-showcase", Label: "Luyện thi", Icon: "m2 9 10-5 10 5-10 5z M6 11v6c4 3 8 3 12 0v-6 M22 9v7")
+    };
+}
+<nav class="landing-rail" aria-label="Khám phá EnglishHub">
+    <a class="rail-home" href="@Url.Action("Index", "Home")#desk" aria-label="EnglishHub — Bàn học" title="Bàn học">E<span>H</span></a>
+    @foreach (var link in links)
+    {
+        var isVocabulary = link.Target == "vocab-showcase";
+        var href = isVocabulary ? "/vocabulary" : Url.Action("Index", "Home") + "#" + link.Target;
+        var current = isVocabulary && ViewContext.RouteData.Values["controller"]?.ToString() == "Vocabulary";
+        <a class="rail-link" href="@href" aria-current="@(current ? "page" : null)" aria-label="@link.Label" title="@link.Label">
+            <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="@link.Icon" /></svg>
+            <span>@link.Label</span>
+        </a>
+    }
+    <a class="rail-help" href="@Url.Action("Index", "Home")#faq" aria-label="Hỏi đáp và hỗ trợ" title="Hỏi đáp và hỗ trợ">?</a>
+</nav>

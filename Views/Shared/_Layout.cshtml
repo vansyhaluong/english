@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="vi" data-tone="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EnglishHub — Học tiếng Anh online miễn phí từ A1 đến C2</title>
+    <meta name="description" content="Học tiếng Anh cho người Việt từ A1 đến C2: từ vựng, ngữ pháp, đọc, nghe và luyện thi." />
+    <meta name="theme-color" content="#15151f" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@800&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/landing.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="landing-page @ViewData["PageClass"]">
+    <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+    <div aria-hidden="true" class="bg-scene-container">
+        <img src="~/images/night.jpg" asp-append-version="true" alt="" class="bg-scene-img" fetchpriority="high" />
+        <div class="scene-scrim"></div>
+    </div>
+    <partial name="_LandingNavigation" />
+    <button type="button" class="scene-motion-toggle" data-scene-motion aria-pressed="false" hidden>Dừng nền</button>
+    <div class="site-wrapper">
+        <header class="site-header">
+            <a asp-controller="Home" asp-action="Index" class="brand-logo"><img src="~/images/learning-mascot.png" width="40" height="40" alt="" />EnglishHub</a>
+            <nav class="nav-actions" aria-label="Điều hướng chính">
+                <a href="@Url.Action("Index", "Home")#levels" class="nav-link-custom d-none-mobile">Lộ trình A1–C2</a>
+                <span class="language-label d-none-mobile" lang="vi" aria-label="Ngôn ngữ: Tiếng Việt">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg> VI
+                </span>
+                <button type="button" class="btn-login" data-open-login>Đăng nhập</button>
+            </nav>
+        </header>
+        <main id="main-content" class="site-main" tabindex="-1">
+            @RenderBody()
+        </main>
+        <footer class="site-footer">
+            <span>EnglishHub — học tiếng Anh online miễn phí</span>
+            <nav aria-label="Liên kết cuối trang">
+                <a href="@Url.Action("Index", "Home")#levels" class="footer-link">Lộ trình học</a>
+                <a href="@Url.Action("Index", "Home")#faq" class="footer-link">Hỏi đáp &amp; Hỗ trợ</a>
+            </nav>
+        </footer>
+    </div>
+    <dialog id="loginModal" class="modal-card" aria-labelledby="login-title" aria-describedby="login-description">
+        <button type="button" class="modal-close" data-close-login aria-label="Đóng hộp đăng nhập">&times;</button>
+        <img src="~/images/learning-mascot.png" alt="" width="80" height="80" class="login-mascot" />
+        <h2 id="login-title">Đăng nhập EnglishHub</h2>
+        <p id="login-description">Tính năng đăng nhập và lưu tiến độ chưa được kết nối. Bạn có thể khám phá nội dung ngay trên trang chủ.</p>
+        <a href="@Url.Action("Index", "Home")#features" class="btn-brand-primary" data-close-login>Khám phá nội dung <span aria-hidden="true">→</span></a>
+    </dialog>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
