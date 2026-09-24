@@ -3,7 +3,7 @@
 Trạng thái: **Approved**. Revision TASKS: **2 — refactor theo feature/phase**.
 Quy mô: **49 → 36 task**, giữ đủ Phase P0–P9; Phase Gate không tính là task. Cơ cấu chi tiết được yêu cầu cộng thành 36 task, nên ưu tiên giữ ranh giới kiểm soát rủi ro thay vì gộp thêm để đạt khoảng 28–32.
 Cơ sở: [PLAN.md revision 1.1 — Approved/Baselined Architecture Plan](PLAN.md).
-P1-01 và P1-02 đã hoàn thành; các task còn lại chưa bắt đầu. Việc liệt kê task không có nghĩa được phép thực thi.
+P1-01, P1-02 và P1-03 đã hoàn thành; các task còn lại chưa bắt đầu. Việc liệt kê task không có nghĩa được phép thực thi.
 
 ## 1. Phạm vi và cổng phê duyệt
 
@@ -87,11 +87,12 @@ Database hiện có là nguồn sự thật cho persistence. Schema nền tảng
   - Form/input: register/login dùng input model/DTO riêng, explicit mapping; không bind domain entity.
   - Bằng chứng: Cookie Authentication và middleware đúng thứ tự; `AuthService` dùng `ApplicationDbContext` + `IPasswordHasher<AspNetUser>`; duplicate email được kiểm tra sớm và chặn cuối bằng unique-key 2601/2627; claims tối thiểu, local return URL, logout POST+CSRF; `dotnet build` pass và GET smoke test cho Login/Register/landing pass. Không tạo Identity schema hoặc migration; POST có ghi DB chưa được manual-test để tránh tạo dữ liệu thử.
 
-- [ ] **P1-03 — Policies, hồ sơ và quản lý user**
+- [x] **P1-03 — Policies, hồ sơ và quản lý user**
   - Phụ thuộc: P1-02.
   - Đầu ra: StudentOnly/AdminOnly/ActiveAccount, profile, password change, Admin list/search/detail/lock/unlock.
-  - Nghiệm thu: sửa tên/avatar/password, email/role cố định; yêu cầu mật khẩu hiện tại khi đổi; Admin không làm bài như Student. Khóa tài khoản tác động request kế tiếp của phiên đang login; quyền sở hữu kiểm tra server.
+  - Nghiệm thu: sửa tên/password, email/role cố định; yêu cầu mật khẩu hiện tại khi đổi; Admin không làm bài như Student. Khóa tài khoản tác động request kế tiếp của phiên đang login; quyền sở hữu kiểm tra server. Avatar upload/storage thuộc P1-05 và không triển khai trong P1-03.
   - Form/input: profile, đổi mật khẩu, Admin user actions đều dùng model/DTO riêng, không nhận trường role/owner ngoài use case.
+  - Bằng chứng: ba policy đăng ký với DB-backed `ActiveAccountHandler`; Profile chỉ POST `FullName`; đổi mật khẩu verify/hash bằng `IPasswordHasher<AspNetUser>`; Admin list/search/detail và lock/unlock POST+CSRF chỉ đổi `IsActive`; `dotnet build` pass và anonymous route smoke test pass. Authenticated DB mutation chưa manual-test vì không tạo/sửa dữ liệu thử.
 
 - [ ] **P1-04 — Layout, localization và error handling**
   - Phụ thuộc: P1-02.
@@ -364,7 +365,7 @@ Mã task và Gate dưới đây dùng revision 2 hiện tại; không dùng ID c
 
 Khi implementation được cho phép, một task hoàn thành khi: đầu ra đúng PLAN, build hoạt động, authorization/validation/UI/localization tương ứng đầy đủ, test có ý nghĩa pass, không phá dữ liệu/landing, có ghi bằng chứng. Không đánh dấu complete chỉ vì tạo file hoặc xong happy path.
 
-**Hiện tại P1-01 và P1-02 đã hoàn thành; các task chức năng còn lại chưa bắt đầu. Không tiếp tục P1-03, thay đổi schema, tạo migration hoặc chạy seed cho đến khi có yêu cầu implementation riêng.**
+**Hiện tại P1-01, P1-02 và P1-03 đã hoàn thành; các task chức năng còn lại chưa bắt đầu. Không tiếp tục P1-04/P1-05, thay đổi schema, tạo migration hoặc chạy seed cho đến khi có yêu cầu implementation riêng.**
 
 
 ## 17. Tổng kết refactor revision 2

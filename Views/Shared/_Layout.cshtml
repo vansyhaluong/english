@@ -31,6 +31,12 @@
                 </span>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
+                    <a asp-controller="Account" asp-action="Profile" class="nav-link-custom">Hồ sơ</a>
+                    <a asp-controller="Account" asp-action="ChangePassword" class="nav-link-custom d-none-mobile">Đổi mật khẩu</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="AdminUsers" asp-action="Index" class="nav-link-custom">Người dùng</a>
+                    }
                     <form asp-controller="Account" asp-action="Logout" method="post" class="account-nav-form">
                         <button type="submit" class="btn-login">Đăng xuất</button>
                     </form>

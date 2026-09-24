@@ -1,13 +1,18 @@
 using System.Security.Claims;
+using English.Authorization;
 using English.Interfaces;
+using English.Models;
 using English.Models.ViewModels.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace English.Controllers;
 
-public sealed class AccountController(IAuthService authService) : Controller
+public sealed class AccountController(
+    IAuthService authService,
+    IUserService userService) : Controller
 {
     [HttpGet]
     public IActionResult Register()
@@ -104,11 +109,131 @@ public sealed class AccountController(IAuthService authService) : Controller
             : RedirectToAction("Index", "Home");
     }
 
+    [HttpGet]
+    [Authorize(Policy = AuthorizationPolicies.ActiveAccount)]
+    public async Task<IActionResult> Profile(CancellationToken cancellationToken)
+    {
+        if (!TryGetCurrentUserId(out var userId))
+        {
+            return Forbid();
+        }
+
+        var model = await CreateProfileViewModelAsync(userId, cancellationToken);
+        return model is null ? Forbid() : View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Policy = AuthorizationPolicies.ActiveAccount)]
+    public async Task<IActionResult> Profile(
+        UpdateProfileViewModel model,
+        CancellationToken cancellationToken)
+    {
+        if (!TryGetCurrentUserId(out var userId))
+        {
+            return Forbid();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            var invalidViewModel = await CreateProfileViewModelAsync(userId, cancellationToken);
+            return invalidViewModel is null ? Forbid() : View(invalidViewModel);
+        }
+
+        if (!await userService.UpdateProfileAsync(
+                userId,
+                model.FullName,
+                cancellationToken))
+        {
+            return Forbid();
+        }
+
+        TempData["AccountMessage"] = "Thông tin cá nhân đã được cập nhật.";
+        return RedirectToAction(nameof(Profile));
+    }
+
+    [HttpGet]
+    [Authorize(Policy = AuthorizationPolicies.ActiveAccount)]
+    public IActionResult ChangePassword()
+    {
+        return View(new ChangePasswordViewModel());
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Policy = AuthorizationPolicies.ActiveAccount)]
+    public async Task<IActionResult> ChangePassword(
+        ChangePasswordViewModel model,
+        CancellationToken cancellationToken)
+    {
+        if (!TryGetCurrentUserId(out var userId))
+        {
+            return Forbid();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var result = await userService.ChangePasswordAsync(
+            userId,
+            model.CurrentPassword,
+            model.NewPassword,
+            cancellationToken);
+
+        if (result == ChangePasswordResult.UserNotFound)
+        {
+            return Forbid();
+        }
+
+        if (result == ChangePasswordResult.InvalidCurrentPassword)
+        {
+            ModelState.AddModelError(
+                nameof(model.CurrentPassword),
+                "Mật khẩu hiện tại không đúng.");
+            return View(model);
+        }
+
+        TempData["AccountMessage"] = "Mật khẩu đã được thay đổi.";
+        return RedirectToAction(nameof(ChangePassword));
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Index", "Home");
+    }
+
+    private bool TryGetCurrentUserId(out Guid userId)
+    {
+        return Guid.TryParse(
+            User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+            out userId);
+    }
+
+    private async Task<ProfileViewModel?> CreateProfileViewModelAsync(
+        Guid userId,
+        CancellationToken cancellationToken)
+    {
+        var profile = await userService.GetProfileAsync(userId, cancellationToken);
+        if (profile is null)
+        {
+            return null;
+        }
+
+        return new ProfileViewModel
+        {
+            FullName = profile.FullName,
+            Email = profile.Email,
+            Role = profile.Role switch
+            {
+                (byte)UserRole.Student => nameof(UserRole.Student),
+                (byte)UserRole.Admin => nameof(UserRole.Admin),
+                _ => "Không xác định"
+            }
+        };
     }
 }

@@ -142,6 +142,18 @@
 .account-submit { width: 100%; }
 .account-switch { margin: var(--space-5) 0 0; }
 .account-switch a { color: var(--brand); font-weight: 700; }
+.account-readonly { display: grid; gap: var(--space-3); margin: var(--space-7) 0; }
+.account-readonly div { padding: var(--space-3); background: rgb(0 0 0 / 18%); border-radius: var(--radius-xs); }
+.account-readonly dt { color: var(--foreground-muted); font-size: var(--text-sm); }
+.account-readonly dd { margin: var(--space-1) 0 0; overflow-wrap: anywhere; }
+.management-card { width: min(64rem, 100%); padding: calc(2 * var(--space-5)); color: var(--foreground); background: var(--glass-3); border: 1px solid var(--glass-border); border-radius: var(--radius-md); box-shadow: var(--shadow-card); }
+.management-search { display: grid; gap: var(--space-2); margin: var(--space-7) 0; }
+.management-search > div { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.management-search input { flex: 1 1 16rem; min-height: 44px; padding: var(--space-3); color: var(--foreground); background: rgb(0 0 0 / 22%); border: 1px solid var(--glass-border); border-radius: var(--radius-xs); }
+.management-table-wrap { overflow-x: auto; }
+.management-table { width: 100%; border-collapse: collapse; }
+.management-table th, .management-table td { padding: var(--space-3); border-bottom: 1px solid var(--glass-border); text-align: left; }
+.management-table a { color: var(--brand); font-weight: 700; }
 @media (min-width: 640px) {
     .site-wrapper { padding-inline: var(--space-7); }
     .hero-section { padding-top: var(--section-space); padding-bottom: calc(4 * var(--space-6)); }
