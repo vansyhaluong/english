@@ -1,6 +1,9 @@
+using English.Authorization;
 using English.Interfaces;
+using English.Models;
 using English.Models.Entities;
 using English.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +27,31 @@ builder.Services
 
 builder.Services.AddScoped<IPasswordHasher<AspNetUser>, PasswordHasher<AspNetUser>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthorizationHandler, ActiveAccountHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AuthorizationPolicies.ActiveAccount, policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.AddRequirements(new ActiveAccountRequirement());
+    });
+
+    options.AddPolicy(AuthorizationPolicies.StudentOnly, policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireRole(nameof(UserRole.Student));
+        policy.AddRequirements(new ActiveAccountRequirement());
+    });
+
+    options.AddPolicy(AuthorizationPolicies.AdminOnly, policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireRole(nameof(UserRole.Admin));
+        policy.AddRequirements(new ActiveAccountRequirement());
+    });
+});
 
 var app = builder.Build();
 

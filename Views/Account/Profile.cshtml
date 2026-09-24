@@ -1,0 +1,45 @@
+@model English.Models.ViewModels.Account.ProfileViewModel
+@{
+    ViewData["Title"] = "Hồ sơ";
+    ViewData["PageClass"] = "account-page-shell";
+}
+
+<section class="account-page" aria-labelledby="profile-title">
+    <div class="account-card">
+        <h1 id="profile-title">Hồ sơ cá nhân</h1>
+
+        @if (TempData["AccountMessage"] is string message)
+        {
+            <p class="account-success" role="status">@message</p>
+        }
+
+        <dl class="account-readonly">
+            <div>
+                <dt>Email</dt>
+                <dd>@Model.Email</dd>
+            </div>
+            <div>
+                <dt>Vai trò</dt>
+                <dd>@Model.Role</dd>
+            </div>
+        </dl>
+
+        <form asp-action="Profile" method="post" class="account-form">
+            <div asp-validation-summary="ModelOnly" class="account-validation" role="alert"></div>
+
+            <div class="account-field">
+                <label asp-for="FullName"></label>
+                <input asp-for="FullName" autocomplete="name" />
+                <span asp-validation-for="FullName"></span>
+            </div>
+
+            <button type="submit" class="btn-brand-primary account-submit">Lưu thay đổi</button>
+        </form>
+
+        <p class="account-switch"><a asp-action="ChangePassword">Đổi mật khẩu</a></p>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
