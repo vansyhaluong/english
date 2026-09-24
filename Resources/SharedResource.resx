@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="AppName" xml:space="preserve"><value>EnglishHub</value></data>
+  <data name="StudentArea" xml:space="preserve"><value>Khu vực học viên</value></data>
+  <data name="AdminArea" xml:space="preserve"><value>Khu vực quản trị</value></data>
+  <data name="SkipToContent" xml:space="preserve"><value>Chuyển đến nội dung chính</value></data>
+  <data name="OpenMenu" xml:space="preserve"><value>Mở menu</value></data>
+  <data name="CloseMenu" xml:space="preserve"><value>Đóng menu</value></data>
+  <data name="StudentNavigation" xml:space="preserve"><value>Điều hướng học viên</value></data>
+  <data name="AdminNavigation" xml:space="preserve"><value>Điều hướng quản trị</value></data>
+  <data name="Home" xml:space="preserve"><value>Trang chủ</value></data>
+  <data name="Vocabulary" xml:space="preserve"><value>Từ vựng</value></data>
+  <data name="Profile" xml:space="preserve"><value>Hồ sơ</value></data>
+  <data name="ChangePassword" xml:space="preserve"><value>Đổi mật khẩu</value></data>
+  <data name="Users" xml:space="preserve"><value>Người dùng</value></data>
+  <data name="Logout" xml:space="preserve"><value>Đăng xuất</value></data>
+  <data name="Language" xml:space="preserve"><value>Ngôn ngữ</value></data>
+  <data name="Vietnamese" xml:space="preserve"><value>Tiếng Việt</value></data>
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="FullName" xml:space="preserve"><value>Họ và tên</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Role" xml:space="preserve"><value>Vai trò</value></data>
+  <data name="CurrentPassword" xml:space="preserve"><value>Mật khẩu hiện tại</value></data>
+  <data name="NewPassword" xml:space="preserve"><value>Mật khẩu mới</value></data>
+  <data name="ConfirmNewPassword" xml:space="preserve"><value>Xác nhận mật khẩu mới</value></data>
+  <data name="ProfileTitle" xml:space="preserve"><value>Hồ sơ cá nhân</value></data>
+  <data name="SaveChanges" xml:space="preserve"><value>Lưu thay đổi</value></data>
+  <data name="ChangePasswordTitle" xml:space="preserve"><value>Đổi mật khẩu</value></data>
+  <data name="UpdatePassword" xml:space="preserve"><value>Cập nhật mật khẩu</value></data>
+  <data name="BackToProfile" xml:space="preserve"><value>Quay lại hồ sơ</value></data>
+  <data name="ProfileUpdated" xml:space="preserve"><value>Thông tin cá nhân đã được cập nhật.</value></data>
+  <data name="PasswordUpdated" xml:space="preserve"><value>Mật khẩu đã được thay đổi.</value></data>
+  <data name="CurrentPasswordIncorrect" xml:space="preserve"><value>Mật khẩu hiện tại không đúng.</value></data>
+  <data name="ManageUsers" xml:space="preserve"><value>Quản lý người dùng</value></data>
+  <data name="SearchUsers" xml:space="preserve"><value>Tìm theo họ tên hoặc email</value></data>
+  <data name="Search" xml:space="preserve"><value>Tìm kiếm</value></data>
+  <data name="NoUsersFound" xml:space="preserve"><value>Không tìm thấy người dùng.</value></data>
+  <data name="Status" xml:space="preserve"><value>Trạng thái</value></data>
+  <data name="Details" xml:space="preserve"><value>Chi tiết</value></data>
+  <data name="UserDetails" xml:space="preserve"><value>Chi tiết người dùng</value></data>
+  <data name="Active" xml:space="preserve"><value>Đang hoạt động</value></data>
+  <data name="Locked" xml:space="preserve"><value>Đã khóa</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>Ngày tạo</value></data>
+  <data name="LockAccount" xml:space="preserve"><value>Khóa tài khoản</value></data>
+  <data name="UnlockAccount" xml:space="preserve"><value>Mở khóa tài khoản</value></data>
+  <data name="BackToUsers" xml:space="preserve"><value>Quay lại danh sách</value></data>
+  <data name="Student" xml:space="preserve"><value>Học viên</value></data>
+  <data name="Admin" xml:space="preserve"><value>Quản trị viên</value></data>
+  <data name="Unknown" xml:space="preserve"><value>Không xác định</value></data>
+  <data name="Error403Title" xml:space="preserve"><value>Bạn không có quyền truy cập</value></data>
+  <data name="Error403Message" xml:space="preserve"><value>Tài khoản của bạn không được phép mở trang này.</value></data>
+  <data name="Error404Title" xml:space="preserve"><value>Không tìm thấy trang</value></data>
+  <data name="Error404Message" xml:space="preserve"><value>Trang bạn yêu cầu không tồn tại hoặc đã được chuyển đi.</value></data>
+  <data name="Error500Title" xml:space="preserve"><value>Đã xảy ra lỗi</value></data>
+  <data name="Error500Message" xml:space="preserve"><value>Hệ thống chưa thể xử lý yêu cầu. Vui lòng thử lại sau.</value></data>
+  <data name="ReturnHome" xml:space="preserve"><value>Về trang chủ</value></data>
+  <data name="RequiredFullName" xml:space="preserve"><value>Vui lòng nhập họ và tên.</value></data>
+  <data name="MaxFullName" xml:space="preserve"><value>Họ và tên không được vượt quá 200 ký tự.</value></data>
+  <data name="PasswordMismatch" xml:space="preserve"><value>Mật khẩu xác nhận không khớp.</value></data>
+  <data name="RequiredCurrentPassword" xml:space="preserve"><value>Vui lòng nhập mật khẩu hiện tại.</value></data>
+  <data name="RequiredNewPassword" xml:space="preserve"><value>Vui lòng nhập mật khẩu mới.</value></data>
+  <data name="MinNewPassword" xml:space="preserve"><value>Mật khẩu mới phải có ít nhất 6 ký tự.</value></data>
+  <data name="RequiredConfirmNewPassword" xml:space="preserve"><value>Vui lòng xác nhận mật khẩu mới.</value></data>
+</root>

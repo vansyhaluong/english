@@ -1,0 +1,68 @@
+@{
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    var isProfile = controller == "Account" && action == "Profile";
+    var isPassword = controller == "Account" && action == "ChangePassword";
+}
+<!DOCTYPE html>
+<html lang="@culture">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @L["AppName"]</title>
+    <meta name="theme-color" content="#151523" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@800&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/student.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="student-shell">
+    <a class="skip-link" href="#main-content">@L["SkipToContent"]</a>
+    <button class="student-menu-toggle" type="button" data-area-menu-toggle aria-controls="student-sidebar" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        <span>@L["OpenMenu"]</span>
+    </button>
+    <button class="student-menu-overlay" type="button" data-area-menu-close aria-label="@L["CloseMenu"]"></button>
+    <aside id="student-sidebar" class="student-sidebar" aria-label="@L["StudentNavigation"]">
+        <a class="student-brand" asp-controller="Home" asp-action="Index">
+            <img src="~/images/learning-mascot.png" width="40" height="40" alt="" />
+            <span>@L["AppName"]<small>@L["StudentArea"]</small></span>
+        </a>
+        <nav class="student-nav">
+            <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 3l9 7v10H3zM9 20v-7h6v7" /></svg><span>@L["Home"]</span>
+            </a>
+            <a asp-controller="Vocabulary" asp-action="Index" asp-route-culture="@culture">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v15M12 6C9 3 5 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-3-1-7-1-10 2" /></svg><span>@L["Vocabulary"]</span>
+            </a>
+            <a class="@(isProfile ? "is-active" : null)" asp-controller="Account" asp-action="Profile" asp-route-culture="@culture" aria-current="@(isProfile ? "page" : null)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg><span>@L["Profile"]</span>
+            </a>
+            <a class="@(isPassword ? "is-active" : null)" asp-controller="Account" asp-action="ChangePassword" asp-route-culture="@culture" aria-current="@(isPassword ? "page" : null)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg><span>@L["ChangePassword"]</span>
+            </a>
+        </nav>
+        <div class="student-sidebar-footer">
+            <div class="student-language" aria-label="@L["Language"]">
+                <a asp-route-culture="vi" aria-current="@(culture == "vi" ? "true" : null)">VI</a>
+                <a asp-route-culture="en" aria-current="@(culture == "en" ? "true" : null)">EN</a>
+            </div>
+            <form asp-controller="Account" asp-action="Logout" asp-route-culture="@culture" method="post">
+                <button type="submit">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5H5v14h5M14 8l4 4-4 4M18 12H9" /></svg><span>@L["Logout"]</span>
+                </button>
+            </form>
+        </div>
+    </aside>
+    <div class="student-content">
+        <main id="main-content" tabindex="-1">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/js/area-shell.js" asp-append-version="true" defer></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

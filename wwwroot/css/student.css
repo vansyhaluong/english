@@ -1,0 +1,106 @@
+.student-shell {
+    --area-accent: #8b5cf6;
+    --area-accent-strong: #6d28d9;
+    --area-bg: #f6f3fb;
+    --area-surface: #fff;
+    --area-text: #241d31;
+    --area-muted: #6f667b;
+    --area-border: #e4ddec;
+    min-height: 100vh;
+    background: var(--area-bg);
+    color: var(--area-text);
+}
+
+.student-shell .student-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    width: 16.5rem;
+    padding: 1.25rem 1rem;
+    overflow-y: auto;
+    color: #f5f3ff;
+    background: #171322;
+    box-shadow: 8px 0 28px rgb(23 19 34 / 16%);
+}
+
+.student-shell .student-brand { display: flex; align-items: center; gap: .75rem; padding: .25rem .5rem 1.5rem; font: 800 1rem/1.25 var(--font-display); }
+.student-shell .student-brand img { object-fit: contain; }
+.student-shell .student-brand span, .student-shell .student-brand small { display: block; }
+.student-shell .student-brand small { margin-top: .18rem; color: #a9a0b7; font: 600 .72rem/1.35 var(--font-sans); }
+.student-shell .student-nav { display: grid; gap: .35rem; }
+.student-shell .student-nav a,
+.student-shell .student-sidebar-footer button {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    width: 100%;
+    min-height: 2.85rem;
+    padding: .65rem .75rem;
+    border: 0;
+    border-radius: .7rem;
+    color: #cfc8d9;
+    background: transparent;
+    text-align: left;
+    font-weight: 700;
+}
+.student-shell .student-nav a:hover,
+.student-shell .student-sidebar-footer button:hover { color: #fff; background: rgb(255 255 255 / 8%); }
+.student-shell .student-nav a.is-active { color: #fff; background: var(--area-accent-strong); }
+.student-shell .student-nav svg,
+.student-shell .student-sidebar-footer svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.student-shell .student-sidebar-footer { display: grid; gap: .65rem; margin-top: auto; padding-top: 1.5rem; }
+.student-shell .student-sidebar-footer form { margin: 0; }
+.student-shell .student-language { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem; }
+.student-shell .student-language a { padding: .45rem; border: 1px solid rgb(255 255 255 / 14%); border-radius: .6rem; color: #bcb3c9; text-align: center; font-size: .8rem; font-weight: 800; }
+.student-shell .student-language a[aria-current] { border-color: #a78bfa; color: #fff; background: rgb(139 92 246 / 25%); }
+.student-shell .student-content { min-height: 100vh; margin-left: 16.5rem; padding: clamp(1.25rem, 4vw, 3rem); }
+.student-shell .student-content main { width: min(58rem, 100%); margin: 0 auto; }
+.student-shell .student-menu-toggle,
+.student-shell .student-menu-overlay { display: none; }
+
+.student-shell .account-page { min-height: calc(100vh - 6rem); display: grid; place-items: center; }
+.student-shell .account-card,
+.student-shell .area-error-card { width: min(34rem, 100%); padding: clamp(1.4rem, 4vw, 2.25rem); border: 1px solid var(--area-border); border-radius: 1rem; background: var(--area-surface); box-shadow: 0 18px 48px rgb(43 31 60 / 9%); }
+.student-shell .account-card h1,
+.student-shell .area-error-card h1 { font-size: clamp(1.55rem, 4vw, 2rem); line-height: 1.25; }
+.student-shell .account-form { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.student-shell .account-field { display: grid; gap: .45rem; }
+.student-shell .account-field label { font-size: .9rem; font-weight: 800; }
+.student-shell .account-field input { width: 100%; min-height: 2.9rem; padding: .7rem .8rem; border: 1px solid var(--area-border); border-radius: .65rem; color: var(--area-text); background: #fff; }
+.student-shell .account-field input:focus { border-color: var(--area-accent); outline: 3px solid rgb(139 92 246 / 18%); }
+.student-shell .account-field span,
+.student-shell .account-validation { color: #b42318; font-size: .86rem; }
+.student-shell .account-validation:empty { display: none; }
+.student-shell .account-validation ul { margin: 0; padding-left: 1.2rem; }
+.student-shell .account-success { margin-bottom: 1rem; padding: .75rem; border: 1px solid #86d19a; border-radius: .65rem; color: #17662d; background: #edf9f0; }
+.student-shell .account-readonly { display: grid; gap: .75rem; margin: 1.5rem 0; }
+.student-shell .account-readonly div { padding: .8rem; border-radius: .65rem; background: #f5f1fa; }
+.student-shell .account-readonly dt { color: var(--area-muted); font-size: .82rem; font-weight: 700; }
+.student-shell .account-readonly dd { margin-top: .2rem; overflow-wrap: anywhere; font-weight: 700; }
+.student-shell .btn-brand-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 2.8rem; padding: .65rem 1rem; border: 0; border-radius: .65rem; color: #fff; background: var(--area-accent-strong); font-weight: 800; }
+.student-shell .btn-brand-primary:hover { background: #5b21b6; }
+.student-shell .account-submit { width: 100%; }
+.student-shell .account-switch { margin-top: 1.25rem; text-align: center; }
+.student-shell .account-switch a,
+.student-shell .area-error-card a { color: var(--area-accent-strong); font-weight: 800; }
+.student-shell .area-error { min-height: calc(100vh - 6rem); display: grid; place-items: center; }
+.student-shell .area-error-code { color: var(--area-accent-strong); font: 800 3rem/1 var(--font-display); }
+.student-shell .area-error-card p { margin-top: .75rem; color: var(--area-muted); }
+.student-shell .area-error-card a { display: inline-block; margin-top: 1.5rem; }
+
+@media (max-width: 800px) {
+    .student-shell .student-sidebar { width: min(18rem, calc(100vw - 3rem)); transform: translateX(-105%); transition: transform 180ms ease; }
+    .student-shell.area-menu-open { overflow: hidden; }
+    .student-shell.area-menu-open .student-sidebar { transform: translateX(0); }
+    .student-shell .student-menu-toggle { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: .55rem; width: 100%; min-height: 3.5rem; padding: .75rem 1rem; border: 0; color: #fff; background: #171322; font-weight: 800; }
+    .student-shell .student-menu-overlay { position: fixed; inset: 0; z-index: 35; width: 100%; height: 100%; border: 0; background: rgb(10 8 16 / 55%); }
+    .student-shell.area-menu-open .student-menu-overlay { display: block; }
+    .student-shell .student-content { margin-left: 0; padding: 1rem; }
+    .student-shell .account-page, .student-shell .area-error { min-height: calc(100vh - 5.5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .student-shell .student-sidebar { transition: none; }
+}

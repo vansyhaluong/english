@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Globalization;
 using English.Authorization;
 using English.Interfaces;
 using English.Models;
@@ -7,12 +8,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace English.Controllers;
 
 public sealed class AccountController(
     IAuthService authService,
-    IUserService userService) : Controller
+    IUserService userService,
+    IStringLocalizer<SharedResource> localizer) : Controller
 {
     [HttpGet]
     public IActionResult Register()
@@ -148,8 +151,8 @@ public sealed class AccountController(
             return Forbid();
         }
 
-        TempData["AccountMessage"] = "Thông tin cá nhân đã được cập nhật.";
-        return RedirectToAction(nameof(Profile));
+        TempData["AccountMessage"] = localizer["ProfileUpdated"].Value;
+        return RedirectToAction(nameof(Profile), CultureRoute());
     }
 
     [HttpGet]
@@ -191,12 +194,12 @@ public sealed class AccountController(
         {
             ModelState.AddModelError(
                 nameof(model.CurrentPassword),
-                "Mật khẩu hiện tại không đúng.");
+                localizer["CurrentPasswordIncorrect"]);
             return View(model);
         }
 
-        TempData["AccountMessage"] = "Mật khẩu đã được thay đổi.";
-        return RedirectToAction(nameof(ChangePassword));
+        TempData["AccountMessage"] = localizer["PasswordUpdated"].Value;
+        return RedirectToAction(nameof(ChangePassword), CultureRoute());
     }
 
     [HttpPost]
@@ -232,8 +235,16 @@ public sealed class AccountController(
             {
                 (byte)UserRole.Student => nameof(UserRole.Student),
                 (byte)UserRole.Admin => nameof(UserRole.Admin),
-                _ => "Không xác định"
+                _ => "Unknown"
             }
+        };
+    }
+
+    private static object CultureRoute()
+    {
+        return new
+        {
+            culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName
         };
     }
 }
