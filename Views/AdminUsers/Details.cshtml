@@ -1,49 +1,50 @@
 @model English.Models.ViewModels.AdminUsers.AdminUserDetailsViewModel
 @{
-    ViewData["Title"] = "Chi tiết người dùng";
-    ViewData["PageClass"] = "account-page-shell";
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    Layout = "_AdminLayout";
+    ViewData["Title"] = L["UserDetails"];
 }
 
 <section class="account-page" aria-labelledby="user-details-title">
     <div class="account-card">
-        <h1 id="user-details-title">Chi tiết người dùng</h1>
+        <h1 id="user-details-title">@L["UserDetails"]</h1>
 
         <dl class="account-readonly">
             <div>
-                <dt>Họ tên</dt>
+                <dt>@L["FullName"]</dt>
                 <dd>@Model.FullName</dd>
             </div>
             <div>
-                <dt>Email</dt>
+                <dt>@L["Email"]</dt>
                 <dd>@Model.Email</dd>
             </div>
             <div>
-                <dt>Vai trò</dt>
-                <dd>@Model.Role</dd>
+                <dt>@L["Role"]</dt>
+                <dd>@L[Model.Role]</dd>
             </div>
             <div>
-                <dt>Trạng thái</dt>
-                <dd>@(Model.IsActive ? "Đang hoạt động" : "Đã khóa")</dd>
+                <dt>@L["Status"]</dt>
+                <dd>@(Model.IsActive ? L["Active"] : L["Locked"])</dd>
             </div>
             <div>
-                <dt>Ngày tạo</dt>
+                <dt>@L["CreatedAt"]</dt>
                 <dd>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm zzz")</dd>
             </div>
         </dl>
 
         @if (Model.IsActive)
         {
-            <form asp-action="Lock" asp-route-id="@Model.Id" method="post" class="account-form">
-                <button type="submit" class="btn-brand-primary">Khóa tài khoản</button>
+            <form asp-action="Lock" asp-route-id="@Model.Id" asp-route-culture="@culture" method="post" class="account-form">
+                <button type="submit" class="btn-brand-primary">@L["LockAccount"]</button>
             </form>
         }
         else
         {
-            <form asp-action="Unlock" asp-route-id="@Model.Id" method="post" class="account-form">
-                <button type="submit" class="btn-brand-primary">Mở khóa tài khoản</button>
+            <form asp-action="Unlock" asp-route-id="@Model.Id" asp-route-culture="@culture" method="post" class="account-form">
+                <button type="submit" class="btn-brand-primary">@L["UnlockAccount"]</button>
             </form>
         }
 
-        <p class="account-switch"><a asp-action="Index">Quay lại danh sách</a></p>
+        <p class="account-switch"><a asp-action="Index" asp-route-culture="@culture">@L["BackToUsers"]</a></p>
     </div>
 </section>

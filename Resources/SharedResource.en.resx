@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="AppName" xml:space="preserve"><value>EnglishHub</value></data>
+  <data name="StudentArea" xml:space="preserve"><value>Student area</value></data>
+  <data name="AdminArea" xml:space="preserve"><value>Admin area</value></data>
+  <data name="SkipToContent" xml:space="preserve"><value>Skip to main content</value></data>
+  <data name="OpenMenu" xml:space="preserve"><value>Open menu</value></data>
+  <data name="CloseMenu" xml:space="preserve"><value>Close menu</value></data>
+  <data name="StudentNavigation" xml:space="preserve"><value>Student navigation</value></data>
+  <data name="AdminNavigation" xml:space="preserve"><value>Admin navigation</value></data>
+  <data name="Home" xml:space="preserve"><value>Home</value></data>
+  <data name="Vocabulary" xml:space="preserve"><value>Vocabulary</value></data>
+  <data name="Profile" xml:space="preserve"><value>Profile</value></data>
+  <data name="ChangePassword" xml:space="preserve"><value>Change password</value></data>
+  <data name="Users" xml:space="preserve"><value>Users</value></data>
+  <data name="Logout" xml:space="preserve"><value>Sign out</value></data>
+  <data name="Language" xml:space="preserve"><value>Language</value></data>
+  <data name="Vietnamese" xml:space="preserve"><value>Tiếng Việt</value></data>
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="FullName" xml:space="preserve"><value>Full name</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Role" xml:space="preserve"><value>Role</value></data>
+  <data name="CurrentPassword" xml:space="preserve"><value>Current password</value></data>
+  <data name="NewPassword" xml:space="preserve"><value>New password</value></data>
+  <data name="ConfirmNewPassword" xml:space="preserve"><value>Confirm new password</value></data>
+  <data name="ProfileTitle" xml:space="preserve"><value>Personal profile</value></data>
+  <data name="SaveChanges" xml:space="preserve"><value>Save changes</value></data>
+  <data name="ChangePasswordTitle" xml:space="preserve"><value>Change password</value></data>
+  <data name="UpdatePassword" xml:space="preserve"><value>Update password</value></data>
+  <data name="BackToProfile" xml:space="preserve"><value>Back to profile</value></data>
+  <data name="ProfileUpdated" xml:space="preserve"><value>Your profile has been updated.</value></data>
+  <data name="PasswordUpdated" xml:space="preserve"><value>Your password has been changed.</value></data>
+  <data name="CurrentPasswordIncorrect" xml:space="preserve"><value>The current password is incorrect.</value></data>
+  <data name="ManageUsers" xml:space="preserve"><value>Manage users</value></data>
+  <data name="SearchUsers" xml:space="preserve"><value>Search by full name or email</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="NoUsersFound" xml:space="preserve"><value>No users were found.</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Details" xml:space="preserve"><value>Details</value></data>
+  <data name="UserDetails" xml:space="preserve"><value>User details</value></data>
+  <data name="Active" xml:space="preserve"><value>Active</value></data>
+  <data name="Locked" xml:space="preserve"><value>Locked</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>Created</value></data>
+  <data name="LockAccount" xml:space="preserve"><value>Lock account</value></data>
+  <data name="UnlockAccount" xml:space="preserve"><value>Unlock account</value></data>
+  <data name="BackToUsers" xml:space="preserve"><value>Back to users</value></data>
+  <data name="Student" xml:space="preserve"><value>Student</value></data>
+  <data name="Admin" xml:space="preserve"><value>Administrator</value></data>
+  <data name="Unknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="Error403Title" xml:space="preserve"><value>Access denied</value></data>
+  <data name="Error403Message" xml:space="preserve"><value>Your account is not allowed to open this page.</value></data>
+  <data name="Error404Title" xml:space="preserve"><value>Page not found</value></data>
+  <data name="Error404Message" xml:space="preserve"><value>The page you requested does not exist or has moved.</value></data>
+  <data name="Error500Title" xml:space="preserve"><value>Something went wrong</value></data>
+  <data name="Error500Message" xml:space="preserve"><value>We could not process your request. Please try again later.</value></data>
+  <data name="ReturnHome" xml:space="preserve"><value>Return home</value></data>
+  <data name="RequiredFullName" xml:space="preserve"><value>Please enter your full name.</value></data>
+  <data name="MaxFullName" xml:space="preserve"><value>Full name cannot exceed 200 characters.</value></data>
+  <data name="PasswordMismatch" xml:space="preserve"><value>The password confirmation does not match.</value></data>
+  <data name="RequiredCurrentPassword" xml:space="preserve"><value>Please enter your current password.</value></data>
+  <data name="RequiredNewPassword" xml:space="preserve"><value>Please enter a new password.</value></data>
+  <data name="MinNewPassword" xml:space="preserve"><value>The new password must contain at least 6 characters.</value></data>
+  <data name="RequiredConfirmNewPassword" xml:space="preserve"><value>Please confirm the new password.</value></data>
+</root>

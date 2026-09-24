@@ -4,6 +4,7 @@ using English.Models;
 using English.Models.ViewModels.AdminUsers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace English.Controllers;
 
@@ -61,7 +62,11 @@ public sealed class AdminUsersController(IUserService userService) : Controller
             return NotFound();
         }
 
-        return RedirectToAction(nameof(Details), new { id });
+        return RedirectToAction(nameof(Details), new
+        {
+            id,
+            culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName
+        });
     }
 
     [HttpPost]
@@ -75,7 +80,11 @@ public sealed class AdminUsersController(IUserService userService) : Controller
             return NotFound();
         }
 
-        return RedirectToAction(nameof(Details), new { id });
+        return RedirectToAction(nameof(Details), new
+        {
+            id,
+            culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName
+        });
     }
 
     private static string GetRoleName(byte role)
@@ -84,7 +93,7 @@ public sealed class AdminUsersController(IUserService userService) : Controller
         {
             (byte)UserRole.Student => nameof(UserRole.Student),
             (byte)UserRole.Admin => nameof(UserRole.Admin),
-            _ => "Không xác định"
+            _ => "Unknown"
         };
     }
 }

@@ -4,20 +4,20 @@ namespace English.Models.ViewModels.Account;
 
 public sealed class ChangePasswordViewModel
 {
-    [Required(ErrorMessage = "Vui lòng nhập mật khẩu hiện tại.")]
+    [Required(ErrorMessageResourceType = typeof(SharedResource), ErrorMessageResourceName = nameof(SharedResource.RequiredCurrentPassword))]
     [DataType(DataType.Password)]
-    [Display(Name = "Mật khẩu hiện tại")]
+    [Display(Name = nameof(SharedResource.CurrentPassword), ResourceType = typeof(SharedResource))]
     public string CurrentPassword { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Vui lòng nhập mật khẩu mới.")]
-    [MinLength(6, ErrorMessage = "Mật khẩu mới phải có ít nhất 6 ký tự.")]
+    [Required(ErrorMessageResourceType = typeof(SharedResource), ErrorMessageResourceName = nameof(SharedResource.RequiredNewPassword))]
+    [MinLength(6, ErrorMessageResourceType = typeof(SharedResource), ErrorMessageResourceName = nameof(SharedResource.MinNewPassword))]
     [DataType(DataType.Password)]
-    [Display(Name = "Mật khẩu mới")]
+    [Display(Name = nameof(SharedResource.NewPassword), ResourceType = typeof(SharedResource))]
     public string NewPassword { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Vui lòng xác nhận mật khẩu mới.")]
+    [Required(ErrorMessageResourceType = typeof(SharedResource), ErrorMessageResourceName = nameof(SharedResource.RequiredConfirmNewPassword))]
     [DataType(DataType.Password)]
-    [Compare(nameof(NewPassword), ErrorMessage = "Mật khẩu xác nhận không khớp.")]
-    [Display(Name = "Xác nhận mật khẩu mới")]
+    [Compare(nameof(NewPassword), ErrorMessageResourceType = typeof(SharedResource), ErrorMessageResourceName = nameof(SharedResource.PasswordMismatch))]
+    [Display(Name = nameof(SharedResource.ConfirmNewPassword), ResourceType = typeof(SharedResource))]
     public string ConfirmPassword { get; set; } = string.Empty;
 }

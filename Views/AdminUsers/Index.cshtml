@@ -1,24 +1,26 @@
 @model English.Models.ViewModels.AdminUsers.AdminUsersIndexViewModel
 @{
-    ViewData["Title"] = "Quản lý người dùng";
-    ViewData["PageClass"] = "account-page-shell";
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    Layout = "_AdminLayout";
+    ViewData["Title"] = L["ManageUsers"];
 }
 
 <section class="account-page" aria-labelledby="users-title">
     <div class="management-card">
-        <h1 id="users-title">Quản lý người dùng</h1>
+        <h1 id="users-title">@L["ManageUsers"]</h1>
 
         <form asp-action="Index" method="get" class="management-search" role="search">
-            <label for="user-search">Tìm theo họ tên hoặc email</label>
+            <label for="user-search">@L["SearchUsers"]</label>
             <div>
+                <input type="hidden" name="culture" value="@culture" />
                 <input id="user-search" type="search" name="search" value="@Model.Search" maxlength="256" />
-                <button type="submit" class="btn-brand-primary">Tìm kiếm</button>
+                <button type="submit" class="btn-brand-primary">@L["Search"]</button>
             </div>
         </form>
 
         @if (Model.Users.Count == 0)
         {
-            <p>Không tìm thấy người dùng.</p>
+            <p>@L["NoUsersFound"]</p>
         }
         else
         {
@@ -26,10 +28,10 @@
                 <table class="management-table">
                     <thead>
                         <tr>
-                            <th>Họ tên</th>
-                            <th>Email</th>
-                            <th>Vai trò</th>
-                            <th>Trạng thái</th>
+                            <th>@L["FullName"]</th>
+                            <th>@L["Email"]</th>
+                            <th>@L["Role"]</th>
+                            <th>@L["Status"]</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -39,9 +41,9 @@
                             <tr>
                                 <td>@user.FullName</td>
                                 <td>@user.Email</td>
-                                <td>@user.Role</td>
-                                <td>@(user.IsActive ? "Đang hoạt động" : "Đã khóa")</td>
-                                <td><a asp-action="Details" asp-route-id="@user.Id">Chi tiết</a></td>
+                                <td>@L[user.Role]</td>
+                                <td>@(user.IsActive ? L["Active"] : L["Locked"])</td>
+                                <td><a asp-action="Details" asp-route-id="@user.Id" asp-route-culture="@culture">@L["Details"]</a></td>
                             </tr>
                         }
                     </tbody>

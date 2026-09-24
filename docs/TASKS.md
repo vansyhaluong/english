@@ -94,11 +94,12 @@ Database hiện có là nguồn sự thật cho persistence. Schema nền tảng
   - Form/input: profile, đổi mật khẩu, Admin user actions đều dùng model/DTO riêng, không nhận trường role/owner ngoài use case.
   - Bằng chứng: ba policy đăng ký với DB-backed `ActiveAccountHandler`; Profile chỉ POST `FullName`; đổi mật khẩu verify/hash bằng `IPasswordHasher<AspNetUser>`; Admin list/search/detail và lock/unlock POST+CSRF chỉ đổi `IsActive`; `dotnet build` pass và anonymous route smoke test pass. Authenticated DB mutation chưa manual-test vì không tạo/sửa dữ liệu thử.
 
-- [ ] **P1-04 — Layout, localization và error handling**
+- [x] **P1-04 — Layout, localization và error handling**
   - Phụ thuộc: P1-02.
   - Phạm vi: Student/Admin areas/layouts, Resources, culture selection, error views.
   - Nghiệm thu: sidebar tối có icon+tên, mobile menu; default vi, chọn en qua request/route/query duy trì link/form; không profile/cookie ghi nhớ dài hạn; validation VI/EN. Giữ landing như PLAN, chỉ nối login thật; 403/404/500 không lộ stack trace.
   - CSS nghiệm thu: global.css chỉ shared tokens/base/typography/components/utilities; landing.css/student.css/admin.css hoặc tương đương chứa style khu vực. Thay style Student/Admin không đổi landing; kiểm tra stylesheet loading và selector scope, không chỉ kiểm tra tên file.
+  - Bằng chứng: `_StudentLayout`/`_AdminLayout` nạp riêng `student.css`/`admin.css`, sidebar tối có icon+tên và menu mobile; query `culture=vi|en` mặc định VI, không cookie/profile persistence, link/form khu vực giữ culture; validation Profile/đổi mật khẩu dùng resource VI/EN. Cookie `AccessDeniedPath` và status-code pipeline trả 403/404/500 bằng view an toàn theo role, không hiển thị exception detail. `dotnet build` pass; Production HTTP smoke test xác nhận 403/404/500, VI/EN và anonymous Profile chuyển Login.
 
 - [ ] **P1-05 — File storage và media boundary**
   - Phụ thuộc: P1-01, P1-03.
@@ -365,7 +366,7 @@ Mã task và Gate dưới đây dùng revision 2 hiện tại; không dùng ID c
 
 Khi implementation được cho phép, một task hoàn thành khi: đầu ra đúng PLAN, build hoạt động, authorization/validation/UI/localization tương ứng đầy đủ, test có ý nghĩa pass, không phá dữ liệu/landing, có ghi bằng chứng. Không đánh dấu complete chỉ vì tạo file hoặc xong happy path.
 
-**Hiện tại P1-01, P1-02 và P1-03 đã hoàn thành; các task chức năng còn lại chưa bắt đầu. Không tiếp tục P1-04/P1-05, thay đổi schema, tạo migration hoặc chạy seed cho đến khi có yêu cầu implementation riêng.**
+**Hiện tại P1-01, P1-02, P1-03 và P1-04 đã hoàn thành; các task chức năng còn lại chưa bắt đầu. Không tiếp tục P1-05, thay đổi schema, tạo migration hoặc chạy seed cho đến khi có yêu cầu implementation riêng.**
 
 
 ## 17. Tổng kết refactor revision 2

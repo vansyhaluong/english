@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="vi" data-tone="dark">
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" data-tone="dark">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,19 +31,19 @@
                 </span>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <a asp-controller="Account" asp-action="Profile" class="nav-link-custom">Hồ sơ</a>
-                    <a asp-controller="Account" asp-action="ChangePassword" class="nav-link-custom d-none-mobile">Đổi mật khẩu</a>
+                    <a asp-controller="Account" asp-action="Profile" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="nav-link-custom">Hồ sơ</a>
+                    <a asp-controller="Account" asp-action="ChangePassword" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="nav-link-custom d-none-mobile">Đổi mật khẩu</a>
                     @if (User.IsInRole("Admin"))
                     {
-                        <a asp-controller="AdminUsers" asp-action="Index" class="nav-link-custom">Người dùng</a>
+                        <a asp-controller="AdminUsers" asp-action="Index" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="nav-link-custom">Người dùng</a>
                     }
-                    <form asp-controller="Account" asp-action="Logout" method="post" class="account-nav-form">
+                    <form asp-controller="Account" asp-action="Logout" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" method="post" class="account-nav-form">
                         <button type="submit" class="btn-login">Đăng xuất</button>
                     </form>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login" class="btn-login">Đăng nhập</a>
+                    <a asp-controller="Account" asp-action="Login" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="btn-login">Đăng nhập</a>
                 }
             </nav>
         </header>
