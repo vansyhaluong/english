@@ -27,7 +27,7 @@
     </button>
     <button class="student-menu-overlay" type="button" data-area-menu-close aria-label="@L["CloseMenu"]"></button>
     <aside id="student-sidebar" class="student-sidebar" aria-label="@L["StudentNavigation"]">
-        <a class="student-brand" asp-controller="Home" asp-action="Index">
+        <a class="student-brand" asp-controller="Home" asp-action="Index" asp-route-culture="@culture">
             <img src="~/images/learning-mascot.png" width="40" height="40" alt="" />
             <span>@L["AppName"]<small>@L["StudentArea"]</small></span>
         </a>

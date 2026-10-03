@@ -54,7 +54,7 @@ public sealed class AccountController(
         }
 
         TempData["AccountMessage"] = "Đăng ký thành công. Vui lòng đăng nhập.";
-        return RedirectToAction(nameof(Login));
+        return RedirectToAction(nameof(Login), CultureRoute());
     }
 
     [HttpGet]
@@ -109,7 +109,9 @@ public sealed class AccountController(
 
         return Url.IsLocalUrl(model.ReturnUrl)
             ? LocalRedirect(model.ReturnUrl)
-            : RedirectToAction("Index", "Home");
+            : user.Role == UserRole.Admin
+                ? RedirectToAction("Index", "AdminUsers", CultureRoute())
+                : RedirectToAction(nameof(Profile), CultureRoute());
     }
 
     [HttpGet]
@@ -254,7 +256,7 @@ public sealed class AccountController(
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Home", CultureRoute());
     }
 
     private bool TryGetCurrentUserId(out Guid userId)

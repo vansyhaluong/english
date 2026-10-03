@@ -62,6 +62,22 @@ builder.Services
         options.Cookie.Name = ".English.Auth";
         options.LoginPath = "/Account/Login";
         options.AccessDeniedPath = "/Home/AccessDenied";
+        options.Events.OnRedirectToLogin = context =>
+        {
+            context.Response.Redirect(Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(
+                context.RedirectUri,
+                "culture",
+                CultureInfo.CurrentUICulture.TwoLetterISOLanguageName));
+            return Task.CompletedTask;
+        };
+        options.Events.OnRedirectToAccessDenied = context =>
+        {
+            context.Response.Redirect(Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(
+                context.RedirectUri,
+                "culture",
+                CultureInfo.CurrentUICulture.TwoLetterISOLanguageName));
+            return Task.CompletedTask;
+        };
     });
 
 builder.Services.AddScoped<IPasswordHasher<AspNetUser>, PasswordHasher<AspNetUser>>();
@@ -97,15 +113,11 @@ builder.Services.AddAuthorization(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseExceptionHandler("/Home/Error");
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-}
-else
-{
-    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();

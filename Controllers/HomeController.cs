@@ -18,12 +18,11 @@ public class HomeController : Controller
         return RenderError(500);
     }
 
-    [HttpGet]
     [AllowAnonymous]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Status(int code)
     {
-        return RenderError(code is 403 or 404 ? code : 404);
+        return RenderError(code is >= 400 and <= 599 ? code : 404);
     }
 
     [HttpGet]

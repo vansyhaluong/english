@@ -1,4 +1,3 @@
-using System.Buffers.Binary;
 using System.Data.Common;
 using English.Data;
 using English.Interfaces;
@@ -253,28 +252,9 @@ public sealed class UserService(
         ReadOnlySpan<byte> content,
         out AvatarContentType avatarType)
     {
-        if (content.Length >= 3 &&
-            content[0] == 0xff &&
-            content[1] == 0xd8 &&
-            content[2] == 0xff)
+        if (AvatarImageContent.TryDecode(content, out var contentType, out var extension))
         {
-            avatarType = new AvatarContentType("image/jpeg", ".jpg");
-            return true;
-        }
-
-        ReadOnlySpan<byte> pngSignature = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
-        if (content.StartsWith(pngSignature))
-        {
-            avatarType = new AvatarContentType("image/png", ".png");
-            return true;
-        }
-
-        if (content.Length >= 12 &&
-            content[..4].SequenceEqual("RIFF"u8) &&
-            content.Slice(8, 4).SequenceEqual("WEBP"u8) &&
-            BinaryPrimitives.ReadUInt32LittleEndian(content.Slice(4, 4)) + 8 <= content.Length)
-        {
-            avatarType = new AvatarContentType("image/webp", ".webp");
+            avatarType = new AvatarContentType(contentType, extension);
             return true;
         }
 

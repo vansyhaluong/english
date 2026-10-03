@@ -1,5 +1,6 @@
 @model English.Models.ViewModels.Account.RegisterViewModel
 @{
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     ViewData["Title"] = "Đăng ký";
     ViewData["PageClass"] = "account-page-shell";
 }
@@ -10,7 +11,7 @@
         <h1 id="register-title">Tạo tài khoản</h1>
         <p class="account-intro">Bắt đầu lưu tiến độ học tiếng Anh của bạn.</p>
 
-        <form asp-action="Register" method="post" class="account-form">
+        <form asp-action="Register" asp-route-culture="@culture" method="post" class="account-form">
             <div asp-validation-summary="ModelOnly" class="account-validation" role="alert"></div>
 
             <div class="account-field">
@@ -40,7 +41,7 @@
             <button type="submit" class="btn-brand-primary account-submit">Đăng ký</button>
         </form>
 
-        <p class="account-switch">Đã có tài khoản? <a asp-action="Login">Đăng nhập</a></p>
+        <p class="account-switch">Đã có tài khoản? <a asp-action="Login" asp-route-culture="@culture">Đăng nhập</a></p>
     </div>
 </section>
 

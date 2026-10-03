@@ -8,12 +8,16 @@
             : "_Layout";
     var titleKey = Model.StatusCode switch
     {
+        400 => "Error400Title",
+        405 => "Error405Title",
         403 => "Error403Title",
         404 => "Error404Title",
         _ => "Error500Title"
     };
     var messageKey = Model.StatusCode switch
     {
+        400 => "Error400Message",
+        405 => "Error405Message",
         403 => "Error403Message",
         404 => "Error404Message",
         _ => "Error500Message"
