@@ -1,5 +1,8 @@
+using System.Buffers.Binary;
+using System.Data.Common;
 using English.Data;
 using English.Interfaces;
+using English.Models;
 using English.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +11,8 @@ namespace English.Services;
 
 public sealed class UserService(
     ApplicationDbContext context,
-    IPasswordHasher<AspNetUser> passwordHasher) : IUserService
+    IPasswordHasher<AspNetUser> passwordHasher,
+    IFileStorage fileStorage) : IUserService
 {
     public Task<UserProfile?> GetProfileAsync(
         Guid userId,
@@ -21,7 +25,8 @@ public sealed class UserService(
                 user.Id,
                 user.Email,
                 user.FullName,
-                user.Role))
+                user.Role,
+                user.AvatarFileId))
             .SingleOrDefaultAsync(cancellationToken);
     }
 
@@ -39,6 +44,110 @@ public sealed class UserService(
         user.FullName = fullName.Trim();
         await context.SaveChangesAsync(cancellationToken);
         return true;
+    }
+
+    public async Task<AvatarUploadResult> UpdateAvatarAsync(
+        Guid userId,
+        AvatarUpload upload,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(upload);
+        ArgumentNullException.ThrowIfNull(upload.Content);
+
+        if (upload.SizeBytes <= 0 || upload.SizeBytes > AvatarUploadLimits.MaxSizeBytes)
+        {
+            return AvatarUploadResult.InvalidSize;
+        }
+
+        var user = await context.AspNetUsers.FindAsync([userId], cancellationToken);
+        if (user is null)
+        {
+            return AvatarUploadResult.UserNotFound;
+        }
+
+        await using var bufferedContent = new MemoryStream();
+        var buffer = new byte[81920];
+        while (true)
+        {
+            var bytesRead = await upload.Content.ReadAsync(buffer, cancellationToken);
+            if (bytesRead == 0)
+            {
+                break;
+            }
+
+            if (bufferedContent.Length + bytesRead > AvatarUploadLimits.MaxSizeBytes)
+            {
+                return AvatarUploadResult.InvalidSize;
+            }
+
+            await bufferedContent.WriteAsync(buffer.AsMemory(0, bytesRead), cancellationToken);
+        }
+
+        if (bufferedContent.Length == 0 ||
+            !TryIdentifyAvatar(bufferedContent.GetBuffer().AsSpan(0, (int)bufferedContent.Length), out var avatarType))
+        {
+            return AvatarUploadResult.InvalidContent;
+        }
+
+        bufferedContent.Position = 0;
+        string storageKey;
+        try
+        {
+            storageKey = await fileStorage.SaveAsync(
+                bufferedContent,
+                avatarType.Extension,
+                cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
+        }
+        catch (Exception exception) when (
+            exception is IOException or UnauthorizedAccessException or ArgumentException)
+        {
+            return AvatarUploadResult.StorageFailure;
+        }
+
+        try
+        {
+            await using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
+            var storedFile = new StoredFile
+            {
+                StorageKey = storageKey,
+                Kind = (byte)StoredFileKind.Avatar,
+                ContentType = avatarType.ContentType,
+                SizeBytes = bufferedContent.Length,
+                OriginalName = NormalizeOriginalName(upload.OriginalName, avatarType.Extension),
+                CreatedAt = DateTimeOffset.UtcNow,
+                UploadedByUserId = userId
+            };
+
+            context.StoredFiles.Add(storedFile);
+            await context.SaveChangesAsync(cancellationToken);
+
+            user.AvatarFileId = storedFile.Id;
+            await context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return AvatarUploadResult.Success;
+        }
+        catch (OperationCanceledException)
+        {
+            await TryDeleteStoredFileAsync(storageKey);
+            throw;
+        }
+        catch (Exception exception) when (
+            exception is DbUpdateException or DbException or InvalidOperationException)
+        {
+            context.ChangeTracker.Clear();
+            await TryDeleteStoredFileAsync(storageKey);
+            return AvatarUploadResult.StorageFailure;
+        }
+        catch
+        {
+            context.ChangeTracker.Clear();
+            await TryDeleteStoredFileAsync(storageKey);
+            throw;
+        }
     }
 
     public async Task<ChangePasswordResult> ChangePasswordAsync(
@@ -139,4 +248,65 @@ public sealed class UserService(
         await context.SaveChangesAsync(cancellationToken);
         return true;
     }
+
+    private static bool TryIdentifyAvatar(
+        ReadOnlySpan<byte> content,
+        out AvatarContentType avatarType)
+    {
+        if (content.Length >= 3 &&
+            content[0] == 0xff &&
+            content[1] == 0xd8 &&
+            content[2] == 0xff)
+        {
+            avatarType = new AvatarContentType("image/jpeg", ".jpg");
+            return true;
+        }
+
+        ReadOnlySpan<byte> pngSignature = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+        if (content.StartsWith(pngSignature))
+        {
+            avatarType = new AvatarContentType("image/png", ".png");
+            return true;
+        }
+
+        if (content.Length >= 12 &&
+            content[..4].SequenceEqual("RIFF"u8) &&
+            content.Slice(8, 4).SequenceEqual("WEBP"u8) &&
+            BinaryPrimitives.ReadUInt32LittleEndian(content.Slice(4, 4)) + 8 <= content.Length)
+        {
+            avatarType = new AvatarContentType("image/webp", ".webp");
+            return true;
+        }
+
+        avatarType = default;
+        return false;
+    }
+
+    private static string NormalizeOriginalName(string? originalName, string extension)
+    {
+        var normalized = Path.GetFileName((originalName ?? string.Empty).Replace('\\', '/'))
+            .Trim();
+        normalized = string.Concat(normalized.Where(character => !char.IsControl(character)));
+
+        if (string.IsNullOrWhiteSpace(normalized))
+        {
+            normalized = $"avatar{extension}";
+        }
+
+        return normalized.Length <= 255 ? normalized : normalized[..255];
+    }
+
+    private async Task TryDeleteStoredFileAsync(string storageKey)
+    {
+        try
+        {
+            await fileStorage.DeleteAsync(storageKey, CancellationToken.None);
+        }
+        catch (Exception exception) when (
+            exception is IOException or UnauthorizedAccessException or ArgumentException)
+        {
+        }
+    }
+
+    private readonly record struct AvatarContentType(string ContentType, string Extension);
 }

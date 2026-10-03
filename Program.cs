@@ -48,6 +48,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services
+    .AddOptions<FileStorageOptions>()
+    .Bind(builder.Configuration.GetSection(FileStorageOptions.SectionName))
+    .Validate(
+        options => !string.IsNullOrWhiteSpace(options.RootPath),
+        "File storage root is required.")
+    .ValidateOnStart();
+
+builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -60,6 +68,8 @@ builder.Services.AddScoped<IPasswordHasher<AspNetUser>, PasswordHasher<AspNetUse
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthorizationHandler, ActiveAccountHandler>();
+builder.Services.AddSingleton<IFileStorage, LocalFileStorage>();
+builder.Services.AddSingleton<IMediaUrlValidator, MediaUrlValidator>();
 
 builder.Services.AddAuthorization(options =>
 {

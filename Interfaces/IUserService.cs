@@ -1,6 +1,21 @@
 namespace English.Interfaces;
 
-public sealed record UserProfile(Guid Id, string Email, string FullName, byte Role);
+public static class AvatarUploadLimits
+{
+    public const long MaxSizeBytes = 2 * 1024 * 1024;
+}
+
+public sealed record AvatarUpload(
+    Stream Content,
+    long SizeBytes,
+    string OriginalName);
+
+public sealed record UserProfile(
+    Guid Id,
+    string Email,
+    string FullName,
+    byte Role,
+    int? AvatarFileId);
 
 public sealed record AdminUserSummary(
     Guid Id,
@@ -24,6 +39,15 @@ public enum ChangePasswordResult
     InvalidCurrentPassword
 }
 
+public enum AvatarUploadResult
+{
+    Success,
+    UserNotFound,
+    InvalidSize,
+    InvalidContent,
+    StorageFailure
+}
+
 public interface IUserService
 {
     Task<UserProfile?> GetProfileAsync(
@@ -33,6 +57,11 @@ public interface IUserService
     Task<bool> UpdateProfileAsync(
         Guid userId,
         string fullName,
+        CancellationToken cancellationToken = default);
+
+    Task<AvatarUploadResult> UpdateAvatarAsync(
+        Guid userId,
+        AvatarUpload upload,
         CancellationToken cancellationToken = default);
 
     Task<ChangePasswordResult> ChangePasswordAsync(
