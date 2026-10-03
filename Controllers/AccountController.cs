@@ -155,6 +155,53 @@ public sealed class AccountController(
         return RedirectToAction(nameof(Profile), CultureRoute());
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Policy = AuthorizationPolicies.ActiveAccount)]
+    public async Task<IActionResult> UploadAvatar(
+        AvatarUploadInputModel model,
+        CancellationToken cancellationToken)
+    {
+        if (!TryGetCurrentUserId(out var userId))
+        {
+            return Forbid();
+        }
+
+        if (model.Avatar is null || model.Avatar.Length == 0)
+        {
+            TempData["AvatarError"] = localizer["AvatarRequired"].Value;
+            return RedirectToAction(nameof(Profile), CultureRoute());
+        }
+
+        if (model.Avatar.Length > AvatarUploadLimits.MaxSizeBytes)
+        {
+            TempData["AvatarError"] = localizer["AvatarTooLarge"].Value;
+            return RedirectToAction(nameof(Profile), CultureRoute());
+        }
+
+        await using var content = model.Avatar.OpenReadStream();
+        var result = await userService.UpdateAvatarAsync(
+            userId,
+            new AvatarUpload(content, model.Avatar.Length, model.Avatar.FileName),
+            cancellationToken);
+
+        if (result == AvatarUploadResult.UserNotFound)
+        {
+            return Forbid();
+        }
+
+        TempData[result == AvatarUploadResult.Success ? "AccountMessage" : "AvatarError"] =
+            localizer[result switch
+            {
+                AvatarUploadResult.Success => "AvatarUpdated",
+                AvatarUploadResult.InvalidSize => "AvatarTooLarge",
+                AvatarUploadResult.InvalidContent => "AvatarInvalidContent",
+                _ => "AvatarStorageFailed"
+            }].Value;
+
+        return RedirectToAction(nameof(Profile), CultureRoute());
+    }
+
     [HttpGet]
     [Authorize(Policy = AuthorizationPolicies.ActiveAccount)]
     public IActionResult ChangePassword()
@@ -236,7 +283,8 @@ public sealed class AccountController(
                 (byte)UserRole.Student => nameof(UserRole.Student),
                 (byte)UserRole.Admin => nameof(UserRole.Admin),
                 _ => "Unknown"
-            }
+            },
+            AvatarFileId = profile.AvatarFileId
         };
     }
 

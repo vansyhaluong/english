@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace English.Models.ViewModels.Account;
 
@@ -14,6 +15,8 @@ public sealed class ProfileViewModel
 
     [Display(Name = nameof(SharedResource.Role), ResourceType = typeof(SharedResource))]
     public string Role { get; init; } = string.Empty;
+
+    public int? AvatarFileId { get; init; }
 }
 
 public sealed class UpdateProfileViewModel
@@ -22,4 +25,9 @@ public sealed class UpdateProfileViewModel
     [StringLength(200, ErrorMessageResourceType = typeof(SharedResource), ErrorMessageResourceName = nameof(SharedResource.MaxFullName))]
     [Display(Name = nameof(SharedResource.FullName), ResourceType = typeof(SharedResource))]
     public string FullName { get; set; } = string.Empty;
+}
+
+public sealed class AvatarUploadInputModel
+{
+    public IFormFile? Avatar { get; set; }
 }

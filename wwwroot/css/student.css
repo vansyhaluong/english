@@ -75,6 +75,15 @@
 .student-shell .account-validation:empty { display: none; }
 .student-shell .account-validation ul { margin: 0; padding-left: 1.2rem; }
 .student-shell .account-success { margin-bottom: 1rem; padding: .75rem; border: 1px solid #86d19a; border-radius: .65rem; color: #17662d; background: #edf9f0; }
+.student-shell .account-error { margin-bottom: 1rem; padding: .75rem; border: 1px solid #f1a6a0; border-radius: .65rem; color: #8f1d17; background: #fff1f0; }
+.student-shell .profile-avatar-panel { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; align-items: center; margin: 1.5rem 0; }
+.student-shell .profile-avatar-preview { position: relative; display: grid; width: 6rem; aspect-ratio: 1; place-items: center; overflow: hidden; border-radius: 50%; color: #fff; background: var(--area-accent-strong); font: 800 2rem/1 var(--font-display); }
+.student-shell .profile-avatar-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.student-shell .avatar-upload-form { display: grid; gap: .5rem; min-width: 0; }
+.student-shell .avatar-upload-form label { font-weight: 800; }
+.student-shell .avatar-upload-form input { max-width: 100%; }
+.student-shell .avatar-upload-form small { color: var(--area-muted); }
+.student-shell .avatar-upload-form button { justify-self: start; }
 .student-shell .account-readonly { display: grid; gap: .75rem; margin: 1.5rem 0; }
 .student-shell .account-readonly div { padding: .8rem; border-radius: .65rem; background: #f5f1fa; }
 .student-shell .account-readonly dt { color: var(--area-muted); font-size: .82rem; font-weight: 700; }
@@ -99,6 +108,7 @@
     .student-shell.area-menu-open .student-menu-overlay { display: block; }
     .student-shell .student-content { margin-left: 0; padding: 1rem; }
     .student-shell .account-page, .student-shell .area-error { min-height: calc(100vh - 5.5rem); }
+    .student-shell .profile-avatar-panel { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

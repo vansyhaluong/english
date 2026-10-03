@@ -18,6 +18,37 @@
             <p class="account-success" role="status">@message</p>
         }
 
+        @if (TempData["AvatarError"] is string avatarError)
+        {
+            <p class="account-error" role="alert">@avatarError</p>
+        }
+
+        <div class="profile-avatar-panel">
+            <div class="profile-avatar-preview">
+                <span aria-hidden="true">@(string.IsNullOrWhiteSpace(Model.FullName) ? "?" : Model.FullName[..1].ToUpperInvariant())</span>
+                @if (Model.AvatarFileId is int avatarFileId)
+                {
+                    <img src="@Url.Action("Avatar", "StoredFiles", new { id = avatarFileId })"
+                         alt="@L["AvatarAlt"]"
+                         onerror="this.hidden=true" />
+                }
+            </div>
+
+            <form asp-action="UploadAvatar"
+                  asp-route-culture="@culture"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="avatar-upload-form">
+                <label for="avatar-upload">@L["Avatar"]</label>
+                <input id="avatar-upload"
+                       name="Avatar"
+                       type="file"
+                       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+                <small>@L["AvatarHelp"]</small>
+                <button type="submit" class="btn-brand-primary">@L["UploadAvatar"]</button>
+            </form>
+        </div>
+
         <dl class="account-readonly">
             <div>
                 <dt>@L["Email"]</dt>

@@ -65,4 +65,13 @@
   <data name="RequiredNewPassword" xml:space="preserve"><value>Vui lòng nhập mật khẩu mới.</value></data>
   <data name="MinNewPassword" xml:space="preserve"><value>Mật khẩu mới phải có ít nhất 6 ký tự.</value></data>
   <data name="RequiredConfirmNewPassword" xml:space="preserve"><value>Vui lòng xác nhận mật khẩu mới.</value></data>
+  <data name="Avatar" xml:space="preserve"><value>Ảnh đại diện</value></data>
+  <data name="AvatarAlt" xml:space="preserve"><value>Ảnh đại diện của bạn</value></data>
+  <data name="UploadAvatar" xml:space="preserve"><value>Tải ảnh lên</value></data>
+  <data name="AvatarHelp" xml:space="preserve"><value>JPG, PNG hoặc WebP; tối đa 2 MB.</value></data>
+  <data name="AvatarRequired" xml:space="preserve"><value>Vui lòng chọn ảnh đại diện.</value></data>
+  <data name="AvatarTooLarge" xml:space="preserve"><value>Ảnh đại diện phải có dung lượng không quá 2 MB.</value></data>
+  <data name="AvatarInvalidContent" xml:space="preserve"><value>Tệp phải là ảnh JPG, PNG hoặc WebP hợp lệ.</value></data>
+  <data name="AvatarStorageFailed" xml:space="preserve"><value>Chưa thể lưu ảnh đại diện. Vui lòng thử lại.</value></data>
+  <data name="AvatarUpdated" xml:space="preserve"><value>Ảnh đại diện đã được cập nhật.</value></data>
 </root>

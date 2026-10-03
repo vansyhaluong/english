@@ -65,4 +65,13 @@
   <data name="RequiredNewPassword" xml:space="preserve"><value>Please enter a new password.</value></data>
   <data name="MinNewPassword" xml:space="preserve"><value>The new password must contain at least 6 characters.</value></data>
   <data name="RequiredConfirmNewPassword" xml:space="preserve"><value>Please confirm the new password.</value></data>
+  <data name="Avatar" xml:space="preserve"><value>Avatar</value></data>
+  <data name="AvatarAlt" xml:space="preserve"><value>Your avatar</value></data>
+  <data name="UploadAvatar" xml:space="preserve"><value>Upload avatar</value></data>
+  <data name="AvatarHelp" xml:space="preserve"><value>JPG, PNG, or WebP; maximum 2 MB.</value></data>
+  <data name="AvatarRequired" xml:space="preserve"><value>Please choose an avatar image.</value></data>
+  <data name="AvatarTooLarge" xml:space="preserve"><value>The avatar must not exceed 2 MB.</value></data>
+  <data name="AvatarInvalidContent" xml:space="preserve"><value>The file must be a valid JPG, PNG, or WebP image.</value></data>
+  <data name="AvatarStorageFailed" xml:space="preserve"><value>We could not save the avatar. Please try again.</value></data>
+  <data name="AvatarUpdated" xml:space="preserve"><value>Your avatar has been updated.</value></data>
 </root>
