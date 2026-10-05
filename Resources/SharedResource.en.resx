@@ -99,4 +99,63 @@
   <data name="ClassificationReferenced" xml:space="preserve"><value>This classification is still referenced by content. Move all references before deleting it.</value></data>
   <data name="ClassificationInvalidVersion" xml:space="preserve"><value>The version is invalid. Reload current data before trying again.</value></data>
   <data name="ClassificationInvalidInput" xml:space="preserve"><value>Please check the classification data.</value></data>
+  <data name="VocabRequired" xml:space="preserve"><value>Please enter a nonblank value.</value></data>
+  <data name="VocabTooLong" xml:space="preserve"><value>The value exceeds the maximum length.</value></data>
+  <data name="VocabClassificationRequired" xml:space="preserve"><value>Please select a valid level/topic.</value></data>
+  <data name="VocabInvalidMeaning" xml:space="preserve"><value>A meaning is invalid or does not belong to this vocabulary.</value></data>
+  <data name="VocabMeaningRequired" xml:space="preserve"><value>Vocabulary must have at least one meaning, and no meaning may be blank.</value></data>
+  <data name="VocabInvalidPos" xml:space="preserve"><value>Please select a part of speech from the list.</value></data>
+  <data name="VocabInvalidMedia" xml:space="preserve"><value>Media URL must be a valid absolute HTTP or HTTPS URL.</value></data>
+  <data name="VocabConflict" xml:space="preserve"><value>The data changed or is no longer valid. Reload current data before trying again.</value></data>
+  <data name="VocabInvalid" xml:space="preserve"><value>Please check the vocabulary data.</value></data>
+  <data name="VocabCreate" xml:space="preserve"><value>Create vocabulary</value></data>
+  <data name="VocabEdit" xml:space="preserve"><value>Edit vocabulary</value></data>
+  <data name="VocabTitle" xml:space="preserve"><value>Title</value></data>
+  <data name="VocabWord" xml:space="preserve"><value>English word</value></data>
+  <data name="VocabPronunciation" xml:space="preserve"><value>Pronunciation</value></data>
+  <data name="VocabPos" xml:space="preserve"><value>Part of speech</value></data>
+  <data name="VocabSelect" xml:space="preserve"><value>Select…</value></data>
+  <data name="VocabMeanings" xml:space="preserve"><value>Vietnamese meanings</value></data>
+  <data name="VocabMeaning" xml:space="preserve"><value>Meaning</value></data>
+  <data name="VocabMeaningsHint" xml:space="preserve"><value>Keep at least one meaning. Use Up/Down to reorder; changes are saved when you select Save.</value></data>
+  <data name="VocabUp" xml:space="preserve"><value>Up</value></data>
+  <data name="VocabDown" xml:space="preserve"><value>Down</value></data>
+  <data name="VocabRemove" xml:space="preserve"><value>Remove meaning</value></data>
+  <data name="VocabAddMeaning" xml:space="preserve"><value>Add meaning</value></data>
+  <data name="VocabEnableJs" xml:space="preserve"><value>Enable JavaScript to add, remove and reorder meanings.</value></data>
+  <data name="VocabExample" xml:space="preserve"><value>Example</value></data>
+  <data name="VocabImageUrl" xml:space="preserve"><value>Image URL (optional)</value></data>
+  <data name="VocabAudioUrl" xml:space="preserve"><value>Audio URL (optional)</value></data>
+  <data name="VocabVisible" xml:space="preserve"><value>Visible</value></data>
+  <data name="VocabHidden" xml:space="preserve"><value>Hidden</value></data>
+  <data name="VocabDeleted" xml:space="preserve"><value>Deleted</value></data>
+  <data name="VocabDelete" xml:space="preserve"><value>Delete vocabulary</value></data>
+  <data name="VocabDeletePrompt" xml:space="preserve"><value>Soft delete this vocabulary? Its meanings and learning history will be retained.</value></data>
+  <data name="VocabSearch" xml:space="preserve"><value>Search word, title or meaning</value></data>
+  <data name="VocabAll" xml:space="preserve"><value>All</value></data>
+  <data name="VocabProgress" xml:space="preserve"><value>Progress</value></data>
+  <data name="VocabLearned" xml:space="preserve"><value>Learned</value></data>
+  <data name="VocabUnlearned" xml:space="preserve"><value>Unlearned</value></data>
+  <data name="VocabFilter" xml:space="preserve"><value>Search / Filter</value></data>
+  <data name="VocabClear" xml:space="preserve"><value>Clear filters</value></data>
+  <data name="VocabEmpty" xml:space="preserve"><value>No matching vocabulary.</value></data>
+  <data name="VocabStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="VocabDetails" xml:space="preserve"><value>View details</value></data>
+  <data name="VocabPages" xml:space="preserve"><value>Pagination</value></data>
+  <data name="VocabPrevious" xml:space="preserve"><value>Previous</value></data>
+  <data name="VocabNext" xml:space="preserve"><value>Next</value></data>
+  <data name="VocabMark" xml:space="preserve"><value>Mark learned</value></data>
+  <data name="VocabUnmark" xml:space="preserve"><value>Unmark learned</value></data>
+  <data name="VocabMediaHint" xml:space="preserve"><value>If media is unavailable, you can still study the text.</value></data>
+  <data name="VocabAudioFallback" xml:space="preserve"><value>Your browser does not support audio playback.</value></data>
+  <data name="VocabPosNoun" xml:space="preserve"><value>Noun</value></data>
+  <data name="VocabPosVerb" xml:space="preserve"><value>Verb</value></data>
+  <data name="VocabPosAdjective" xml:space="preserve"><value>Adjective</value></data>
+  <data name="VocabPosAdverb" xml:space="preserve"><value>Adverb</value></data>
+  <data name="VocabPosPronoun" xml:space="preserve"><value>Pronoun</value></data>
+  <data name="VocabPosPreposition" xml:space="preserve"><value>Preposition</value></data>
+  <data name="VocabPosConjunction" xml:space="preserve"><value>Conjunction</value></data>
+  <data name="VocabPosInterjection" xml:space="preserve"><value>Interjection</value></data>
+  <data name="VocabPosPhrase" xml:space="preserve"><value>Phrase</value></data>
+  <data name="VocabPosOther" xml:space="preserve"><value>Other</value></data>
 </root>

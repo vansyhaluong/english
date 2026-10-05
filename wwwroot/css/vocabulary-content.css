@@ -1,0 +1,18 @@
+.vocabulary-content .management-card { width: 100%; }
+.student-shell .vocabulary-content .management-card { padding: clamp(1.4rem, 4vw, 2.25rem); border: 1px solid var(--area-border); border-radius: 1rem; background: var(--area-surface); }
+.vocabulary-content .management-table-wrap { overflow-x: auto; }
+.vocabulary-content .management-table { width: 100%; border-collapse: collapse; }
+.vocabulary-content .management-table th, .vocabulary-content .management-table td { padding: .8rem; border-bottom: 1px solid var(--area-border); text-align: left; white-space: normal; overflow-wrap: anywhere; min-width: 8rem; }
+.vocabulary-content .vocabulary-filters, .vocabulary-content .vocabulary-actions { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; margin-block: 1rem; }
+.vocabulary-content label { display: grid; gap: .4rem; }
+.vocabulary-content select, .vocabulary-content input:not([type=checkbox]), .vocabulary-content textarea { max-width: 100%; padding: .65rem; border: 1px solid var(--area-border, #656078); border-radius: .45rem; background: var(--area-surface, #211d2d); color: inherit; font: inherit; }
+.vocabulary-content .vocabulary-meanings { padding: 1rem; border: 1px solid var(--area-border, #656078); }
+.vocabulary-content .vocabulary-meaning-row { margin-block: 1rem; }
+.vocabulary-content button:not(.btn-brand-primary) { padding: .45rem .75rem; cursor: pointer; }
+.vocabulary-content button:disabled { opacity: .5; cursor: default; }
+.vocabulary-content ol { padding-left: 1.5rem; }
+.vocabulary-content .vocabulary-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.vocabulary-content .vocabulary-image { max-width: min(100%, 24rem); max-height: 20rem; object-fit: contain; }
+.vocabulary-content audio { max-width: 100%; }
+.vocabulary-content h2, .vocabulary-content article > p, .vocabulary-content article > form { margin-block: 1rem; }
+.vocabulary-content [hidden] { display: none; }

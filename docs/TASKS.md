@@ -143,6 +143,10 @@ Database hiện có là nguồn sự thật cho persistence. Schema nền tảng
   - Đầu ra: list/detail/find English hoặc bất kỳ meaning; filter level/topic/learned; play URL nếu có, đánh dấu học.
   - Nghiệm thu: nghĩa thứ hai tìm được; nhiều nghĩa cùng khớp không lặp từ; thứ tự display đúng; thiếu audio ẩn nút, không TTS. Đánh dấu độc lập bài tập.
   - Form/input: collection meanings nằm trong ViewModel/InputModel, kiểm tra ID nghĩa thuộc đúng Vocabulary khi cập nhật; không bind đồ thị domain entity từ request.
+  - Trạng thái 2026-10-05: phần implementation đã có đủ luồng Admin/Student; chờ người dùng tự nghiệm thu trên DB thật. Giữ checkbox chưa chọn đến khi có kết quả nghiệm thu; không coi rà soát mã là bằng chứng runtime.
+  - Implementation đã rà soát: Admin thêm/sửa, collection meanings thêm/bỏ/đổi thứ tự trong transaction, kiểm tra ownership của meaning và RowVersion; URL media được validate, visibility và soft delete giữ meanings/progress. Student list/detail, tìm Word/Title/bất kỳ meaning bằng Any để tránh trùng, lọc level/topic/learned, phân trang, audio tùy chọn và mark/unmark theo user từ claims. Có InputModel riêng, policy, POST + antiforgery, resource VI/EN và CSS giới hạn phạm vi.
+  - Validation phiên tiếp tục: `dotnet build` PASS (0 warning/error), `node --check wwwroot/js/vocabulary-meanings.js` PASS, `git diff --check` PASS; đã đọc diff và các file mới liên quan. Probe chỉ đọc SQL không hoàn tất do timeout kết nối ở post-login; chưa xác nhận runtime list/detail, constraint hiện tại hoặc thao tác ghi. Không chạy probe cập nhật/xóa theo yêu cầu người dùng; người dùng tự kiểm thử DB thật. Chưa kiểm tra trực quan bằng browser.
+  - Phiên tiếp tục không thay đổi schema, scaffold, migration hoặc dependency và không chạy `docs/sql/P2-02-first-learned.sql` có sẵn. Script này thay CHECK constraint; không suy ra trạng thái DB hay quyền chạy script từ chú thích trong file. Cần xác nhận constraint hiện tại tương thích việc giữ LearnedAt sau unmark khi người dùng nghiệm thu.
 
 - [ ] **P2-03 — Grammar end-to-end**
   - Phụ thuộc: P2-01, P1-04.

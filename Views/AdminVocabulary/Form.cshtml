@@ -1,0 +1,42 @@
+@model English.Models.ViewModels.Vocabulary.VocabularyFormViewModel
+@using English.Models.ViewModels.Vocabulary
+@{ Layout = "_AdminLayout"; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; ViewData["Title"] = L[Model.Id.HasValue ? "VocabEdit" : "VocabCreate"]; }
+@section Styles { <link rel="stylesheet" href="~/css/vocabulary-content.css" asp-append-version="true" /> }
+<section class="account-page vocabulary-content"><div class="management-card">
+    <h1>@ViewData["Title"]</h1>
+    <form asp-action="@(Model.Id.HasValue ? "Edit" : "Create")" asp-route-id="@Model.Id" asp-route-culture="@culture" method="post" class="account-form" data-meaning-form>
+        <div asp-validation-summary="All" class="account-validation" role="alert"></div>
+        <input asp-for="Input.RowVersion" type="hidden" />
+        <div class="account-field"><label asp-for="Input.Title">@L["VocabTitle"]</label><input asp-for="Input.Title" maxlength="300" required /><span asp-validation-for="Input.Title"></span></div>
+        <div class="account-field"><label asp-for="Input.Word">@L["VocabWord"]</label><input asp-for="Input.Word" maxlength="200" required /><span asp-validation-for="Input.Word"></span></div>
+        <div class="account-field"><label asp-for="Input.Pronunciation">@L["VocabPronunciation"]</label><input asp-for="Input.Pronunciation" maxlength="300" required /><span asp-validation-for="Input.Pronunciation"></span></div>
+        <div class="account-field"><label asp-for="Input.PartOfSpeech">@L["VocabPos"]</label><select asp-for="Input.PartOfSpeech" required><option value="">@L["VocabSelect"]</option>@foreach (var pos in VocabularyPartsOfSpeech.Values) { <option value="@pos">@L["VocabPos" + pos]</option> }</select><span asp-validation-for="Input.PartOfSpeech"></span></div>
+        <div class="account-field"><label asp-for="Input.LevelId">@L["Levels"]</label><select asp-for="Input.LevelId" required><option value="">@L["VocabSelect"]</option>@foreach (var level in Model.Choices.Levels) { <option value="@level.Id">@level.Name</option> }</select><span asp-validation-for="Input.LevelId"></span></div>
+        <div class="account-field"><label asp-for="Input.TopicId">@L["Topics"]</label><select asp-for="Input.TopicId" required><option value="">@L["VocabSelect"]</option>@foreach (var topic in Model.Choices.Topics) { <option value="@topic.Id">@topic.Name</option> }</select><span asp-validation-for="Input.TopicId"></span></div>
+        <fieldset class="vocabulary-meanings"><legend>@L["VocabMeanings"]</legend>
+            <p>@L["VocabMeaningsHint"]</p><span asp-validation-for="Input.Meanings"></span>
+            <div data-meaning-list>
+                @for (var i = 0; i < Model.Input.Meanings.Count; i++)
+                {
+                    <div class="vocabulary-meaning-row" data-meaning-row>
+                        <input asp-for="Input.Meanings[i].Id" type="hidden" data-meaning-id />
+                        <label><span>@L["VocabMeaning"] <span data-meaning-number>@(i + 1)</span></span><textarea asp-for="Input.Meanings[i].MeaningVi" data-meaning-text maxlength="1000" rows="2" required></textarea></label>
+                        <div class="vocabulary-actions" data-meaning-controls hidden><button type="button" data-up>@L["VocabUp"]</button><button type="button" data-down>@L["VocabDown"]</button><button type="button" data-remove>@L["VocabRemove"]</button></div>
+                    </div>
+                }
+            </div>
+            <button type="button" data-add-meaning hidden>@L["VocabAddMeaning"]</button>
+            <noscript><p>@L["VocabEnableJs"]</p></noscript>
+        </fieldset>
+        <div class="account-field"><label asp-for="Input.Example">@L["VocabExample"]</label><textarea asp-for="Input.Example" rows="4" required></textarea><span asp-validation-for="Input.Example"></span></div>
+        <div class="account-field"><label asp-for="Input.Description">@L["ClassificationDescription"]</label><textarea asp-for="Input.Description" rows="3"></textarea></div>
+        <div class="account-field"><label asp-for="Input.ImageUrl">@L["VocabImageUrl"]</label><input asp-for="Input.ImageUrl" type="url" maxlength="2048" /><span asp-validation-for="Input.ImageUrl"></span></div>
+        <div class="account-field"><label asp-for="Input.AudioUrl">@L["VocabAudioUrl"]</label><input asp-for="Input.AudioUrl" type="url" maxlength="2048" /><span asp-validation-for="Input.AudioUrl"></span></div>
+        <label><input asp-for="Input.IsVisible" /> @L["VocabVisible"]</label>
+        <button type="submit" class="btn-brand-primary">@L["SaveChanges"]</button>
+    </form>
+    <template id="meaning-template"><div class="vocabulary-meaning-row" data-meaning-row><input type="hidden" value="0" data-meaning-id /><label><span>@L["VocabMeaning"] <span data-meaning-number></span></span><textarea data-meaning-text maxlength="1000" rows="2" required></textarea></label><div class="vocabulary-actions" data-meaning-controls><button type="button" data-up>@L["VocabUp"]</button><button type="button" data-down>@L["VocabDown"]</button><button type="button" data-remove>@L["VocabRemove"]</button></div></div></template>
+    @if (Model.Id.HasValue) { <p><a asp-action="Edit" asp-route-id="@Model.Id" asp-route-culture="@culture">@L["ClassificationReload"]</a></p> }
+    <p><a asp-action="Index" asp-route-culture="@culture">@L["ClassificationBack"]</a></p>
+</div></section>
+@section Scripts { <script src="~/js/vocabulary-meanings.js" asp-append-version="true" defer></script> }

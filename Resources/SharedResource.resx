@@ -99,4 +99,63 @@
   <data name="ClassificationReferenced" xml:space="preserve"><value>Phân loại vẫn được nội dung tham chiếu. Hãy chuyển mọi tham chiếu trước khi xóa.</value></data>
   <data name="ClassificationInvalidVersion" xml:space="preserve"><value>Phiên bản không hợp lệ. Hãy tải lại dữ liệu hiện tại trước khi thử lại.</value></data>
   <data name="ClassificationInvalidInput" xml:space="preserve"><value>Vui lòng kiểm tra dữ liệu phân loại.</value></data>
+  <data name="VocabRequired" xml:space="preserve"><value>Vui lòng nhập nội dung bắt buộc.</value></data>
+  <data name="VocabTooLong" xml:space="preserve"><value>Nội dung vượt quá độ dài cho phép.</value></data>
+  <data name="VocabClassificationRequired" xml:space="preserve"><value>Vui lòng chọn cấp độ/chủ đề hợp lệ.</value></data>
+  <data name="VocabInvalidMeaning" xml:space="preserve"><value>Nghĩa không hợp lệ hoặc không thuộc từ vựng này.</value></data>
+  <data name="VocabMeaningRequired" xml:space="preserve"><value>Từ vựng phải có ít nhất một nghĩa; mỗi nghĩa không được để trống.</value></data>
+  <data name="VocabInvalidPos" xml:space="preserve"><value>Vui lòng chọn loại từ trong danh sách.</value></data>
+  <data name="VocabInvalidMedia" xml:space="preserve"><value>URL media phải là địa chỉ HTTP hoặc HTTPS tuyệt đối hợp lệ.</value></data>
+  <data name="VocabConflict" xml:space="preserve"><value>Dữ liệu đã thay đổi hoặc không còn hợp lệ. Tải lại dữ liệu trước khi thử lại.</value></data>
+  <data name="VocabInvalid" xml:space="preserve"><value>Vui lòng kiểm tra dữ liệu từ vựng.</value></data>
+  <data name="VocabCreate" xml:space="preserve"><value>Thêm từ vựng</value></data>
+  <data name="VocabEdit" xml:space="preserve"><value>Sửa từ vựng</value></data>
+  <data name="VocabTitle" xml:space="preserve"><value>Tiêu đề</value></data>
+  <data name="VocabWord" xml:space="preserve"><value>Từ tiếng Anh</value></data>
+  <data name="VocabPronunciation" xml:space="preserve"><value>Phiên âm</value></data>
+  <data name="VocabPos" xml:space="preserve"><value>Loại từ</value></data>
+  <data name="VocabSelect" xml:space="preserve"><value>Chọn…</value></data>
+  <data name="VocabMeanings" xml:space="preserve"><value>Các nghĩa tiếng Việt</value></data>
+  <data name="VocabMeaning" xml:space="preserve"><value>Nghĩa</value></data>
+  <data name="VocabMeaningsHint" xml:space="preserve"><value>Giữ ít nhất một nghĩa. Dùng Lên/Xuống để đổi thứ tự; thay đổi được lưu khi bấm Lưu.</value></data>
+  <data name="VocabUp" xml:space="preserve"><value>Lên</value></data>
+  <data name="VocabDown" xml:space="preserve"><value>Xuống</value></data>
+  <data name="VocabRemove" xml:space="preserve"><value>Bỏ nghĩa</value></data>
+  <data name="VocabAddMeaning" xml:space="preserve"><value>Thêm nghĩa</value></data>
+  <data name="VocabEnableJs" xml:space="preserve"><value>Bật JavaScript để thêm, bỏ và sắp xếp nghĩa.</value></data>
+  <data name="VocabExample" xml:space="preserve"><value>Ví dụ</value></data>
+  <data name="VocabImageUrl" xml:space="preserve"><value>URL ảnh (tùy chọn)</value></data>
+  <data name="VocabAudioUrl" xml:space="preserve"><value>URL audio (tùy chọn)</value></data>
+  <data name="VocabVisible" xml:space="preserve"><value>Hiển thị</value></data>
+  <data name="VocabHidden" xml:space="preserve"><value>Đang ẩn</value></data>
+  <data name="VocabDeleted" xml:space="preserve"><value>Đã xóa</value></data>
+  <data name="VocabDelete" xml:space="preserve"><value>Xóa từ vựng</value></data>
+  <data name="VocabDeletePrompt" xml:space="preserve"><value>Xóa mềm từ vựng này? Các nghĩa và lịch sử học vẫn được giữ lại.</value></data>
+  <data name="VocabSearch" xml:space="preserve"><value>Tìm từ, tiêu đề hoặc nghĩa</value></data>
+  <data name="VocabAll" xml:space="preserve"><value>Tất cả</value></data>
+  <data name="VocabProgress" xml:space="preserve"><value>Tiến độ</value></data>
+  <data name="VocabLearned" xml:space="preserve"><value>Đã học</value></data>
+  <data name="VocabUnlearned" xml:space="preserve"><value>Chưa học</value></data>
+  <data name="VocabFilter" xml:space="preserve"><value>Tìm / Lọc</value></data>
+  <data name="VocabClear" xml:space="preserve"><value>Xóa bộ lọc</value></data>
+  <data name="VocabEmpty" xml:space="preserve"><value>Không có từ vựng phù hợp.</value></data>
+  <data name="VocabStatus" xml:space="preserve"><value>Trạng thái</value></data>
+  <data name="VocabDetails" xml:space="preserve"><value>Xem chi tiết</value></data>
+  <data name="VocabPages" xml:space="preserve"><value>Phân trang</value></data>
+  <data name="VocabPrevious" xml:space="preserve"><value>Trang trước</value></data>
+  <data name="VocabNext" xml:space="preserve"><value>Trang sau</value></data>
+  <data name="VocabMark" xml:space="preserve"><value>Đánh dấu đã học</value></data>
+  <data name="VocabUnmark" xml:space="preserve"><value>Bỏ đánh dấu đã học</value></data>
+  <data name="VocabMediaHint" xml:space="preserve"><value>Nếu media không tải được, bạn vẫn có thể học với nội dung văn bản.</value></data>
+  <data name="VocabAudioFallback" xml:space="preserve"><value>Trình duyệt không hỗ trợ phát audio.</value></data>
+  <data name="VocabPosNoun" xml:space="preserve"><value>Danh từ</value></data>
+  <data name="VocabPosVerb" xml:space="preserve"><value>Động từ</value></data>
+  <data name="VocabPosAdjective" xml:space="preserve"><value>Tính từ</value></data>
+  <data name="VocabPosAdverb" xml:space="preserve"><value>Trạng từ</value></data>
+  <data name="VocabPosPronoun" xml:space="preserve"><value>Đại từ</value></data>
+  <data name="VocabPosPreposition" xml:space="preserve"><value>Giới từ</value></data>
+  <data name="VocabPosConjunction" xml:space="preserve"><value>Liên từ</value></data>
+  <data name="VocabPosInterjection" xml:space="preserve"><value>Thán từ</value></data>
+  <data name="VocabPosPhrase" xml:space="preserve"><value>Cụm từ</value></data>
+  <data name="VocabPosOther" xml:space="preserve"><value>Khác</value></data>
 </root>
