@@ -1,0 +1,41 @@
+@model English.Models.ViewModels.AdminClassifications.ClassificationIndexViewModel
+@{
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    Layout = "_AdminLayout";
+    ViewData["Title"] = L[Model.Kind == English.Interfaces.ClassificationKind.Topic ? "Topics" : "GrammarGroups"];
+}
+<section class="account-page" aria-labelledby="classification-title">
+    <div class="management-card">
+        <h1 id="classification-title">@ViewData["Title"]</h1>
+        @if (TempData["ClassificationMessage"] is string message)
+        {
+            <p class="account-success" role="status">@message</p>
+        }
+        <p class="classification-actions"><a class="btn-brand-primary" asp-action="Create" asp-route-kind="@Model.Kind" asp-route-culture="@culture">@L["ClassificationCreate"]</a></p>
+        @if (Model.Items.Count == 0)
+        {
+            <p>@L["ClassificationEmpty"]</p>
+        }
+        else
+        {
+            <div class="management-table-wrap">
+                <table class="management-table">
+                    <thead><tr><th>@L["ClassificationName"]</th><th>@L["ClassificationDescription"]</th><th>@L["ClassificationActions"]</th></tr></thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="classification-text">@item.Name</td>
+                                <td class="classification-text">@item.Description</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-kind="@Model.Kind" asp-route-id="@item.Id" asp-route-culture="@culture">@L["ClassificationEdit"]</a>
+                                    <a asp-action="Delete" asp-route-kind="@Model.Kind" asp-route-id="@item.Id" asp-route-culture="@culture">@L["ClassificationDelete"]</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</section>

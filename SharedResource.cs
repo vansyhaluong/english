@@ -10,6 +10,10 @@ public sealed class SharedResource
         typeof(SharedResource).Assembly);
 
     public static string FullName => Get(nameof(FullName));
+    public static string ClassificationName => Get(nameof(ClassificationName));
+    public static string ClassificationDescription => Get(nameof(ClassificationDescription));
+    public static string RequiredClassificationName => Get(nameof(RequiredClassificationName));
+    public static string MaxClassificationName => Get(nameof(MaxClassificationName));
     public static string Email => Get(nameof(Email));
     public static string Role => Get(nameof(Role));
     public static string CurrentPassword => Get(nameof(CurrentPassword));

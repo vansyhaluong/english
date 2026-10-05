@@ -78,4 +78,25 @@
   <data name="Error400Message" xml:space="preserve"><value>Vui lòng tải lại trang và thử lại.</value></data>
   <data name="Error405Title" xml:space="preserve"><value>Phương thức không được hỗ trợ</value></data>
   <data name="Error405Message" xml:space="preserve"><value>Vui lòng sử dụng thao tác có sẵn trên trang.</value></data>
+  <data name="Topics" xml:space="preserve"><value>Chủ đề</value></data>
+  <data name="GrammarGroups" xml:space="preserve"><value>Nhóm ngữ pháp</value></data>
+  <data name="Levels" xml:space="preserve"><value>Trình độ</value></data>
+  <data name="LevelsReadOnly" xml:space="preserve"><value>Trình độ A1–C2 cố định và chỉ được xem.</value></data>
+  <data name="ClassificationName" xml:space="preserve"><value>Tên</value></data>
+  <data name="ClassificationDescription" xml:space="preserve"><value>Mô tả</value></data>
+  <data name="RequiredClassificationName" xml:space="preserve"><value>Vui lòng nhập tên.</value></data>
+  <data name="MaxClassificationName" xml:space="preserve"><value>Tên không được vượt quá 200 ký tự.</value></data>
+  <data name="ClassificationCreate" xml:space="preserve"><value>Thêm mới</value></data>
+  <data name="ClassificationEdit" xml:space="preserve"><value>Chỉnh sửa</value></data>
+  <data name="ClassificationDelete" xml:space="preserve"><value>Xóa</value></data>
+  <data name="ClassificationActions" xml:space="preserve"><value>Thao tác</value></data>
+  <data name="ClassificationEmpty" xml:space="preserve"><value>Chưa có dữ liệu phân loại.</value></data>
+  <data name="ClassificationBack" xml:space="preserve"><value>Quay lại danh sách</value></data>
+  <data name="ClassificationReload" xml:space="preserve"><value>Tải lại dữ liệu hiện tại</value></data>
+  <data name="ClassificationDeletePrompt" xml:space="preserve"><value>Xóa phân loại này? Cần chuyển mọi tham chiếu trước, kể cả nội dung ẩn hoặc đã xóa mềm.</value></data>
+  <data name="ClassificationSaved" xml:space="preserve"><value>Đã lưu thay đổi.</value></data>
+  <data name="ClassificationConflict" xml:space="preserve"><value>Phân loại đã được thay đổi hoặc xóa bởi yêu cầu khác. Hãy tải lại dữ liệu hiện tại trước khi thử lại.</value></data>
+  <data name="ClassificationReferenced" xml:space="preserve"><value>Phân loại vẫn được nội dung tham chiếu. Hãy chuyển mọi tham chiếu trước khi xóa.</value></data>
+  <data name="ClassificationInvalidVersion" xml:space="preserve"><value>Phiên bản không hợp lệ. Hãy tải lại dữ liệu hiện tại trước khi thử lại.</value></data>
+  <data name="ClassificationInvalidInput" xml:space="preserve"><value>Vui lòng kiểm tra dữ liệu phân loại.</value></data>
 </root>

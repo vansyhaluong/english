@@ -1,0 +1,23 @@
+@model English.Models.ViewModels.AdminClassifications.ClassificationDeleteViewModel
+@{
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    Layout = "_AdminLayout";
+    ViewData["Title"] = L["ClassificationDelete"];
+}
+<section class="account-page" aria-labelledby="classification-delete-title">
+    <div class="account-card">
+        <h1 id="classification-delete-title">@L["ClassificationDelete"] — @L[Model.Kind == English.Interfaces.ClassificationKind.Topic ? "Topics" : "GrammarGroups"]</h1>
+        <dl class="account-readonly">
+            <div><dt>@L["ClassificationName"]</dt><dd>@Model.Item.Name</dd></div>
+            <div><dt>@L["ClassificationDescription"]</dt><dd>@Model.Item.Description</dd></div>
+        </dl>
+        <p>@L["ClassificationDeletePrompt"]</p>
+        <form asp-action="Delete" asp-route-kind="@Model.Kind" asp-route-id="@Model.Item.Id" asp-route-culture="@culture" method="post" class="account-form">
+            <div asp-validation-summary="All" class="account-validation" role="alert"></div>
+            <input asp-for="Input.RowVersion" type="hidden" />
+            <button type="submit" class="btn-brand-primary">@L["ClassificationDelete"]</button>
+        </form>
+        <p class="account-switch"><a asp-action="Delete" asp-route-kind="@Model.Kind" asp-route-id="@Model.Item.Id" asp-route-culture="@culture">@L["ClassificationReload"]</a></p>
+        <p class="account-switch"><a asp-action="Index" asp-route-kind="@Model.Kind" asp-route-culture="@culture">@L["ClassificationBack"]</a></p>
+    </div>
+</section>
