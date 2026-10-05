@@ -16,9 +16,10 @@
     {
         var isVocabulary = link.Target == "vocab-showcase";
         var isListening = link.Target == "listening-showcase";
-        var href = isVocabulary ? "/vocabulary" : isListening ? "/listening" : Url.Action("Index", "Home") + "#" + link.Target;
+        var isGrammar = link.Target == "grammar-showcase";
+        var href = isVocabulary ? "/vocabulary" : isListening ? "/listening" : isGrammar ? "/grammar" : Url.Action("Index", "Home") + "#" + link.Target;
         var controller = ViewContext.RouteData.Values["controller"]?.ToString();
-        var current = (isVocabulary && controller == "Vocabulary") || (isListening && controller == "Listening");
+        var current = (isVocabulary && controller == "Vocabulary") || (isListening && controller == "Listening") || (isGrammar && controller == "Grammar");
         <a class="rail-link" href="@href" aria-current="@(current ? "page" : null)" aria-label="@link.Label" title="@link.Label">
             <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="@link.Icon" /></svg>
             <span>@link.Label</span>
