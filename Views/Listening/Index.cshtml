@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Nghe & Shadowing";
+    ViewData["PageClass"] = "listening-page";
+    var lessons = new[]
+    {
+        (Title: "A morning in London", Level: "A1", Topic: "Cuộc sống hằng ngày", Art: "city", Symbol: "☀", Lines: 16),
+        (Title: "At the coffee shop", Level: "A1", Topic: "Giao tiếp", Art: "coffee", Symbol: "☕", Lines: 18),
+        (Title: "My daily routine", Level: "A1", Topic: "Cuộc sống hằng ngày", Art: "home", Symbol: "⌂", Lines: 24),
+        (Title: "A weekend by the sea", Level: "A2", Topic: "Du lịch", Art: "sea", Symbol: "≈", Lines: 22),
+        (Title: "Meeting someone new", Level: "A2", Topic: "Giao tiếp", Art: "talk", Symbol: "❝", Lines: 20),
+        (Title: "Small habits, big changes", Level: "B1", Topic: "Phát triển bản thân", Art: "garden", Symbol: "✿", Lines: 32),
+        (Title: "Finding your way around", Level: "A2", Topic: "Du lịch", Art: "city", Symbol: "↗", Lines: 26),
+        (Title: "The perfect cup of tea", Level: "B1", Topic: "Văn hóa", Art: "coffee", Symbol: "☕", Lines: 28),
+        (Title: "A place to call home", Level: "B1", Topic: "Cuộc sống hằng ngày", Art: "home", Symbol: "⌂", Lines: 34),
+        (Title: "Why we love to travel", Level: "B2", Topic: "Du lịch", Art: "sea", Symbol: "≈", Lines: 42),
+        (Title: "The art of a good conversation", Level: "B2", Topic: "Giao tiếp", Art: "talk", Symbol: "❝", Lines: 38),
+        (Title: "Learning something every day", Level: "B1", Topic: "Phát triển bản thân", Art: "garden", Symbol: "✿", Lines: 30),
+        (Title: "Cities of the future", Level: "C1", Topic: "Khoa học & đời sống", Art: "city", Symbol: "↗", Lines: 56),
+        (Title: "Food brings us together", Level: "B2", Topic: "Văn hóa", Art: "coffee", Symbol: "☕", Lines: 40),
+        (Title: "The meaning of belonging", Level: "C2", Topic: "Văn hóa", Art: "home", Symbol: "⌂", Lines: 64),
+        (Title: "Protecting our oceans", Level: "C1", Topic: "Thiên nhiên", Art: "sea", Symbol: "≈", Lines: 48),
+        (Title: "How stories shape our world", Level: "C2", Topic: "Văn hóa", Art: "talk", Symbol: "❝", Lines: 62),
+        (Title: "A walk in the countryside", Level: "A2", Topic: "Thiên nhiên", Art: "garden", Symbol: "✿", Lines: 24)
+    };
+}
+@section Styles { <link rel="stylesheet" href="~/css/listening.css" asp-append-version="true" /> }
+<section class="listening" aria-labelledby="listening-title">
+    <header class="listening-heading">
+        <div class="listening-title"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2 M3 13h4v8H3z M17 13h4v8h-4z" /></svg><h1 id="listening-title">Nghe &amp; Shadowing</h1></div>
+        <a class="listening-guide-link" href="#listening-guide"><span aria-hidden="true">♫</span> Cách luyện nghe</a>
+    </header>
+    <div class="listening-filters" role="search" aria-label="Tìm bài nghe" hidden data-listening-filters>
+        <label class="listening-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><span class="visually-hidden">Tìm theo tên hoặc cấp độ</span><input type="search" id="listening-search" placeholder="Tìm theo tên hoặc cấp độ (A1, B1…)" maxlength="150" /></label>
+        <label><span class="visually-hidden">Lọc theo cấp độ</span><select id="listening-level"><option value="">Tất cả cấp độ</option>@foreach (var level in new[] { "A1", "A2", "B1", "B2", "C1", "C2" }) { <option>@level</option> }</select></label>
+        <label><span class="visually-hidden">Sắp xếp bài nghe</span><select id="listening-sort"><option value="default">Mặc định</option><option value="level">Cấp độ A1 → C2</option><option value="title">Tên bài A → Z</option></select></label>
+    </div>
+    <p class="listening-notice">Bộ sưu tập mẫu · Audio và tiến độ học chưa khả dụng.</p>
+    <div class="listening-grid">
+        @for (var i = 0; i < lessons.Length; i++)
+        {
+            var lesson = lessons[i];
+            <article class="listening-card" data-title="@lesson.Title" data-level="@lesson.Level" data-order="@i">
+                <div class="listening-cover listening-cover--@lesson.Art" aria-hidden="true"><span class="listening-level">@lesson.Level</span><span class="listening-cover-symbol">@lesson.Symbol</span><span class="listening-cover-topic">@lesson.Topic</span><span class="listening-wave">▂ ▅ ▃ ▇ ▄ ▂ ▆ ▃ ▅ ▂</span></div>
+                <div class="listening-card-body"><h2 lang="en">@lesson.Title</h2><p><svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2 M12 19v3 M8 22h8"/></svg> @lesson.Lines câu <span>· EnglishHub</span></p></div>
+            </article>
+        }
+    </div>
+    <div class="listening-empty" hidden><h2>Không tìm thấy bài nghe</h2><p>Thử tên khác hoặc chọn tất cả cấp độ.</p><button type="button" data-listening-reset>Xóa bộ lọc</button></div>
+    <p class="listening-count" role="status" aria-live="polite">@lessons.Length bài nghe mẫu</p>
+    <details class="listening-guide" id="listening-guide"><summary>Cách luyện nghe &amp; shadowing</summary><ol><li>Chọn bài phù hợp với trình độ của bạn.</li><li>Nghe một lượt để hiểu nội dung, sau đó nghe lại từng câu.</li><li>Đọc theo người nói, chú ý cách phát âm và ngữ điệu.</li></ol><p>Đây là giao diện bộ sưu tập mẫu. Bài nghe sẽ mở khi có audio.</p></details>
+</section>
+@section Scripts { <script src="~/js/listening.js" asp-append-version="true" defer></script> }

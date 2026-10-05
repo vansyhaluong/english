@@ -83,6 +83,7 @@ builder.Services
 builder.Services.AddScoped<IPasswordHasher<AspNetUser>, PasswordHasher<AspNetUser>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IClassificationService, ClassificationService>();
 builder.Services.AddScoped<IAuthorizationHandler, ActiveAccountHandler>();
 builder.Services.AddSingleton<IFileStorage, LocalFileStorage>();
 builder.Services.AddSingleton<IMediaUrlValidator, MediaUrlValidator>();

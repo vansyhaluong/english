@@ -127,10 +127,14 @@ Database hiện có là nguồn sự thật cho persistence. Schema nền tảng
 
 ## 6. P2 — Phân loại, Vocabulary và Grammar
 
-- [ ] **P2-01 — Schema Content theo Database First**
+- [x] **P2-01 — Schema Content theo Database First**
   - Phụ thuộc: Gate P1.
   - Đầu ra: LearningItem/shared PK subtype Vocabulary/Grammar, VocabularyMeaning, basic UserLearningProgress; mapping Topic/Group và Admin CRUD phân loại.
   - Nghiệm thu: Level required; VocabularyMeaning FK thật, MeaningVi nonempty, DisplayOrder dương/unique mỗi từ. Topic Vocabulary required, GrammarGroup rule; không MeaningVi đơn hoặc serialized meanings trên Vocabulary. Xóa nhóm có nội dung bị chặn đến khi chuyển, A1–C2 cố định.
+  - Bằng chứng metadata SQL Server (2026-10-05): Vocabulary/GrammarLesson dùng shared PK/FK LearningItem; Level required; CHECK phân loại yêu cầu Topic cho Vocabulary, GrammarGroup cho Grammar; UserLearningProgress có khóa (UserId, LearningItemId) và FK thật. Các FK phân loại/content dùng NO_ACTION. Unique UQ_VocabularyMeaning_Order (VocabularyId, DisplayOrder) enabled; CHECK DisplayOrder > 0 và CK_VocabularyMeaning_MeaningVi_NotBlank do người dùng bổ sung đều enabled/trusted. Topic/GrammarGroup có Name nvarchar(200), Description nullable nvarchar(max), RowVersion 8 byte; Level hiện có đủ A1–C2.
+  - Bằng chứng implementation: AdminClassificationsController → IClassificationService/ClassificationService → ApplicationDbContext; list/create/edit/delete Topic và GrammarGroup, Level chỉ đọc; InputModel/ViewModel riêng, AdminOnly, POST + antiforgery, giao diện VI/EN dùng Admin layout. Xóa kiểm tra mọi LearningItem (kể cả hidden/soft-deleted), thêm Book/Exercise cho Topic, không cascade nội dung. RowVersion cũ/sai bị chặn; conflict/deadlock khi xóa đồng thời được xử lý an toàn.
+  - Bằng chứng validation: dotnet build PASS (0 warning/error); probe HTTP tạm tại localhost:5107 PASS cho create/edit, tên blank/quá 200 ký tự, HTML encoding, stale edit/delete, RowVersion sai, delete referenced/unreferenced và hai yêu cầu delete đồng thời cho cả hai loại; Topic còn được kiểm tra riêng tham chiếu Book/Exercise. Phiên Guest/Student bị chặn, phiên Admin truy cập được; POST create/edit/delete thiếu antiforgery bị chặn. Probe dùng ticket role ký cục bộ với account active có sẵn, không thay đổi tài khoản hoặc kiểm tra lại login. Dữ liệu probe có marker riêng đã được cleanup. git diff --check PASS; validation UI bằng HTTP, chưa kiểm tra trực quan browser.
+  - Giới hạn phạm vi: không thay đổi schema, migrations, scaffold hoặc packages; không triển khai authoring Vocabulary/Grammar hay P2-02/P2-03. P2-02 vẫn phải validate MeaningVi ở application trước SaveChanges để trả lỗi thân thiện, không chỉ dựa vào CHECK trong DB.
 
 - [ ] **P2-02 — Vocabulary end-to-end**
   - Phụ thuộc: P2-01.

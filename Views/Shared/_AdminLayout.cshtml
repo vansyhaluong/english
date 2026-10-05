@@ -33,6 +33,15 @@
             <span>@L["AppName"]<small>@L["AdminArea"]</small></span>
         </a>
         <nav class="admin-nav">
+            <a class="@(controller == "AdminClassifications" && action != "Levels" && Context.Request.Query["kind"] == "Topic" ? "is-active" : null)" asp-controller="AdminClassifications" asp-action="Index" asp-route-kind="Topic" asp-route-culture="@culture">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7l3 3h8v13H3z" /></svg><span>@L["Topics"]</span>
+            </a>
+            <a class="@(controller == "AdminClassifications" && action != "Levels" && Context.Request.Query["kind"] == "GrammarGroup" ? "is-active" : null)" asp-controller="AdminClassifications" asp-action="Index" asp-route-kind="GrammarGroup" asp-route-culture="@culture">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h4" /></svg><span>@L["GrammarGroups"]</span>
+            </a>
+            <a class="@(controller == "AdminClassifications" && action == "Levels" ? "is-active" : null)" asp-controller="AdminClassifications" asp-action="Levels" asp-route-culture="@culture">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 16v4M10 12v8M14 8v12M18 4v16" /></svg><span>@L["Levels"]</span>
+            </a>
             <a class="@(isUsers ? "is-active" : null)" asp-controller="AdminUsers" asp-action="Index" asp-route-culture="@culture" aria-current="@(isUsers ? "page" : null)">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4" /><path d="M2 21a7 7 0 0 1 14 0M16 4a4 4 0 0 1 0 8M18 14a7 7 0 0 1 4 7" /></svg><span>@L["Users"]</span>
             </a>

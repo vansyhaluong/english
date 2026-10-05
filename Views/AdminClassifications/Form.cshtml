@@ -1,0 +1,35 @@
+@model English.Models.ViewModels.AdminClassifications.ClassificationFormViewModel
+@{
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var formAction = Model.Id.HasValue ? "Edit" : "Create";
+    Layout = "_AdminLayout";
+    ViewData["Title"] = L[Model.Kind == English.Interfaces.ClassificationKind.Topic ? "Topics" : "GrammarGroups"];
+}
+<section class="account-page" aria-labelledby="classification-form-title">
+    <div class="account-card">
+        <h1 id="classification-form-title">@L[Model.Id.HasValue ? "ClassificationEdit" : "ClassificationCreate"] — @ViewData["Title"]</h1>
+        <form asp-action="@formAction" asp-route-kind="@Model.Kind" asp-route-id="@Model.Id" asp-route-culture="@culture" method="post" class="account-form">
+            <div asp-validation-summary="ModelOnly" class="account-validation" role="alert"></div>
+            @if (Model.Id.HasValue)
+            {
+                <input asp-for="Input.RowVersion" type="hidden" />
+            }
+            <div class="account-field">
+                <label asp-for="Input.Name"></label>
+                <input asp-for="Input.Name" maxlength="200" />
+                <span asp-validation-for="Input.Name"></span>
+            </div>
+            <div class="account-field">
+                <label asp-for="Input.Description"></label>
+                <textarea asp-for="Input.Description" rows="4"></textarea>
+                <span asp-validation-for="Input.Description"></span>
+            </div>
+            <button type="submit" class="btn-brand-primary">@L["SaveChanges"]</button>
+        </form>
+        @if (Model.Id.HasValue)
+        {
+            <p class="account-switch"><a asp-action="Edit" asp-route-kind="@Model.Kind" asp-route-id="@Model.Id" asp-route-culture="@culture">@L["ClassificationReload"]</a></p>
+        }
+        <p class="account-switch"><a asp-action="Index" asp-route-kind="@Model.Kind" asp-route-culture="@culture">@L["ClassificationBack"]</a></p>
+    </div>
+</section>

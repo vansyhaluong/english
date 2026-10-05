@@ -1,0 +1,17 @@
+@model English.Models.ViewModels.AdminClassifications.LevelsViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = L["Levels"];
+}
+<section class="account-page" aria-labelledby="levels-title">
+    <div class="management-card">
+        <h1 id="levels-title">@L["Levels"]</h1>
+        <p>@L["LevelsReadOnly"]</p>
+        <ul>
+            @foreach (var level in Model.Levels)
+            {
+                <li>@level.Code</li>
+            }
+        </ul>
+    </div>
+</section>

@@ -64,6 +64,11 @@
 .admin-shell .account-field span,
 .admin-shell .account-validation { color: #b42318; font-size: .86rem; }
 .admin-shell .account-validation:empty { display: none; }
+.admin-shell .account-field textarea { width: 100%; padding: .7rem .8rem; border: 1px solid var(--area-border); border-radius: .65rem; color: var(--area-text); background: #fff; resize: vertical; }
+.admin-shell .account-field textarea:focus { border-color: var(--area-accent); outline: 3px solid rgb(37 99 235 / 16%); }
+.admin-shell .classification-actions { margin: 1rem 0; }
+.admin-shell .management-table .classification-text { min-width: 10rem; white-space: normal; overflow-wrap: anywhere; }
+.admin-shell .management-table td a + a { margin-left: .8rem; }
 .admin-shell .account-validation ul { margin: 0; padding-left: 1.2rem; }
 .admin-shell .account-success { margin-bottom: 1rem; padding: .75rem; border: 1px solid #86d19a; border-radius: .65rem; color: #17662d; background: #edf9f0; }
 .admin-shell .account-error { margin-bottom: 1rem; padding: .75rem; border: 1px solid #f1a6a0; border-radius: .65rem; color: #8f1d17; background: #fff1f0; }
