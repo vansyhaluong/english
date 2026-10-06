@@ -1,5 +1,7 @@
 @{
     ViewData["Title"] = "Trang chủ";
+    var grammarController = User.IsInRole("Admin") ? "AdminGrammar" : "Grammar";
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 }
 
 <!-- HERO SECTION -->
@@ -21,7 +23,7 @@
 
         <nav class="desk-shortcuts" aria-label="Chọn kỹ năng">
             <a href="/vocabulary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v15 M12 6C9 3 5 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-3-1-7-1-10 2" /></svg>Luyện từ</a>
-            <a href="#grammar-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v18H4z M8 7h8 M8 11h6" /></svg>Ngữ pháp</a>
+            <a asp-controller="@grammarController" asp-action="Index" asp-route-culture="@culture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v18H4z M8 7h8 M8 11h6" /></svg>Ngữ pháp</a>
             <a href="#listening-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2 M3 13h4v8H3z M17 13h4v8h-4z" /></svg>Nghe &amp; Shadowing</a>
             <a href="#translate-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h12 M7 2v3 M4 14 12 5 M5 8l6 6 M14 21l4-10 4 10 M16 17h4" /></svg>Dịch tiếng Anh</a>
             <a href="#ai-coach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 21h8 M4 16 16 4l4 4L8 20l-5 1z" /></svg>Luyện viết cùng AI</a>
@@ -110,7 +112,7 @@
 
         <!-- 2. Ngữ pháp -->
         <div class="glass-card glass-card-interactive">
-            <a href="#grammar-showcase" class="feature-card">
+            <a asp-controller="@grammarController" asp-action="Index" asp-route-culture="@culture" class="feature-card">
                 <div class="feature-icon-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"></path>
@@ -432,7 +434,7 @@
         <p class="section-desc">Tìm hiểu cách kết hợp các kỹ năng trong mỗi buổi học.</p>
     </div>
     <div class="faq-container">
-        <details id="grammar-showcase" class="glass-card faq-item"><summary class="faq-trigger">Ngữ pháp <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Chọn một chủ điểm phù hợp với trình độ. Đọc cấu trúc, xem ví dụ, rồi tự đặt câu về cuộc sống của bạn để ghi nhớ cách dùng.</p></div></details>
+        <details id="grammar-showcase" class="glass-card faq-item"><summary class="faq-trigger">Ngữ pháp <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Chọn một chủ điểm phù hợp với trình độ. Đọc cấu trúc, xem ví dụ, rồi tự đặt câu về cuộc sống của bạn để ghi nhớ cách dùng.</p><a asp-controller="@grammarController" asp-action="Index" asp-route-culture="@culture" class="showcase-link">Mở danh sách bài ngữ pháp →</a></div></details>
         <details id="conversation-showcase" class="glass-card faq-item"><summary class="faq-trigger">Hội thoại <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Luyện những tình huống quen thuộc như giới thiệu bản thân, hỏi đường và mua sắm. Nghe từng câu, nói lại rồi thử thay đổi thông tin để tạo hội thoại của riêng bạn.</p></div></details>
         <details id="translate-showcase" class="glass-card faq-item"><summary class="faq-trigger">Dịch Việt–Anh <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Bắt đầu với câu ngắn, xác định ý chính và chọn thì phù hợp trước khi dịch. Đọc lại toàn bộ câu để kiểm tra trật tự từ và cách diễn đạt.</p></div></details>
         <details id="ai-coach" class="glass-card faq-item"><summary class="faq-trigger">Viết &amp; Nói <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Chọn một chủ đề quen thuộc, viết một đoạn ngắn rồi nói lại bằng lời của bạn. Tập trung vào việc diễn đạt rõ ý trước khi mở rộng từ vựng và cấu trúc.</p></div></details>

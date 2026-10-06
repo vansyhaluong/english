@@ -209,9 +209,10 @@ public sealed class VocabularyService(ApplicationDbContext context, IMediaUrlVal
                 progress = new UserLearningProgress { UserId = userId, LearningItemId = id };
                 context.UserLearningProgresses.Add(progress);
             }
+            var now = DateTimeOffset.UtcNow;
             progress.IsLearned = learned;
-            if (learned) progress.LearnedAt ??= DateTimeOffset.UtcNow;
-            progress.UpdatedAt = DateTimeOffset.UtcNow;
+            progress.LearnedAt = learned ? now : null;
+            progress.UpdatedAt = now;
             await context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
             return VocabularyResult.Success;

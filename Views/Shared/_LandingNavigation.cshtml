@@ -15,11 +15,15 @@
     @foreach (var link in links)
     {
         var isVocabulary = link.Target == "vocab-showcase";
-        var isListening = link.Target == "listening-showcase";
         var isGrammar = link.Target == "grammar-showcase";
-        var href = isVocabulary ? "/vocabulary" : isListening ? "/listening" : isGrammar ? "/grammar" : Url.Action("Index", "Home") + "#" + link.Target;
+        var grammarController = User.IsInRole("Admin") ? "AdminGrammar" : "Grammar";
+        var isListening = link.Target == "listening-showcase";
+
+        var href = isGrammar ? Url.Action("Index", grammarController, new { culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName })
+            : isVocabulary ? "/vocabulary" : isListening ? "/listening" : Url.Action("Index", "Home") + "#" + link.Target;
         var controller = ViewContext.RouteData.Values["controller"]?.ToString();
-        var current = (isVocabulary && controller == "Vocabulary") || (isListening && controller == "Listening") || (isGrammar && controller == "Grammar");
+        var current = (isGrammar && controller == grammarController) || (isVocabulary && controller == "Vocabulary") || (isListening && controller == "Listening");
+
         <a class="rail-link" href="@href" aria-current="@(current ? "page" : null)" aria-label="@link.Label" title="@link.Label">
             <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="@link.Icon" /></svg>
             <span>@link.Label</span>
