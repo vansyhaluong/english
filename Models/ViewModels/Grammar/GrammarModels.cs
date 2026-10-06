@@ -7,6 +7,7 @@ public sealed class GrammarInputModel
     private string title = string.Empty;
     [Required(ErrorMessage = "GrammarRequired"), StringLength(300, ErrorMessage = "GrammarTooLong")]
     public string Title { get => title; set => title = value?.Trim() ?? string.Empty; }
+    public string? Description { get; set; }
     [Required(ErrorMessage = "GrammarRequired")]
     public string Formula { get; set; } = string.Empty;
     [Required(ErrorMessage = "GrammarRequired")]
@@ -50,6 +51,7 @@ public sealed class GrammarDetailsViewModel
 {
     public int Id { get; init; }
     public string Title { get; init; } = string.Empty;
+    public string? Description { get; init; }
     public int LevelId { get; init; }
     public string Level { get; init; } = string.Empty;
     public int GrammarGroupId { get; init; }

@@ -29,7 +29,7 @@ public sealed class AdminGrammarController(IGrammarService service, IStringLocal
         if (item is null || item.IsDeleted) return NotFound();
         return View("Form", new GrammarFormViewModel(id, new()
         {
-            Title = item.Title, Formula = item.Formula, Usage = item.Usage, Examples = item.Examples, Notes = item.Notes,
+            Title = item.Title, Description = item.Description, Formula = item.Formula, Usage = item.Usage, Examples = item.Examples, Notes = item.Notes,
             LevelId = item.LevelId, GrammarGroupId = item.GrammarGroupId, IsVisible = item.IsVisible,
             RowVersion = Convert.ToBase64String(item.RowVersion)
         }, await service.GetChoicesAsync(cancellationToken)));

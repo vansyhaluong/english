@@ -6,6 +6,7 @@
     <form asp-action="@(Model.Id.HasValue ? "Edit" : "Create")" asp-route-id="@Model.Id" asp-route-culture="@culture" method="post" class="account-form">
         <div asp-validation-summary="All" class="account-validation" role="alert"></div><input asp-for="Input.RowVersion" type="hidden" />
         <div class="account-field"><label asp-for="Input.Title">@L["GrammarTitle"]</label><input asp-for="Input.Title" maxlength="300" required /><span asp-validation-for="Input.Title"></span></div>
+        <div class="account-field"><label asp-for="Input.Description">@L["ClassificationDescription"]</label><textarea asp-for="Input.Description" rows="2"></textarea><span asp-validation-for="Input.Description"></span></div>
         <div class="account-field"><label asp-for="Input.LevelId">@L["Levels"]</label><select asp-for="Input.LevelId" required><option value="">@L["VocabSelect"]</option>@foreach (var level in Model.Choices.Levels) { <option value="@level.Id">@level.Name</option> }</select><span asp-validation-for="Input.LevelId"></span></div>
         <div class="account-field"><label asp-for="Input.GrammarGroupId">@L["GrammarGroups"]</label><select asp-for="Input.GrammarGroupId" required><option value="">@L["VocabSelect"]</option>@foreach (var group in Model.Choices.Groups) { <option value="@group.Id">@group.Name</option> }</select><span asp-validation-for="Input.GrammarGroupId"></span></div>
         <p id="grammar-editor-hint">@L["GrammarEditorHint"]</p>

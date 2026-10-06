@@ -22,7 +22,7 @@ public sealed class GrammarService(ApplicationDbContext context, GrammarHtmlSani
         .Where(x => x.LearningItem.Kind == GrammarKind && (admin || (!x.LearningItem.IsDeleted && x.LearningItem.IsVisible)));
     private static IQueryable<GrammarDetailsViewModel> Project(IQueryable<GrammarLesson> source, Guid userId, bool details) => source.Select(x => new GrammarDetailsViewModel
     {
-        Id = x.LearningItemId, Title = x.LearningItem.Title,
+        Id = x.LearningItemId, Title = x.LearningItem.Title, Description = x.LearningItem.Description,
         LevelId = x.LearningItem.LevelId, Level = x.LearningItem.Level.Code,
         GrammarGroupId = x.LearningItem.GrammarGroupId!.Value, GrammarGroup = x.LearningItem.GrammarGroup!.Name,
         Formula = details ? x.Formula : string.Empty, Usage = details ? x.Usage : string.Empty,
@@ -92,6 +92,7 @@ public sealed class GrammarService(ApplicationDbContext context, GrammarHtmlSani
                 context.GrammarLessons.Add(lesson);
             }
             lesson.LearningItem.Title = input.Title;
+            lesson.LearningItem.Description = string.IsNullOrWhiteSpace(input.Description) ? null : input.Description.Trim();
             lesson.LearningItem.LevelId = input.LevelId; lesson.LearningItem.GrammarGroupId = input.GrammarGroupId;
             lesson.LearningItem.TopicId = null;
             lesson.LearningItem.IsVisible = input.IsVisible; lesson.LearningItem.UpdatedAt = DateTimeOffset.UtcNow;
