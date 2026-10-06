@@ -32,6 +32,9 @@
             <span>@L["AppName"]<small>@L["StudentArea"]</small></span>
         </a>
         <nav class="student-nav">
+            <a class="@(controller == "Grammar" ? "is-active" : null)" asp-controller="Grammar" asp-action="Index" asp-route-culture="@culture" aria-current="@(controller == "Grammar" ? "page" : null)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h4" /></svg><span>@L["Grammar"]</span>
+            </a>
             <a asp-controller="Home" asp-action="Index" asp-route-culture="@culture">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 3l9 7v10H3zM9 20v-7h6v7" /></svg><span>@L["Home"]</span>
             </a>

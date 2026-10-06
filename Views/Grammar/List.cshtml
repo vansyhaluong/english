@@ -1,0 +1,33 @@
+@model English.Models.ViewModels.Grammar.GrammarListViewModel
+@{ Layout = Model.IsAdmin ? "_AdminLayout" : "_StudentLayout"; ViewData["Title"] = L["Grammar"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+@section Styles { <link rel="stylesheet" href="~/css/grammar-content.css" asp-append-version="true" /> }
+<section class="account-page grammar-content"><div class="management-card">
+    <h1>@L["Grammar"]</h1>
+    @if (TempData["GrammarMessage"] is string message) { <p class="account-success" role="status">@message</p> }
+    @if (Model.IsAdmin) { <p><a asp-action="Create" asp-route-culture="@culture">@L["GrammarCreate"]</a></p> }
+    <form asp-action="Index" method="get" class="grammar-filters">
+        <input type="hidden" name="culture" value="@culture" />
+        <label>@L["GrammarSearch"]<input type="search" name="Search" value="@Model.Query.Search" maxlength="300" /></label>
+        <label>@L["Levels"]<select name="LevelId"><option value="">@L["VocabAll"]</option>@foreach (var option in Model.Choices.Levels) { <option value="@option.Id" selected="@(Model.Query.LevelId == option.Id)">@option.Name</option> }</select></label>
+        <label>@L["GrammarGroups"]<select name="GrammarGroupId"><option value="">@L["VocabAll"]</option>@foreach (var option in Model.Choices.Groups) { <option value="@option.Id" selected="@(Model.Query.GrammarGroupId == option.Id)">@option.Name</option> }</select></label>
+        <button type="submit" class="btn-brand-primary">@L["VocabFilter"]</button><a asp-action="Index" asp-route-culture="@culture">@L["VocabClear"]</a>
+    </form>
+    @if (Model.Items.Count == 0) { <p>@L["GrammarEmpty"]</p> }
+    else
+    {
+        <div class="management-table-wrap"><table class="management-table"><thead><tr><th>@L["GrammarTitle"]</th><th>@L["Levels"] / @L["GrammarGroups"]</th><th>@L["VocabStatus"]</th><th>@L["ClassificationActions"]</th></tr></thead><tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr data-grammar-id="@item.Id"><td>@item.Title</td><td>@item.Level / @item.GrammarGroup</td>
+                <td>@L[Model.IsAdmin ? (item.IsDeleted ? "VocabDeleted" : item.IsVisible ? "VocabVisible" : "VocabHidden") : item.IsLearned ? "VocabLearned" : "VocabUnlearned"]</td>
+                <td>@if (Model.IsAdmin) { @if (!item.IsDeleted) { <a asp-action="Edit" asp-route-id="@item.Id" asp-route-culture="@culture">@L["ClassificationEdit"]</a><br /><a asp-action="Delete" asp-route-id="@item.Id" asp-route-culture="@culture">@L["GrammarDelete"]</a> } } else { <a asp-action="Details" asp-route-id="@item.Id" asp-route-culture="@culture">@L["VocabDetails"]</a> }</td>
+            </tr>
+        }
+        </tbody></table></div>
+    }
+    <nav class="grammar-actions" aria-label="@L["VocabPages"]">
+        @if (Model.Query.Page > 1) { <a asp-action="Index" asp-route-page="@(Model.Query.Page - 1)" asp-route-search="@Model.Query.Search" asp-route-levelId="@Model.Query.LevelId" asp-route-grammarGroupId="@Model.Query.GrammarGroupId" asp-route-culture="@culture">@L["VocabPrevious"]</a> }
+        <span>@Model.Query.Page / @Model.TotalPages</span>
+        @if (Model.Query.Page < Model.TotalPages) { <a asp-action="Index" asp-route-page="@(Model.Query.Page + 1)" asp-route-search="@Model.Query.Search" asp-route-levelId="@Model.Query.LevelId" asp-route-grammarGroupId="@Model.Query.GrammarGroupId" asp-route-culture="@culture">@L["VocabNext"]</a> }
+    </nav>
+</div></section>

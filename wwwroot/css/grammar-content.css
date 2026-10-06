@@ -1,0 +1,13 @@
+.grammar-content .management-card { width: 100%; }
+.student-shell .grammar-content .management-card { padding: clamp(1.4rem, 4vw, 2.25rem); border: 1px solid var(--area-border); border-radius: 1rem; background: var(--area-surface); }
+.grammar-content .management-table-wrap, .grammar-content .grammar-html { overflow-x: auto; overflow-wrap: anywhere; }
+.grammar-content .management-table, .grammar-content .grammar-html table { width: 100%; border-collapse: collapse; }
+.grammar-content th, .grammar-content td { padding: .8rem; border: 1px solid var(--area-border); text-align: left; }
+.grammar-content .grammar-filters, .grammar-content .grammar-actions { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; margin-block: 1rem; }
+.grammar-content label { display: grid; gap: .4rem; }
+.grammar-content select, .grammar-content input:not([type=checkbox]), .grammar-content textarea { max-width: 100%; padding: .65rem; border: 1px solid var(--area-border, #656078); border-radius: .45rem; background: var(--area-surface, #211d2d); color: inherit; font: inherit; }
+.grammar-content .grammar-editor textarea { width: 100%; }
+.grammar-content button:not(.btn-brand-primary) { padding: .45rem .75rem; cursor: pointer; }
+.grammar-content ul, .grammar-content ol { padding-left: 1.5rem; }
+.grammar-content h2, .grammar-content h3, .grammar-content p, .grammar-content article > form { margin-block: 1rem; }
+.grammar-content :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }

@@ -1,0 +1,19 @@
+@model English.Models.ViewModels.Grammar.GrammarDetailsViewModel
+@{ Layout = "_StudentLayout"; ViewData["Title"] = Model.Title; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+@section Styles { <link rel="stylesheet" href="~/css/grammar-content.css" asp-append-version="true" /> }
+<section class="account-page grammar-content"><article class="management-card">
+    <h1>@Model.Title</h1><p>@Model.Level / @Model.GrammarGroup</p>
+    @if (TempData["GrammarMessage"] is string message) { <p role="status">@message</p> }
+    <nav class="grammar-actions" aria-label="@L["GrammarSections"]"><a href="#grammar-theory">@L["GrammarTheory"]</a><a href="#grammar-practice">@L["GrammarPractice"]</a></nav>
+    <section id="grammar-theory" aria-labelledby="theory-title"><h2 id="theory-title">@L["GrammarTheory"]</h2>
+        @* Only GrammarService output sanitized by GrammarHtmlSanitizer is rendered as HTML. *@
+        <h3>@L["GrammarFormula"]</h3><div class="grammar-html">@Html.Raw(Model.Formula)</div>
+        <h3>@L["GrammarUsage"]</h3><div class="grammar-html">@Html.Raw(Model.Usage)</div>
+        <h3>@L["GrammarExamples"]</h3><div class="grammar-html">@Html.Raw(Model.Examples)</div>
+        @if (!string.IsNullOrWhiteSpace(Model.Notes)) { <h3>@L["GrammarNotes"]</h3><div class="grammar-html">@Html.Raw(Model.Notes)</div> }
+    </section>
+    <section id="grammar-practice" aria-labelledby="practice-title"><h2 id="practice-title">@L["GrammarPractice"]</h2><p>@L["GrammarPracticePlaceholder"]</p></section>
+    <p>@L[Model.IsLearned ? "VocabLearned" : "VocabUnlearned"]</p>
+    <form asp-action="Learned" asp-route-id="@Model.Id" asp-route-culture="@culture" method="post"><input type="hidden" name="IsLearned" value="@((!Model.IsLearned).ToString().ToLowerInvariant())" /><button type="submit" class="btn-brand-primary">@L[Model.IsLearned ? "VocabUnmark" : "VocabMark"]</button></form>
+    <p><a asp-action="Index" asp-route-culture="@culture">@L["ClassificationBack"]</a></p>
+</article></section>

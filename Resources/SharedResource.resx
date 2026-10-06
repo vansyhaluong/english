@@ -158,4 +158,31 @@
   <data name="VocabPosInterjection" xml:space="preserve"><value>Thán từ</value></data>
   <data name="VocabPosPhrase" xml:space="preserve"><value>Cụm từ</value></data>
   <data name="VocabPosOther" xml:space="preserve"><value>Khác</value></data>
+  <data name="Grammar" xml:space="preserve"><value>Ngữ pháp</value></data>
+  <data name="GrammarRequired" xml:space="preserve"><value>Vui lòng nhập nội dung bắt buộc.</value></data>
+  <data name="GrammarTooLong" xml:space="preserve"><value>Nội dung vượt quá độ dài cho phép.</value></data>
+  <data name="GrammarClassificationRequired" xml:space="preserve"><value>Vui lòng chọn cấp độ và nhóm ngữ pháp hợp lệ.</value></data>
+  <data name="GrammarConflict" xml:space="preserve"><value>Dữ liệu đã thay đổi hoặc không thể lưu. Hãy tải lại và thử lại.</value></data>
+  <data name="GrammarCreate" xml:space="preserve"><value>Thêm bài ngữ pháp</value></data>
+  <data name="GrammarEdit" xml:space="preserve"><value>Sửa bài ngữ pháp</value></data>
+  <data name="GrammarTitle" xml:space="preserve"><value>Tên bài học</value></data>
+  <data name="GrammarFormula" xml:space="preserve"><value>Công thức</value></data>
+  <data name="GrammarUsage" xml:space="preserve"><value>Cách dùng / lý thuyết</value></data>
+  <data name="GrammarExamples" xml:space="preserve"><value>Ví dụ</value></data>
+  <data name="GrammarNotes" xml:space="preserve"><value>Ghi chú</value></data>
+  <data name="GrammarSearch" xml:space="preserve"><value>Tìm theo tên bài học</value></data>
+  <data name="GrammarEmpty" xml:space="preserve"><value>Không có bài ngữ pháp phù hợp.</value></data>
+  <data name="GrammarDelete" xml:space="preserve"><value>Xóa bài ngữ pháp</value></data>
+  <data name="GrammarDeletePrompt" xml:space="preserve"><value>Xóa mềm bài học này? Nội dung và tiến độ học sẽ được giữ lại.</value></data>
+  <data name="GrammarSections" xml:space="preserve"><value>Các phần bài học</value></data>
+  <data name="GrammarTheory" xml:space="preserve"><value>Lý thuyết</value></data>
+  <data name="GrammarPractice" xml:space="preserve"><value>Luyện tập</value></data>
+  <data name="GrammarPracticePlaceholder" xml:space="preserve"><value>Bài tập sẽ được bổ sung sau. Bạn có thể xem lý thuyết mà không cần hoàn thành bài tập.</value></data>
+  <data name="GrammarEditorHint" xml:space="preserve"><value>Nhập nội dung HTML. Chọn văn bản rồi dùng nút định dạng để chèn thẻ đậm, nghiêng, danh sách hoặc bảng. Chỉ định dạng được phép được giữ lại khi lưu.</value></data>
+  <data name="GrammarFormatting" xml:space="preserve"><value>Định dạng nội dung</value></data>
+  <data name="GrammarBold" xml:space="preserve"><value>Đậm</value></data>
+  <data name="GrammarItalic" xml:space="preserve"><value>Nghiêng</value></data>
+  <data name="GrammarBullets" xml:space="preserve"><value>Danh sách</value></data>
+  <data name="GrammarNumbered" xml:space="preserve"><value>Danh sách số</value></data>
+  <data name="GrammarTable" xml:space="preserve"><value>Bảng 2 cột</value></data>
 </root>

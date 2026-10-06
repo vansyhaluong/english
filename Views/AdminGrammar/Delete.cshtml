@@ -1,0 +1,8 @@
+@model English.Models.ViewModels.Grammar.GrammarDeleteViewModel
+@{ Layout = "_AdminLayout"; ViewData["Title"] = L["GrammarDelete"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+<section class="account-page"><div class="account-card"><h1>@L["GrammarDelete"] — @Model.Item.Title</h1><p>@L["GrammarDeletePrompt"]</p>
+    <form asp-action="Delete" asp-route-id="@Model.Item.Id" asp-route-culture="@culture" method="post" class="account-form">
+        <div asp-validation-summary="All" class="account-validation" role="alert"></div><input asp-for="Input.RowVersion" type="hidden" />
+        <button type="submit" class="btn-brand-primary">@L["GrammarDelete"]</button>
+    </form><p><a asp-action="Index" asp-route-culture="@culture">@L["ClassificationBack"]</a></p>
+</div></section>
