@@ -45,6 +45,21 @@ public sealed class GrammarService(ApplicationDbContext context, GrammarHtmlSani
             .Skip((query.Page - 1) * PageSize).Take(PageSize), userId, false).ToArrayAsync(cancellationToken);
         return new(query, await GetChoicesAsync(cancellationToken), items, pages, admin);
     }
+    public async Task<GrammarWorkspaceViewModel> GetWorkspaceAsync(GrammarQuery query, int? id, Guid userId, CancellationToken cancellationToken)
+    {
+        query.Search = query.Search?.Trim();
+        var source = Source(false);
+        if (!string.IsNullOrEmpty(query.Search)) source = source.Where(x => x.LearningItem.Title.Contains(query.Search));
+        if (query.LevelId.HasValue) source = source.Where(x => x.LearningItem.LevelId == query.LevelId);
+        if (query.GrammarGroupId.HasValue) source = source.Where(x => x.LearningItem.GrammarGroupId == query.GrammarGroupId);
+        // The sidebar needs the full matching catalog for accurate group counts, without lesson HTML.
+        var items = await Project(source.OrderBy(x => x.LearningItem.Level.SortOrder)
+            .ThenBy(x => x.LearningItem.GrammarGroup!.Name).ThenBy(x => x.LearningItem.Title)
+            .ThenBy(x => x.LearningItemId), userId, false).ToArrayAsync(cancellationToken);
+        var selectedId = id ?? items.FirstOrDefault()?.Id;
+        var lesson = selectedId.HasValue ? await GetAsync(selectedId.Value, false, userId, cancellationToken) : null;
+        return new(query, await GetChoicesAsync(cancellationToken), items, lesson);
+    }
     public async Task<GrammarDetailsViewModel?> GetAsync(int id, bool admin, Guid userId, CancellationToken cancellationToken)
     {
         var item = await Project(Source(admin).Where(x => x.LearningItemId == id), userId, true).SingleOrDefaultAsync(cancellationToken);

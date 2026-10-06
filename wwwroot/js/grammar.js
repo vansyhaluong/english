@@ -1,6 +1,7 @@
 (() => {
     const workspace = document.querySelector('.grammar-workspace');
-    if (!workspace) return;
+    const toolbar = workspace?.querySelector('[data-grammar-toolbar]');
+    if (!toolbar) return;
     const tabs = [...workspace.querySelectorAll('[role="tab"]')];
     const selectTab = tab => {
         tabs.forEach(item => {
@@ -10,7 +11,7 @@
             document.getElementById(item.getAttribute('aria-controls')).hidden = !selected;
         });
     };
-    workspace.querySelector('[data-grammar-toolbar]').hidden = false;
+    toolbar.hidden = false;
     tabs.forEach((tab, index) => {
         tab.addEventListener('click', () => selectTab(tab));
         tab.addEventListener('keydown', event => {
@@ -30,13 +31,4 @@
         typeToggle.setAttribute('aria-pressed', String(plain));
         typeToggle.setAttribute('aria-label', plain ? 'Dùng kiểu chữ viết tay' : 'Dùng kiểu chữ thông thường');
     });
-    const form = document.getElementById('grammar-practice-form');
-    const result = document.getElementById('grammar-result');
-    form.addEventListener('submit', event => {
-        event.preventDefault();
-        const answers = new FormData(form);
-        const correct = [answers.get('q1') === 'learns', answers.get('q2') === 'dont', answers.get('q3') === 'live'];
-        result.textContent = `Bạn trả lời đúng ${correct.filter(Boolean).length}/3 câu. Đáp án: 1. learns · 2. don't · 3. live.`;
-    });
-    form.addEventListener('reset', () => { result.textContent = ''; });
 })();

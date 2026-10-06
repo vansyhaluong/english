@@ -1,5 +1,8 @@
+@model English.Models.ViewModels.Grammar.GrammarWorkspaceViewModel
 @{
-    ViewData["Title"] = "Present simple — Thì hiện tại đơn";
+    var lesson = Model.Lesson;
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    ViewData["Title"] = lesson?.Title ?? L["Grammar"].Value;
     ViewData["PageClass"] = "grammar-page";
 }
 @section Styles {
@@ -8,64 +11,85 @@
 }
 <div class="grammar-workspace">
     <aside class="grammar-sidebar" aria-label="Danh mục ngữ pháp">
-        <h2>Ngữ pháp</h2>
-        <p class="grammar-catalog-note">Bài học mẫu · Tiếng Anh A1</p>
+        <h2>@L["Grammar"]</h2>
+        <p class="grammar-catalog-note"><span data-grammar-count>@Model.Items.Count</span> bài học</p>
+        <form asp-action="Index" method="get" class="grammar-catalog-filters" role="search">
+            <input type="hidden" name="culture" value="@culture" />
+            <label>@L["GrammarSearch"]<input type="search" name="Search" value="@Model.Query.Search" maxlength="300" /></label>
+            <label>@L["Levels"]<select name="LevelId"><option value="">@L["VocabAll"]</option>@foreach (var level in Model.Choices.Levels) { <option value="@level.Id" selected="@(Model.Query.LevelId == level.Id)">@level.Name</option> }</select></label>
+            <label>@L["GrammarGroups"]<select name="GrammarGroupId"><option value="">@L["VocabAll"]</option>@foreach (var group in Model.Choices.Groups) { <option value="@group.Id" selected="@(Model.Query.GrammarGroupId == group.Id)">@group.Name</option> }</select></label>
+            <div><button type="submit">@L["VocabFilter"]</button><a asp-action="Index" asp-route-culture="@culture">@L["VocabClear"]</a></div>
+        </form>
         <details open class="grammar-tree">
-            <summary>1. Ngữ pháp theo lộ trình</summary>
-            <details open>
-                <summary>1.1 A1 <span>1 bài</span></summary>
-                <a class="grammar-current" href="#lesson-title" aria-current="page"><span>Present simple</span><b>A1</b></a>
-                <nav class="grammar-outline" aria-label="Nội dung bài học">
-                    <a href="#explanation">Giải thích</a>
-                    <a href="#structure">Cấu trúc</a>
-                    <a href="#summary-table">Bảng tổng hợp</a>
-                    <a href="#common-errors">Lỗi thường gặp</a>
-                    <a href="#usage">Lưu ý sử dụng</a>
-                </nav>
-            </details>
+            <summary>Ngữ pháp theo lộ trình <span>@Model.Items.Count bài</span></summary>
+            @foreach (var level in Model.Items.GroupBy(x => new { x.LevelId, x.Level }))
+            {
+                <details open data-grammar-level="@level.Key.LevelId">
+                    <summary>@level.Key.Level <span>@level.Count() bài</span></summary>
+                    @foreach (var group in level.GroupBy(x => new { x.GrammarGroupId, x.GrammarGroup }))
+                    {
+                        <details open data-grammar-group="@group.Key.GrammarGroupId">
+                            <summary>@group.Key.GrammarGroup <span>@group.Count() bài</span></summary>
+                            @foreach (var item in group)
+                            {
+                                var current = lesson?.Id == item.Id;
+                                <a class="grammar-lesson-link @(current ? "grammar-current" : null)" data-grammar-id="@item.Id" asp-action="Details" asp-route-id="@item.Id" asp-route-search="@Model.Query.Search" asp-route-levelId="@Model.Query.LevelId" asp-route-grammarGroupId="@Model.Query.GrammarGroupId" asp-route-culture="@culture" aria-current="@(current ? "page" : null)"><span>@item.Title</span><b>@item.Level</b></a>
+                                @if (current)
+                                {
+                                    <nav class="grammar-outline" aria-label="Nội dung bài học">
+                                        <a href="#explanation">Giải thích</a>
+                                        <a href="#structure">Cấu trúc</a>
+                                        <a href="#examples">Ví dụ</a>
+                                        @if (!string.IsNullOrWhiteSpace(lesson!.Notes)) { <a href="#usage">Lưu ý / Lỗi thường gặp</a> }
+                                    </nav>
+                                }
+                            }
+                        </details>
+                    }
+                </details>
+            }
         </details>
         <div class="grammar-sidebar-tip"><span aria-hidden="true">✦</span><p>Mỗi ngày một chút.<br />Vững ngữ pháp, tự tin giao tiếp.</p></div>
-        <a class="grammar-back" asp-controller="Home" asp-action="Index">← Về bàn học</a>
+        <a class="grammar-back" asp-controller="Home" asp-action="Index" asp-route-culture="@culture">← Về bàn học</a>
     </aside>
-    <article class="grammar-lesson" aria-labelledby="lesson-title">
-        <header class="grammar-lesson-header">
-            <p class="grammar-eyebrow">Lộ trình · A1 · Giao tiếp cơ bản trong cuộc sống hằng ngày</p>
-            <h1 id="lesson-title" lang="en">Present simple</h1>
-            <p class="grammar-subtitle"><span class="grammar-badge">A1</span> Thì hiện tại đơn</p>
-            <div class="grammar-toolbar" hidden data-grammar-toolbar>
-                <div role="tablist" aria-label="Chế độ học">
-                    <button id="knowledge-tab" type="button" role="tab" aria-selected="true" aria-controls="knowledge-panel">Xem kiến thức</button>
-                    <button id="practice-tab" type="button" role="tab" aria-selected="false" aria-controls="practice-panel" tabindex="-1">Luyện tập</button>
+    <article class="grammar-lesson" aria-labelledby="lesson-title" data-selected-grammar-id="@lesson?.Id">
+        @if (TempData["GrammarMessage"] is string message) { <p role="status">@message</p> }
+        @if (lesson is null)
+        {
+            <h1 id="lesson-title">@L["Grammar"]</h1>
+            <p>@L["GrammarEmpty"]</p>
+        }
+        else
+        {
+            <header class="grammar-lesson-header">
+                <p class="grammar-eyebrow">Lộ trình · @lesson.Level · @lesson.GrammarGroup</p>
+                <h1 id="lesson-title" lang="en">@lesson.Title</h1>
+                <p class="grammar-subtitle"><span class="grammar-badge">@lesson.Level</span> @lesson.Description</p>
+                <div class="grammar-toolbar" hidden data-grammar-toolbar>
+                    <div role="tablist" aria-label="Chế độ học">
+                        <button id="knowledge-tab" type="button" role="tab" aria-selected="true" aria-controls="knowledge-panel">Xem kiến thức</button>
+                        <button id="practice-tab" type="button" role="tab" aria-selected="false" aria-controls="practice-panel" tabindex="-1">Luyện tập</button>
+                    </div>
+                    <button type="button" class="grammar-type-toggle" aria-pressed="false" aria-label="Dùng kiểu chữ thông thường" title="Đổi kiểu chữ">Aa</button>
                 </div>
-                <button type="button" class="grammar-type-toggle" aria-pressed="false" aria-label="Dùng kiểu chữ thông thường" title="Đổi kiểu chữ">Aa</button>
+            </header>
+            @* Rich text comes only from GrammarService.GetAsync, sanitized on read. *@
+            <div id="knowledge-panel" role="tabpanel" aria-labelledby="knowledge-tab" class="grammar-paper">
+                <section id="explanation"><h2>Giải thích</h2><div class="grammar-richtext">@Html.Raw(lesson.Usage)</div></section>
+                <section id="structure"><h2>Cấu trúc</h2><div class="grammar-richtext grammar-table-scroll">@Html.Raw(lesson.Formula)</div></section>
+                <section id="examples"><h2>Ví dụ</h2><div class="grammar-richtext">@Html.Raw(lesson.Examples)</div></section>
+                @if (!string.IsNullOrWhiteSpace(lesson.Notes)) { <section id="usage"><h2>Lưu ý / Lỗi thường gặp</h2><div class="grammar-richtext">@Html.Raw(lesson.Notes)</div></section> }
             </div>
-        </header>
-        <div id="knowledge-panel" role="tabpanel" aria-labelledby="knowledge-tab" class="grammar-paper">
-            <div class="grammar-opening"><p lang="en">She <mark>reads</mark> a book every evening.</p><p>Cô ấy đọc sách mỗi tối.</p></div>
-            <section id="explanation"><h2>Giải thích</h2><p>Dùng <strong>Present simple</strong> để nói về thói quen, những việc lặp lại và sự thật hiển nhiên.</p><p>Với <strong>I, you, we, they</strong>, dùng động từ nguyên thể. Với <strong>he, she, it</strong>, thêm <mark>-s</mark> hoặc <mark>-es</mark> vào động từ.</p></section>
-            <section id="structure"><h2>Cấu trúc</h2>
-                <h3>Khẳng định</h3><p class="grammar-formula">I / You / We / They + V<br />He / She / It + V-s / es</p>
-                <ul class="grammar-examples"><li><span lang="en">I <mark>learn</mark> English every day.</span><small>Tôi học tiếng Anh mỗi ngày.</small></li><li><span lang="en">She <mark>works</mark> in a hospital.</span><small>Cô ấy làm việc ở bệnh viện.</small></li></ul>
-                <h3>Phủ định</h3><p class="grammar-formula">I / You / We / They + do not + V<br />He / She / It + does not + V</p>
-                <ul class="grammar-examples"><li><span lang="en">He <mark>doesn't drink</mark> coffee.</span><small>Anh ấy không uống cà phê.</small></li></ul>
-                <h3>Câu hỏi</h3><p class="grammar-formula">Do / Does + chủ ngữ + V?</p>
-                <ul class="grammar-examples"><li><span lang="en"><mark>Does</mark> she <mark>live</mark> in Hanoi?</span><small>Cô ấy sống ở Hà Nội phải không?</small></li></ul>
-            </section>
-            <section id="summary-table"><h2>Bảng tổng hợp</h2><p>Động từ ở thì hiện tại đơn</p><div class="grammar-table-scroll"><table><caption class="visually-hidden">Cách dùng động từ theo chủ ngữ</caption><thead><tr><th>Chủ ngữ</th><th>Khẳng định</th><th>Phủ định</th><th>Câu hỏi</th></tr></thead><tbody><tr><td>I / You / We / They</td><td>work</td><td>don't work</td><td>Do … work?</td></tr><tr><td>He / She / It</td><td>works</td><td>doesn't work</td><td>Does … work?</td></tr></tbody></table></div></section>
-            <section id="common-errors"><h2>Lỗi thường gặp</h2><div class="grammar-error"><p class="grammar-wrong" lang="en">✕ She work every day.</p><p lang="en">✓ She <mark>works</mark> every day.</p><small>Thêm -s với chủ ngữ she trong câu khẳng định.</small></div><div class="grammar-error"><p class="grammar-wrong" lang="en">✕ Does he likes music?</p><p lang="en">✓ Does he <mark>like</mark> music?</p><small>Sau does, dùng động từ nguyên thể.</small></div></section>
-            <section id="usage"><h2>Lưu ý sử dụng</h2><ul class="grammar-notes"><li>Dấu hiệu thường gặp: <strong>always, usually, often, sometimes, never, every day.</strong></li><li>Thêm -es với động từ tận cùng bằng -s, -sh, -ch, -x, -o: watch → watches, go → goes.</li><li>Phụ âm + y: đổi y thành -ies, ví dụ study → studies. Nguyên âm + y: thêm -s, ví dụ play → plays.</li></ul></section>
-        </div>
-        <div id="practice-panel" role="tabpanel" aria-labelledby="practice-tab" class="grammar-paper grammar-practice" hidden>
-            <h2>Thử sức một chút</h2><p>Chọn dạng động từ đúng để hoàn thành câu.</p>
-            <form id="grammar-practice-form">
-                <fieldset><legend>1. She ___ English every day.</legend><label><input type="radio" name="q1" value="learn" required /> learn</label><label><input type="radio" name="q1" value="learns" /> learns</label></fieldset>
-                <fieldset><legend>2. They ___ work on Sundays.</legend><label><input type="radio" name="q2" value="dont" required /> don't</label><label><input type="radio" name="q2" value="doesnt" /> doesn't</label></fieldset>
-                <fieldset><legend>3. Does he ___ in Hanoi?</legend><label><input type="radio" name="q3" value="live" required /> live</label><label><input type="radio" name="q3" value="lives" /> lives</label></fieldset>
-                <button type="submit" class="grammar-check">Kiểm tra đáp án</button><button type="reset" class="grammar-reset">Làm lại</button>
-                <p id="grammar-result" role="status" aria-live="polite"></p>
-            </form><p class="grammar-practice-note">Bài tập mẫu · Kết quả không được lưu vào tài khoản.</p>
-        </div>
-        <footer class="grammar-lesson-footer"><span>EnglishHub · Ngữ pháp tiếng Anh</span><a href="#lesson-title">Về đầu bài ↑</a></footer>
+            <div id="practice-panel" role="tabpanel" aria-labelledby="practice-tab" class="grammar-paper grammar-practice" hidden>
+                <h2>@L["GrammarPractice"]</h2><p>@L["GrammarPracticePlaceholder"]</p>
+            </div>
+            <form asp-action="Learned" asp-route-id="@lesson.Id" asp-route-culture="@culture" method="post" class="grammar-progress">
+                <p>@L[lesson.IsLearned ? "VocabLearned" : "VocabUnlearned"]</p>
+                <input type="hidden" name="IsLearned" value="@((!lesson.IsLearned).ToString().ToLowerInvariant())" />
+                <button type="submit" class="grammar-check">@L[lesson.IsLearned ? "VocabUnmark" : "VocabMark"]</button>
+            </form>
+            <footer class="grammar-lesson-footer"><span>EnglishHub · Ngữ pháp tiếng Anh</span><a href="#lesson-title">Về đầu bài ↑</a></footer>
+        }
     </article>
 </div>
 @section Scripts { <script src="~/js/grammar.js" asp-append-version="true" defer></script> }

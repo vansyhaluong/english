@@ -9,6 +9,7 @@ public interface IGrammarService
 {
     Task<GrammarChoices> GetChoicesAsync(CancellationToken cancellationToken);
     Task<GrammarListViewModel> ListAsync(GrammarQuery query, bool admin, Guid userId, CancellationToken cancellationToken);
+    Task<GrammarWorkspaceViewModel> GetWorkspaceAsync(GrammarQuery query, int? id, Guid userId, CancellationToken cancellationToken);
     Task<GrammarDetailsViewModel?> GetAsync(int id, bool admin, Guid userId, CancellationToken cancellationToken);
     Task<GrammarSaveResult> SaveAsync(int? id, GrammarInputModel input, CancellationToken cancellationToken);
     Task<GrammarResult> DeleteAsync(int id, string? rowVersion, CancellationToken cancellationToken);

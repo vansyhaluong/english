@@ -67,5 +67,7 @@ public sealed class GrammarDetailsViewModel
 }
 public sealed record GrammarListViewModel(GrammarQuery Query, GrammarChoices Choices,
     IReadOnlyList<GrammarDetailsViewModel> Items, int TotalPages, bool IsAdmin);
+public sealed record GrammarWorkspaceViewModel(GrammarQuery Query, GrammarChoices Choices,
+    IReadOnlyList<GrammarDetailsViewModel> Items, GrammarDetailsViewModel? Lesson);
 public sealed record GrammarFormViewModel(int? Id, GrammarInputModel Input, GrammarChoices Choices);
 public sealed record GrammarDeleteViewModel(GrammarDetailsViewModel Item, GrammarDeleteInputModel Input);

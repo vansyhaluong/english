@@ -75,10 +75,20 @@ student.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Cl
 fake.Result = GrammarResult.NotFound;
 await student.Learned(42, new GrammarProgressInputModel { IsLearned = true }, default);
 Check(fake.UserId == studentId && fake.UserId != victimId, "controller uses claims user for progress mutation");
+var query = new GrammarQuery { Search = "lesson", LevelId = 1, GrammarGroupId = 2 };
+var lesson = new GrammarDetailsViewModel { Id = 42, Title = "Lesson", Description = "Bài học" };
+fake.Workspace = new(query, new([], []), [lesson], lesson);
+var workspacePage = (ViewResult)await student.Index(query, default);
+Check(workspacePage.ViewName == "Index" && ReferenceEquals(workspacePage.Model, fake.Workspace) && fake.UserId == studentId && fake.LessonId is null, "Student index passes query/claims to real workspace view");
+workspacePage = (ViewResult)await student.Details(42, query, default);
+Check(workspacePage.ViewName == "Index" && ReferenceEquals(workspacePage.Model, fake.Workspace) && fake.LessonId == 42, "selected lesson uses the same workspace UI");
+fake.Workspace = new(query, new([], []), [], null);
+Check(await student.Details(42, query, default) is NotFoundResult, "unavailable selected lesson cannot render a sample");
 student.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity());
+Check(await student.Index(query, default) is ForbidResult, "missing user claim cannot read workspace");
 Check(await student.Learned(42, new GrammarProgressInputModel { IsLearned = true }, default) is ForbidResult, "missing user claim cannot mutate progress");
-var detailsSource = File.ReadAllText(Path.Combine(root, "Views/Grammar/Details.cshtml"));
-Check(detailsSource.Contains("id=\"grammar-theory\"") && detailsSource.Contains("id=\"grammar-practice\"") && detailsSource.Contains("GrammarPracticePlaceholder"), "Theory/Practice sections and placeholder exist");
+var detailsSource = File.ReadAllText(Path.Combine(root, "Views/Grammar/Index.cshtml"));
+Check(detailsSource.Contains("id=\"knowledge-panel\"") && detailsSource.Contains("id=\"practice-panel\"") && detailsSource.Contains("GrammarPracticePlaceholder"), "Theory/Practice sections and placeholder exist");
 Check(!detailsSource.Contains("disabled") && !detailsSource.Contains("fieldset") && !detailsSource.Contains("radio"), "Practice has no progress lock or exercise controls");
 foreach (var file in new[] { "SharedResource.resx", "SharedResource.en.resx" }) {
     var resources = XDocument.Load(Path.Combine(root, "Resources", file)).Root!.Elements("data").Select(e => e.Attribute("name")!.Value).ToArray();
@@ -223,7 +233,7 @@ try {
         Check(httpItem.Kind == 2 && httpItem.TopicId == null && !httpItem.IsDeleted, "HTTP over-posted persistence fields ignored");
         var detailPage = await Page(learner, "/grammar/" + httpItem.Id);
         var detailDom = new HtmlParser().ParseDocument(detailPage);
-        Check(detailDom.QuerySelectorAll(".grammar-html strong").Length > 0 && detailDom.QuerySelectorAll(".grammar-html table").Length > 0 && detailDom.QuerySelectorAll(".grammar-html [onclick], .grammar-html script").Length == 0, "HTTP detail renders safe bold/table and strips XSS");
+        Check(detailDom.QuerySelectorAll(".grammar-richtext strong").Length > 0 && detailDom.QuerySelectorAll(".grammar-richtext table").Length > 0 && detailDom.QuerySelectorAll(".grammar-richtext [onclick], .grammar-richtext script").Length == 0, "HTTP detail renders safe bold/table and strips XSS");
         Check(detailPage.Contains("grammar-practice") && !detailPage.Contains("type=\"radio\""), "HTTP Practice placeholder without exercises");
         var progressUrl = "/grammar/" + httpItem.Id + "/learned";
         Check((await learner.PostAsync(progressUrl, new FormUrlEncodedContent(new Dictionary<string,string> { ["IsLearned"] = "true" }))).StatusCode == HttpStatusCode.BadRequest, "HTTP progress missing antiforgery rejected");
@@ -269,10 +279,13 @@ sealed class ProbeLocalizer : IStringLocalizer<SharedResource>
 sealed class ProgressProbe : IGrammarService
 {
     public Guid UserId { get; private set; }
+    public int? LessonId { get; private set; }
+    public GrammarWorkspaceViewModel? Workspace { get; set; }
     public GrammarResult Result { get; set; }
     public Task<GrammarResult> SetLearnedAsync(int id, Guid userId, bool learned, CancellationToken cancellationToken) { UserId = userId; return Task.FromResult(Result); }
     public Task<GrammarChoices> GetChoicesAsync(CancellationToken c) => throw new NotSupportedException();
     public Task<GrammarListViewModel> ListAsync(GrammarQuery q, bool a, Guid u, CancellationToken c) => throw new NotSupportedException();
+    public Task<GrammarWorkspaceViewModel> GetWorkspaceAsync(GrammarQuery q, int? id, Guid u, CancellationToken c) { UserId = u; LessonId = id; return Task.FromResult(Workspace ?? throw new NotSupportedException()); }
     public Task<GrammarDetailsViewModel?> GetAsync(int id, bool a, Guid u, CancellationToken c) => throw new NotSupportedException();
     public Task<GrammarSaveResult> SaveAsync(int? id, GrammarInputModel i, CancellationToken c) => throw new NotSupportedException();
     public Task<GrammarResult> DeleteAsync(int id, string? v, CancellationToken c) => throw new NotSupportedException();

@@ -19,14 +19,15 @@ public sealed class GrammarController(IGrammarService service, IStringLocalizer<
     {
         if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId)) return Forbid();
         if (!ModelState.IsValid) return BadRequest();
-        return View("List", await service.ListAsync(query, false, userId, cancellationToken));
+        return View("Index", await service.GetWorkspaceAsync(query, null, userId, cancellationToken));
     }
     [HttpGet("/grammar/{id:int}")]
-    public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Details(int id, GrammarQuery query, CancellationToken cancellationToken)
     {
         if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId)) return Forbid();
-        var item = await service.GetAsync(id, false, userId, cancellationToken);
-        return item is null ? NotFound() : View(item);
+        if (!ModelState.IsValid) return BadRequest();
+        var workspace = await service.GetWorkspaceAsync(query, id, userId, cancellationToken);
+        return workspace.Lesson is null ? NotFound() : View("Index", workspace);
     }
     [HttpPost("/grammar/{id:int}/learned"), ValidateAntiForgeryToken]
     public async Task<IActionResult> Learned(int id, GrammarProgressInputModel input, CancellationToken cancellationToken)
