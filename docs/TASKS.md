@@ -136,7 +136,7 @@ Database hiện có là nguồn sự thật cho persistence. Schema nền tảng
   - Bằng chứng validation: dotnet build PASS (0 warning/error); probe HTTP tạm tại localhost:5107 PASS cho create/edit, tên blank/quá 200 ký tự, HTML encoding, stale edit/delete, RowVersion sai, delete referenced/unreferenced và hai yêu cầu delete đồng thời cho cả hai loại; Topic còn được kiểm tra riêng tham chiếu Book/Exercise. Phiên Guest/Student bị chặn, phiên Admin truy cập được; POST create/edit/delete thiếu antiforgery bị chặn. Probe dùng ticket role ký cục bộ với account active có sẵn, không thay đổi tài khoản hoặc kiểm tra lại login. Dữ liệu probe có marker riêng đã được cleanup. git diff --check PASS; validation UI bằng HTTP, chưa kiểm tra trực quan browser.
   - Giới hạn phạm vi: không thay đổi schema, migrations, scaffold hoặc packages; không triển khai authoring Vocabulary/Grammar hay P2-02/P2-03. P2-02 vẫn phải validate MeaningVi ở application trước SaveChanges để trả lỗi thân thiện, không chỉ dựa vào CHECK trong DB.
 
-- [ ] **P2-02 — Vocabulary end-to-end**
+- [x] **P2-02 — Vocabulary end-to-end**
   - Phụ thuộc: P2-01.
   - Đầu ra: form thêm/sửa từ, collection editor meanings có reorder, URL ảnh/audio, visible/delete.
   - Nghiệm thu: từ có >=1 nghĩa, thêm/sửa/bỏ/reorder atomically; không bỏ nghĩa cuối; rollback lỗi không làm mất danh sách. Khác loại từ là mục riêng, soft delete từ giữ meaning con.
@@ -163,6 +163,8 @@ Database hiện có là nguồn sự thật cho persistence. Schema nền tảng
 Điều kiện: hoàn thành P2-01, P2-02, P2-03; kiểm tra/bằng chứng dưới đây đạt trước khi chuyển phase tiếp theo.
 
 - Nghiệm thu: SQL/HTTP regression cho meaning order/transaction/search, required fields/soft delete, visibility/ownership, filter/pagination và empty state; snapshot bài tập không phụ thuộc live meaning khi nối P4.
+- [x] **Gate P2 — PASS (2026-10-06)**. Bằng chứng cập nhật trong [P2-REVIEW.md](P2-REVIEW.md): build PASS (0 warning/error); Classification/Vocabulary SQL + authenticated Admin/Student HTTP PASS, meaning reorder/rollback/ownership/search/filter/progress/visibility/soft delete và CSRF PASS; Grammar SQL/HTTP + sanitizer + VI/EN PASS. Regression đổi ngôn ngữ Topic/GrammarGroup đã sửa đúng hai link Admin layout; EN → VI giữ loại và ID trên Index/Create/Edit/Delete, các trang Admin khác giữ route và không nhận kind. Browser desktop đã kiểm tra các trang chính; mobile visual chưa kết luận đầy đủ. Chỉ ghi fixture trên English_P2_Test đã được duyệt, cleanup fixture PASS; hash 37 bảng xác nhận dữ liệu nền và English nguồn không đổi. Không thay schema/migration/scaffold/dependency; không triển khai P3. Tích hợp exercise snapshot thuộc P4.
+- Nghiệm thu P2-02 cập nhật 2026-10-06: bằng chứng runtime trên bản sao DB được người dùng phê duyệt thay cho trạng thái chờ nghiệm thu 2026-10-05 ở trên. Mark/unmark/re-mark đúng rule hiện tại (unmark xóa LearnedAt, mark lại ghi timestamp mới); không chạy SQL first-learned cũ. Checkbox P2-02 phản ánh kiểm tra runtime đã PASS, không suy từ rà soát mã.
 
 ## 7. P3 — Listening, Reading và Books
 

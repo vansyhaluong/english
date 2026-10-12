@@ -18,7 +18,7 @@ public sealed class VocabularyController(IVocabularyService service, IStringLoca
     {
         if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId)) return Forbid();
         if (!ModelState.IsValid) return BadRequest();
-        return View("List", await service.ListAsync(query, false, userId, cancellationToken));
+        return View("Index", await service.ListAsync(query, false, userId, cancellationToken));
     }
     [HttpGet("/vocabulary/{id:int}")]
     public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)

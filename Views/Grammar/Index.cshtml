@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="~/css/grammar.css" asp-append-version="true" />
 }
 <div class="grammar-workspace">
-    <aside class="grammar-sidebar" aria-label="Danh mục ngữ pháp">
+    <aside class="grammar-sidebar" aria-label="@L["GrammarCatalog"]">
         <h2>@L["Grammar"]</h2>
-        <p class="grammar-catalog-note"><span data-grammar-count>@Model.Items.Count</span> bài học</p>
+        <p class="grammar-catalog-note"><span data-grammar-count>@Model.Items.Count</span> @L["GrammarLessonCountUnit"]</p>
         <form asp-action="Index" method="get" class="grammar-catalog-filters" role="search">
             <input type="hidden" name="culture" value="@culture" />
             <label>@L["GrammarSearch"]<input type="search" name="Search" value="@Model.Query.Search" maxlength="300" /></label>
@@ -21,26 +21,26 @@
             <div><button type="submit">@L["VocabFilter"]</button><a asp-action="Index" asp-route-culture="@culture">@L["VocabClear"]</a></div>
         </form>
         <details open class="grammar-tree">
-            <summary>Ngữ pháp theo lộ trình <span>@Model.Items.Count bài</span></summary>
+            <summary>@L["GrammarRoadmap"] <span>@L["GrammarLessonCount", Model.Items.Count]</span></summary>
             @foreach (var level in Model.Items.GroupBy(x => new { x.LevelId, x.Level }))
             {
                 <details open data-grammar-level="@level.Key.LevelId">
-                    <summary>@level.Key.Level <span>@level.Count() bài</span></summary>
+                    <summary>@level.Key.Level <span>@L["GrammarLessonCount", level.Count()]</span></summary>
                     @foreach (var group in level.GroupBy(x => new { x.GrammarGroupId, x.GrammarGroup }))
                     {
                         <details open data-grammar-group="@group.Key.GrammarGroupId">
-                            <summary>@group.Key.GrammarGroup <span>@group.Count() bài</span></summary>
+                            <summary>@group.Key.GrammarGroup <span>@L["GrammarLessonCount", group.Count()]</span></summary>
                             @foreach (var item in group)
                             {
                                 var current = lesson?.Id == item.Id;
                                 <a class="grammar-lesson-link @(current ? "grammar-current" : null)" data-grammar-id="@item.Id" asp-action="Details" asp-route-id="@item.Id" asp-route-search="@Model.Query.Search" asp-route-levelId="@Model.Query.LevelId" asp-route-grammarGroupId="@Model.Query.GrammarGroupId" asp-route-culture="@culture" aria-current="@(current ? "page" : null)"><span>@item.Title</span><b>@item.Level</b></a>
                                 @if (current)
                                 {
-                                    <nav class="grammar-outline" aria-label="Nội dung bài học">
-                                        <a href="#explanation">Giải thích</a>
-                                        <a href="#structure">Cấu trúc</a>
-                                        <a href="#examples">Ví dụ</a>
-                                        @if (!string.IsNullOrWhiteSpace(lesson!.Notes)) { <a href="#usage">Lưu ý / Lỗi thường gặp</a> }
+                                    <nav class="grammar-outline" aria-label="@L["GrammarSections"]">
+                                        <a href="#explanation">@L["GrammarExplanation"]</a>
+                                        <a href="#structure">@L["GrammarStructure"]</a>
+                                        <a href="#examples">@L["GrammarExamples"]</a>
+                                        @if (!string.IsNullOrWhiteSpace(lesson!.Notes)) { <a href="#usage">@L["GrammarNotesAndMistakes"]</a> }
                                     </nav>
                                 }
                             }
@@ -49,8 +49,8 @@
                 </details>
             }
         </details>
-        <div class="grammar-sidebar-tip"><span aria-hidden="true">✦</span><p>Mỗi ngày một chút.<br />Vững ngữ pháp, tự tin giao tiếp.</p></div>
-        <a class="grammar-back" asp-controller="Home" asp-action="Index" asp-route-culture="@culture">← Về bàn học</a>
+        <div class="grammar-sidebar-tip"><span aria-hidden="true">✦</span><p>@L["GrammarDailyTip"]<br />@L["GrammarConfidenceTip"]</p></div>
+        <a class="grammar-back" asp-controller="Home" asp-action="Index" asp-route-culture="@culture">← @L["GrammarBackToDesk"]</a>
     </aside>
     <article class="grammar-lesson" aria-labelledby="lesson-title" data-selected-grammar-id="@lesson?.Id">
         @if (TempData["GrammarMessage"] is string message) { <p role="status">@message</p> }
@@ -62,23 +62,23 @@
         else
         {
             <header class="grammar-lesson-header">
-                <p class="grammar-eyebrow">Lộ trình · @lesson.Level · @lesson.GrammarGroup</p>
+                <p class="grammar-eyebrow">@L["GrammarLearningPath"] · @lesson.Level · @lesson.GrammarGroup</p>
                 <h1 id="lesson-title" lang="en">@lesson.Title</h1>
                 <p class="grammar-subtitle"><span class="grammar-badge">@lesson.Level</span> @lesson.Description</p>
                 <div class="grammar-toolbar" hidden data-grammar-toolbar>
-                    <div role="tablist" aria-label="Chế độ học">
-                        <button id="knowledge-tab" type="button" role="tab" aria-selected="true" aria-controls="knowledge-panel">Xem kiến thức</button>
-                        <button id="practice-tab" type="button" role="tab" aria-selected="false" aria-controls="practice-panel" tabindex="-1">Luyện tập</button>
+                    <div role="tablist" aria-label="@L["GrammarStudyMode"]">
+                        <button id="knowledge-tab" type="button" role="tab" aria-selected="true" aria-controls="knowledge-panel">@L["GrammarTheory"]</button>
+                        <button id="practice-tab" type="button" role="tab" aria-selected="false" aria-controls="practice-panel" tabindex="-1">@L["GrammarPractice"]</button>
                     </div>
-                    <button type="button" class="grammar-type-toggle" aria-pressed="false" aria-label="Dùng kiểu chữ thông thường" title="Đổi kiểu chữ">Aa</button>
+                    <button type="button" class="grammar-type-toggle" aria-pressed="false" aria-label="@L["GrammarUsePlainFont"]" title="@L["GrammarChangeFont"]" data-plain-label="@L["GrammarUsePlainFont"]" data-handwriting-label="@L["GrammarUseHandwritingFont"]">Aa</button>
                 </div>
             </header>
             @* Rich text comes only from GrammarService.GetAsync, sanitized on read. *@
             <div id="knowledge-panel" role="tabpanel" aria-labelledby="knowledge-tab" class="grammar-paper">
-                <section id="explanation"><h2>Giải thích</h2><div class="grammar-richtext">@Html.Raw(lesson.Usage)</div></section>
-                <section id="structure"><h2>Cấu trúc</h2><div class="grammar-richtext grammar-table-scroll">@Html.Raw(lesson.Formula)</div></section>
-                <section id="examples"><h2>Ví dụ</h2><div class="grammar-richtext">@Html.Raw(lesson.Examples)</div></section>
-                @if (!string.IsNullOrWhiteSpace(lesson.Notes)) { <section id="usage"><h2>Lưu ý / Lỗi thường gặp</h2><div class="grammar-richtext">@Html.Raw(lesson.Notes)</div></section> }
+                <section id="explanation"><h2>@L["GrammarExplanation"]</h2><div class="grammar-richtext">@Html.Raw(lesson.Usage)</div></section>
+                <section id="structure"><h2>@L["GrammarStructure"]</h2><div class="grammar-richtext grammar-table-scroll">@Html.Raw(lesson.Formula)</div></section>
+                <section id="examples"><h2>@L["GrammarExamples"]</h2><div class="grammar-richtext">@Html.Raw(lesson.Examples)</div></section>
+                @if (!string.IsNullOrWhiteSpace(lesson.Notes)) { <section id="usage"><h2>@L["GrammarNotesAndMistakes"]</h2><div class="grammar-richtext">@Html.Raw(lesson.Notes)</div></section> }
             </div>
             <div id="practice-panel" role="tabpanel" aria-labelledby="practice-tab" class="grammar-paper grammar-practice" hidden>
                 <h2>@L["GrammarPractice"]</h2><p>@L["GrammarPracticePlaceholder"]</p>
@@ -88,7 +88,7 @@
                 <input type="hidden" name="IsLearned" value="@((!lesson.IsLearned).ToString().ToLowerInvariant())" />
                 <button type="submit" class="grammar-check">@L[lesson.IsLearned ? "VocabUnmark" : "VocabMark"]</button>
             </form>
-            <footer class="grammar-lesson-footer"><span>EnglishHub · Ngữ pháp tiếng Anh</span><a href="#lesson-title">Về đầu bài ↑</a></footer>
+            <footer class="grammar-lesson-footer"><span>EnglishHub · @L["GrammarEnglishGrammar"]</span><a href="#lesson-title">@L["GrammarBackToTop"] ↑</a></footer>
         }
     </article>
 </div>

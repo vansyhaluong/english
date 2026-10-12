@@ -29,6 +29,6 @@
     typeToggle.addEventListener('click', () => {
         const plain = workspace.classList.toggle('grammar-plain');
         typeToggle.setAttribute('aria-pressed', String(plain));
-        typeToggle.setAttribute('aria-label', plain ? 'Dùng kiểu chữ viết tay' : 'Dùng kiểu chữ thông thường');
+        typeToggle.setAttribute('aria-label', plain ? typeToggle.dataset.handwritingLabel : typeToggle.dataset.plainLabel);
     });
 })();

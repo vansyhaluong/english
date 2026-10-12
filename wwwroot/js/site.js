@@ -17,9 +17,9 @@ if (sceneMotionButton) {
     let manuallyPaused = false;
     function updateSceneMotion() {
         document.body.classList.toggle('scene-motion-paused', manuallyPaused || document.hidden);
-        sceneMotionButton.textContent = manuallyPaused ? 'Chuyển động nền' : 'Dừng nền';
+        sceneMotionButton.textContent = manuallyPaused ? sceneMotionButton.dataset.resumeLabel : sceneMotionButton.dataset.pauseLabel;
         sceneMotionButton.setAttribute('aria-pressed', String(manuallyPaused));
-        sceneMotionButton.setAttribute('aria-label', manuallyPaused ? 'Bật chuyển động ảnh nền' : 'Tạm dừng chuyển động ảnh nền');
+        sceneMotionButton.setAttribute('aria-label', manuallyPaused ? sceneMotionButton.dataset.resumeDescription : sceneMotionButton.dataset.pauseDescription);
     }
     sceneMotionButton.addEventListener('click', () => {
         manuallyPaused = !manuallyPaused;

@@ -185,4 +185,35 @@
   <data name="GrammarBullets" xml:space="preserve"><value>Danh sách</value></data>
   <data name="GrammarNumbered" xml:space="preserve"><value>Danh sách số</value></data>
   <data name="GrammarTable" xml:space="preserve"><value>Bảng 2 cột</value></data>
+  <data name="GrammarCatalog" xml:space="preserve"><value>Danh mục ngữ pháp</value></data>
+  <data name="GrammarLessonCountUnit" xml:space="preserve"><value>bài học</value></data>
+  <data name="GrammarLessonCount" xml:space="preserve"><value>{0} bài</value></data>
+  <data name="GrammarRoadmap" xml:space="preserve"><value>Ngữ pháp theo lộ trình</value></data>
+  <data name="GrammarExplanation" xml:space="preserve"><value>Giải thích</value></data>
+  <data name="GrammarStructure" xml:space="preserve"><value>Cấu trúc</value></data>
+  <data name="GrammarNotesAndMistakes" xml:space="preserve"><value>Lưu ý / Lỗi thường gặp</value></data>
+  <data name="GrammarDailyTip" xml:space="preserve"><value>Mỗi ngày một chút.</value></data>
+  <data name="GrammarConfidenceTip" xml:space="preserve"><value>Vững ngữ pháp, tự tin giao tiếp.</value></data>
+  <data name="GrammarBackToDesk" xml:space="preserve"><value>Về bàn học</value></data>
+  <data name="GrammarLearningPath" xml:space="preserve"><value>Lộ trình</value></data>
+  <data name="GrammarStudyMode" xml:space="preserve"><value>Chế độ học</value></data>
+  <data name="GrammarUsePlainFont" xml:space="preserve"><value>Dùng kiểu chữ thông thường</value></data>
+  <data name="GrammarUseHandwritingFont" xml:space="preserve"><value>Dùng kiểu chữ viết tay</value></data>
+  <data name="GrammarChangeFont" xml:space="preserve"><value>Đổi kiểu chữ</value></data>
+  <data name="GrammarEnglishGrammar" xml:space="preserve"><value>Ngữ pháp tiếng Anh</value></data>
+  <data name="GrammarBackToTop" xml:space="preserve"><value>Về đầu bài</value></data>
+  <data name="GrammarPauseBackground" xml:space="preserve"><value>Dừng nền</value></data>
+  <data name="GrammarResumeBackground" xml:space="preserve"><value>Chuyển động nền</value></data>
+  <data name="GrammarPauseBackgroundDescription" xml:space="preserve"><value>Tạm dừng chuyển động ảnh nền</value></data>
+  <data name="GrammarResumeBackgroundDescription" xml:space="preserve"><value>Bật chuyển động ảnh nền</value></data>
+  <data name="GrammarMainNavigation" xml:space="preserve"><value>Điều hướng chính</value></data>
+  <data name="GrammarLevelsPath" xml:space="preserve"><value>Lộ trình A1–C2</value></data>
+  <data name="GrammarSiteFooter" xml:space="preserve"><value>EnglishHub — học tiếng Anh online miễn phí</value></data>
+  <data name="GrammarFooterNavigation" xml:space="preserve"><value>Liên kết cuối trang</value></data>
+  <data name="GrammarHelp" xml:space="preserve"><value>Hỏi đáp và hỗ trợ</value></data>
+  <data name="GrammarExplore" xml:space="preserve"><value>Khám phá EnglishHub</value></data>
+  <data name="GrammarDesk" xml:space="preserve"><value>Bàn học</value></data>
+  <data name="GrammarListening" xml:space="preserve"><value>Luyện nghe</value></data>
+  <data name="GrammarReading" xml:space="preserve"><value>Luyện đọc</value></data>
+  <data name="GrammarExam" xml:space="preserve"><value>Luyện thi</value></data>
 </root>

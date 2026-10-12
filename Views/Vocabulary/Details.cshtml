@@ -1,7 +1,7 @@
 @model English.Models.ViewModels.Vocabulary.VocabularyDetailsViewModel
-@{ Layout = "_StudentLayout"; ViewData["Title"] = Model.Title; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
-@section Styles { <link rel="stylesheet" href="~/css/vocabulary-content.css" asp-append-version="true" /> }
-<section class="account-page vocabulary-content"><article class="management-card">
+@{ Layout = "_Layout"; ViewData["Title"] = Model.Title; ViewData["PageClass"] = "vocabulary-page"; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+@section Styles { <link rel="stylesheet" href="~/css/vocabulary.css" asp-append-version="true" /><link rel="stylesheet" href="~/css/vocabulary-content.css" asp-append-version="true" /> }
+<section class="vocabulary vocabulary-content"><article class="vocab-deck">
     <h1>@Model.Title</h1><h2 lang="en">@Model.Word</h2><p>@Model.Pronunciation · @L["VocabPos" + Model.PartOfSpeech]</p><p>@Model.Level / @Model.Topic</p>
     @if (TempData["VocabularyMessage"] is string message) { <p role="status">@message</p> }
     @if (!string.IsNullOrEmpty(Model.Description)) { <p class="vocabulary-text">@Model.Description</p> }

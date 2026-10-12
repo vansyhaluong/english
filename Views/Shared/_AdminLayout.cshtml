@@ -63,8 +63,8 @@
         </nav>
         <div class="admin-sidebar-footer">
             <div class="admin-language" aria-label="@L["Language"]">
-                <a asp-route-culture="vi" aria-current="@(culture == "vi" ? "true" : null)">VI</a>
-                <a asp-route-culture="en" aria-current="@(culture == "en" ? "true" : null)">EN</a>
+                <a asp-route-culture="vi" asp-route-kind="@(controller == "AdminClassifications" && action != "Levels" ? Context.Request.Query["kind"].ToString() : null)" asp-route-id="@ViewContext.RouteData.Values["id"]" aria-current="@(culture == "vi" ? "true" : null)">VI</a>
+                <a asp-route-culture="en" asp-route-kind="@(controller == "AdminClassifications" && action != "Levels" ? Context.Request.Query["kind"].ToString() : null)" asp-route-id="@ViewContext.RouteData.Values["id"]" aria-current="@(culture == "en" ? "true" : null)">EN</a>
             </div>
             <form asp-controller="Account" asp-action="Logout" asp-route-culture="@culture" method="post">
                 <button type="submit">

@@ -22,9 +22,9 @@
         </div>
 
         <nav class="desk-shortcuts" aria-label="Chọn kỹ năng">
-            <a href="/vocabulary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v15 M12 6C9 3 5 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-3-1-7-1-10 2" /></svg>Luyện từ</a>
+            <a asp-controller="Vocabulary" asp-action="Index" asp-route-culture="@culture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v15 M12 6C9 3 5 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-3-1-7-1-10 2" /></svg>Luyện từ</a>
             <a asp-controller="@grammarController" asp-action="Index" asp-route-culture="@culture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v18H4z M8 7h8 M8 11h6" /></svg>Ngữ pháp</a>
-            <a href="#listening-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2 M3 13h4v8H3z M17 13h4v8h-4z" /></svg>Nghe &amp; Shadowing</a>
+            <a asp-controller="Listening" asp-action="Index" asp-route-culture="@culture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2 M3 13h4v8H3z M17 13h4v8h-4z" /></svg>Nghe &amp; Shadowing</a>
             <a href="#translate-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h12 M7 2v3 M4 14 12 5 M5 8l6 6 M14 21l4-10 4 10 M16 17h4" /></svg>Dịch tiếng Anh</a>
             <a href="#ai-coach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 21h8 M4 16 16 4l4 4L8 20l-5 1z" /></svg>Luyện viết cùng AI</a>
             <a href="#reading-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v18H4z M8 3v7l3-2 3 2V3" /></svg>Đọc sách</a>
@@ -97,7 +97,7 @@
     <div class="features-grid">
         <!-- 1. Từ vựng -->
         <div class="glass-card glass-card-interactive">
-            <a href="/vocabulary" class="feature-card">
+            <a asp-controller="Vocabulary" asp-action="Index" asp-route-culture="@culture" class="feature-card">
                 <div class="feature-icon-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path>
@@ -155,7 +155,7 @@
 
         <!-- 5. Nghe & Shadowing -->
         <div class="glass-card glass-card-interactive">
-            <a href="#listening-showcase" class="feature-card">
+            <a asp-controller="Listening" asp-action="Index" asp-route-culture="@culture" class="feature-card">
                 <div class="feature-icon-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path>
@@ -289,7 +289,7 @@
                     <p class="showcase-desc">
                         Mỗi thẻ từ có lịch ôn riêng dựa trên việc bạn nhớ hay quên nó. Từ khó quay lại sớm, từ đã thuộc giãn dần ra — nên thời gian học tập trung vào đúng chỗ bạn còn yếu.
                     </p>
-                    <a href="/vocabulary" class="showcase-link">
+                    <a asp-controller="Vocabulary" asp-action="Index" asp-route-culture="@culture" class="showcase-link">
                         Mở kho từ vựng
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14"></path>
@@ -363,7 +363,7 @@
                     <p class="showcase-desc">
                         117 bài nghe lấy từ video thực tế kèm 1.918 câu luyện riêng. Bạn nghe, chép lại, rồi nói nhại theo (Shadowing) để sửa ngữ điệu — AI phân tích và chỉ ra từ nào bạn phát âm chưa chuẩn.
                     </p>
-                    <a href="#features" class="showcase-link">
+                    <a asp-controller="Listening" asp-action="Index" asp-route-culture="@culture" class="showcase-link">
                         Bắt đầu luyện nghe
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14"></path>
@@ -438,7 +438,7 @@
         <details id="conversation-showcase" class="glass-card faq-item"><summary class="faq-trigger">Hội thoại <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Luyện những tình huống quen thuộc như giới thiệu bản thân, hỏi đường và mua sắm. Nghe từng câu, nói lại rồi thử thay đổi thông tin để tạo hội thoại của riêng bạn.</p></div></details>
         <details id="translate-showcase" class="glass-card faq-item"><summary class="faq-trigger">Dịch Việt–Anh <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Bắt đầu với câu ngắn, xác định ý chính và chọn thì phù hợp trước khi dịch. Đọc lại toàn bộ câu để kiểm tra trật tự từ và cách diễn đạt.</p></div></details>
         <details id="ai-coach" class="glass-card faq-item"><summary class="faq-trigger">Viết &amp; Nói <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Chọn một chủ đề quen thuộc, viết một đoạn ngắn rồi nói lại bằng lời của bạn. Tập trung vào việc diễn đạt rõ ý trước khi mở rộng từ vựng và cấu trúc.</p></div></details>
-        <details id="dict-showcase" class="glass-card faq-item"><summary class="faq-trigger">Từ điển Anh–Việt <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Khi gặp từ mới, hãy ghi lại nghĩa, phiên âm và cả câu chứa từ đó. Kết hợp tra cứu với ôn tập để dùng được từ trong ngữ cảnh.</p><a href="/vocabulary" class="showcase-link">Tìm hiểu cách ôn từ vựng →</a></div></details>
+        <details id="dict-showcase" class="glass-card faq-item"><summary class="faq-trigger">Từ điển Anh–Việt <span aria-hidden="true">+</span></summary><div class="faq-body"><p class="faq-content">Khi gặp từ mới, hãy ghi lại nghĩa, phiên âm và cả câu chứa từ đó. Kết hợp tra cứu với ôn tập để dùng được từ trong ngữ cảnh.</p><a asp-controller="Vocabulary" asp-action="Index" asp-route-culture="@culture" class="showcase-link">Tìm hiểu cách ôn từ vựng →</a></div></details>
     </div>
 </section>
 <section id="levels" class="section-block">

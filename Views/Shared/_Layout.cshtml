@@ -1,9 +1,14 @@
 ﻿<!DOCTYPE html>
+@{
+    var isGrammarPage = ViewData["PageClass"]?.ToString() == "grammar-page";
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    string PageLabel(string key, string original) => isGrammarPage ? L[key].Value : original;
+}
 <html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" data-tone="dark">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EnglishHub — Học tiếng Anh online miễn phí từ A1 đến C2</title>
+    <title>@ViewData["Title"] - @PageLabel("AppName", "EnglishHub — Học tiếng Anh online miễn phí từ A1 đến C2")</title>
     <meta name="description" content="Học tiếng Anh cho người Việt từ A1 đến C2: từ vựng, ngữ pháp, đọc, nghe và luyện thi." />
     <meta name="theme-color" content="#15151f" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,31 +19,31 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body class="landing-page @ViewData["PageClass"]">
-    <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+    <a class="skip-link" href="#main-content">@PageLabel("SkipToContent", "Chuyển đến nội dung chính")</a>
     <div aria-hidden="true" class="bg-scene-container">
         <img src="~/images/night.jpg" asp-append-version="true" alt="" class="bg-scene-img" fetchpriority="high" />
         <div class="scene-scrim"></div>
     </div>
     <partial name="_LandingNavigation" />
-    <button type="button" class="scene-motion-toggle" data-scene-motion aria-pressed="false" hidden>Dừng nền</button>
+    <button type="button" class="scene-motion-toggle" data-scene-motion aria-pressed="false" data-pause-label="@PageLabel("GrammarPauseBackground", "Dừng nền")" data-resume-label="@PageLabel("GrammarResumeBackground", "Chuyển động nền")" data-pause-description="@PageLabel("GrammarPauseBackgroundDescription", "Tạm dừng chuyển động ảnh nền")" data-resume-description="@PageLabel("GrammarResumeBackgroundDescription", "Bật chuyển động ảnh nền")" hidden>@PageLabel("GrammarPauseBackground", "Dừng nền")</button>
     <div class="site-wrapper">
         <header class="site-header">
             <a asp-controller="Home" asp-action="Index" class="brand-logo"><img src="~/images/learning-mascot.png" width="40" height="40" alt="" />EnglishHub</a>
-            <nav class="nav-actions" aria-label="Điều hướng chính">
-                <a href="@Url.Action("Index", "Home")#levels" class="nav-link-custom d-none-mobile">Lộ trình A1–C2</a>
-                <span class="language-label d-none-mobile" lang="vi" aria-label="Ngôn ngữ: Tiếng Việt">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg> VI
+            <nav class="nav-actions" aria-label="@PageLabel("GrammarMainNavigation", "Điều hướng chính")">
+                <a href="@Url.Action("Index", "Home")#levels" class="nav-link-custom d-none-mobile">@PageLabel("GrammarLevelsPath", "Lộ trình A1–C2")</a>
+                <span class="language-label d-none-mobile" lang="@(isGrammarPage ? culture : "vi")" aria-label="@(isGrammarPage ? L["Language"].Value + ": " + culture.ToUpperInvariant() : "Ngôn ngữ: Tiếng Việt")">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg> @(isGrammarPage ? culture.ToUpperInvariant() : "VI")
                 </span>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <a asp-controller="Account" asp-action="Profile" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="nav-link-custom">Hồ sơ</a>
-                    <a asp-controller="Account" asp-action="ChangePassword" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="nav-link-custom d-none-mobile">Đổi mật khẩu</a>
+                    <a asp-controller="Account" asp-action="Profile" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="nav-link-custom">@PageLabel("Profile", "Hồ sơ")</a>
+                    <a asp-controller="Account" asp-action="ChangePassword" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="nav-link-custom d-none-mobile">@PageLabel("ChangePassword", "Đổi mật khẩu")</a>
                     @if (User.IsInRole("Admin"))
                     {
                         <a asp-controller="AdminUsers" asp-action="Index" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="nav-link-custom">Người dùng</a>
                     }
                     <form asp-controller="Account" asp-action="Logout" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" method="post" class="account-nav-form">
-                        <button type="submit" class="btn-login">Đăng xuất</button>
+                        <button type="submit" class="btn-login">@PageLabel("Logout", "Đăng xuất")</button>
                     </form>
                 }
                 else
@@ -51,10 +56,10 @@
             @RenderBody()
         </main>
         <footer class="site-footer">
-            <span>EnglishHub — học tiếng Anh online miễn phí</span>
-            <nav aria-label="Liên kết cuối trang">
-                <a href="@Url.Action("Index", "Home")#levels" class="footer-link">Lộ trình học</a>
-                <a href="@Url.Action("Index", "Home")#faq" class="footer-link">Hỏi đáp &amp; Hỗ trợ</a>
+            <span>@PageLabel("GrammarSiteFooter", "EnglishHub — học tiếng Anh online miễn phí")</span>
+            <nav aria-label="@PageLabel("GrammarFooterNavigation", "Liên kết cuối trang")">
+                <a href="@Url.Action("Index", "Home")#levels" class="footer-link">@PageLabel("GrammarLearningPath", "Lộ trình học")</a>
+                <a href="@Url.Action("Index", "Home")#faq" class="footer-link">@PageLabel("GrammarHelp", "Hỏi đáp & Hỗ trợ")</a>
             </nav>
         </footer>
     </div>

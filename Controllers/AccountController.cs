@@ -107,11 +107,16 @@ public sealed class AccountController(
             CookieAuthenticationDefaults.AuthenticationScheme,
             new ClaimsPrincipal(identity));
 
-        return Url.IsLocalUrl(model.ReturnUrl)
-            ? LocalRedirect(model.ReturnUrl)
+        var canReturn = Url.IsLocalUrl(model.ReturnUrl) &&
+            (user.Role != UserRole.Student ||
+             !Url.Content(model.ReturnUrl!).StartsWith("/Admin", StringComparison.OrdinalIgnoreCase));
+        return canReturn
+            ? LocalRedirect(model.ReturnUrl!)
             : user.Role == UserRole.Admin
                 ? RedirectToAction("Index", "AdminUsers", CultureRoute())
-                : RedirectToAction(nameof(Profile), CultureRoute());
+                : user.Role == UserRole.Student
+                    ? RedirectToAction("Index", "Home", CultureRoute())
+                    : RedirectToAction(nameof(Profile), CultureRoute());
     }
 
     [HttpGet]

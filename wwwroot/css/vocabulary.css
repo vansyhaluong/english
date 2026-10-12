@@ -41,6 +41,7 @@
 .vocab-deck-heading { display: flex; align-items: flex-start; gap: 10px; }
 .vocab-deck-icon { width: 40px; height: 40px; display: grid; place-items: center; flex-shrink: 0; border-radius: 8px; background: rgb(255 255 255 / 7%); font-size: 22px; }
 .vocab-deck h3 { font-size: 14px; line-height: 1.5; font-weight: 700; }
+.vocab-deck-heading > div { min-width: 0; overflow-wrap: anywhere; }
 .vocab-deck-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 12px; color: var(--foreground-muted); }
 .vocab-badge { border-radius: 20px; background: #ddd0f3; color: #322445; padding: 1px 9px; font-size: 11px; font-weight: 800; }
 .vocab-deck-description { font-size: 12px; line-height: 1.65; color: var(--foreground-muted); margin-top: 10px; margin-bottom: 8px; }
@@ -50,6 +51,7 @@
 .vocab-study[hidden] { display: none; }
 .vocab-words { border-top: 1px solid var(--vocab-border); color: var(--foreground-muted); font-size: 12px; }
 .vocab-words summary { cursor: pointer; padding-top: 8px; }
+.vocab-words ol { padding: 12px 0 12px 1.5rem; overflow-wrap: anywhere; }
 .vocab-words dl > div { padding: 12px 0; border-bottom: 1px solid var(--vocab-border); }
 .vocab-words dt { color: var(--foreground); font-size: 16px; font-weight: 700; }
 .vocab-words dd strong, .vocab-words dd [data-example] { display: block; margin-top: 5px; }

@@ -104,12 +104,23 @@ if (baseIndex >= 0) {
     }
 }
 if (!args.Contains("--database")) { Console.WriteLine("DB checks NOT RUN (use -Database)"); return; }
+if (baseIndex >= 0) { var target = new Uri(args[baseIndex + 1]); Check(target.IsLoopback && target.Port == 5112, "database HTTP checks require dedicated test app port 5112"); }
 var config = new ConfigurationBuilder().SetBasePath(root).AddJsonFile("appsettings.json").AddJsonFile("appsettings.Development.json", true).AddEnvironmentVariables().Build();
 var connection = new SqlConnectionStringBuilder(config.GetConnectionString("DefaultConnection")) { ConnectTimeout = 15 };
+Check(!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")) &&
+    connection.InitialCatalog == "English_P2_Test" && connection.DataSource == "LAPTOP-8RQB10J4",
+    "mutation requires explicit English_P2_Test environment override");
 var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlServer(connection.ConnectionString).Options;
 await using var context = new ApplicationDbContext(options);
 try { await context.Database.OpenConnectionAsync(); }
 catch (SqlException e) { Console.WriteLine("BLOCKED DB connection: SqlException " + e.Number); Environment.ExitCode = 2; return; }
+await using (var guard = context.Database.GetDbConnection().CreateCommand()) {
+    guard.CommandText = "SELECT DB_NAME(), CONVERT(nvarchar(128), SERVERPROPERTY('ServerName'))";
+    await using var identity = await guard.ExecuteReaderAsync();
+    await identity.ReadAsync();
+    Check(identity.GetString(0) == "English_P2_Test" && identity.GetString(1) == "LAPTOP-8RQB10J4",
+        "connected database verified as LAPTOP-8RQB10J4/English_P2_Test before mutation");
+}
 await context.Database.CloseConnectionAsync();
 var fixtureTitle = "P203-" + Guid.NewGuid().ToString("N");
 var ids = new List<int>();
@@ -235,6 +246,17 @@ try {
         var detailDom = new HtmlParser().ParseDocument(detailPage);
         Check(detailDom.QuerySelectorAll(".grammar-richtext strong").Length > 0 && detailDom.QuerySelectorAll(".grammar-richtext table").Length > 0 && detailDom.QuerySelectorAll(".grammar-richtext [onclick], .grammar-richtext script").Length == 0, "HTTP detail renders safe bold/table and strips XSS");
         Check(detailPage.Contains("grammar-practice") && !detailPage.Contains("type=\"radio\""), "HTTP Practice placeholder without exercises");
+        foreach (var language in new[] { "vi", "en" }) {
+            var localized = new HtmlParser().ParseDocument(await Page(learner, "/grammar/" + httpItem.Id + "?culture=" + language));
+            var resourceFile = language == "en" ? "SharedResource.en.resx" : "SharedResource.resx";
+            var labels = XDocument.Load(Path.Combine(root, "Resources", resourceFile)).Root!.Elements("data").ToDictionary(e => e.Attribute("name")!.Value, e => e.Element("value")!.Value);
+            foreach (var (selector, key) in new[] { ("#knowledge-tab", "GrammarTheory"), ("#practice-tab", "GrammarPractice"), (".grammar-back", "GrammarBackToDesk"), (".grammar-tree > summary", "GrammarRoadmap") })
+                Check(localized.QuerySelector(selector)!.TextContent.Contains(labels[key]), "HTTP " + language + " " + key);
+            Check(localized.QuerySelector(".grammar-sidebar")!.GetAttribute("aria-label") == labels["GrammarCatalog"], "HTTP " + language + " catalog accessible label");
+            Check(localized.QuerySelector(".grammar-type-toggle")!.GetAttribute("data-plain-label") == labels["GrammarUsePlainFont"], "HTTP " + language + " font label");
+        }
+        foreach (var action in new[] { "Create", "Edit/" + httpItem.Id, "Delete/" + httpItem.Id })
+            Check((await admin.PostAsync("/AdminGrammar/" + action, new FormUrlEncodedContent(new Dictionary<string,string>()))).StatusCode == HttpStatusCode.BadRequest, "HTTP Admin Grammar CSRF " + action);
         var progressUrl = "/grammar/" + httpItem.Id + "/learned";
         Check((await learner.PostAsync(progressUrl, new FormUrlEncodedContent(new Dictionary<string,string> { ["IsLearned"] = "true" }))).StatusCode == HttpStatusCode.BadRequest, "HTTP progress missing antiforgery rejected");
         var progressForm = new Dictionary<string,string> { ["IsLearned"] = "true", ["UserId"] = students[1].ToString(), ["__RequestVerificationToken"] = Token(detailPage) };
@@ -253,6 +275,19 @@ try {
         Check((await admin.PostAsync("/AdminGrammar/Edit/" + httpItem.Id, new FormUrlEncodedContent(form))).StatusCode == HttpStatusCode.Redirect, "HTTP Admin edit");
         context.ChangeTracker.Clear();
         Check((await context.LearningItems.AsNoTracking().SingleAsync(x => x.Id == httpItem.Id)).Title.EndsWith("-edited"), "HTTP edit persisted");
+        Check((await admin.PostAsync("/AdminGrammar/Edit/" + httpItem.Id, new FormUrlEncodedContent(form))).StatusCode == HttpStatusCode.OK, "HTTP Grammar stale edit blocked");
+        editPage = await Page(admin, "/AdminGrammar/Edit/" + httpItem.Id);
+        form["Input.RowVersion"] = new HtmlParser().ParseDocument(editPage).QuerySelector("input[name='Input.RowVersion']")!.GetAttribute("value")!;
+        form["__RequestVerificationToken"] = Token(editPage); form["Input.IsVisible"] = "false";
+        Check((await admin.PostAsync("/AdminGrammar/Edit/" + httpItem.Id, new FormUrlEncodedContent(form))).StatusCode == HttpStatusCode.Redirect, "HTTP Grammar hide");
+        Check((await learner.GetAsync("/grammar/" + httpItem.Id)).StatusCode == HttpStatusCode.NotFound, "HTTP hidden Grammar detail rejected");
+        Check((await learner.PostAsync(progressUrl, new FormUrlEncodedContent(progressForm))).StatusCode == HttpStatusCode.NotFound, "HTTP hidden Grammar progress rejected");
+        var deletePage = await Page(admin, "/AdminGrammar/Delete/" + httpItem.Id);
+        var deleteForm = new Dictionary<string,string> { ["Input.RowVersion"] = new HtmlParser().ParseDocument(deletePage).QuerySelector("input[name='Input.RowVersion']")!.GetAttribute("value")!, ["__RequestVerificationToken"] = Token(deletePage) };
+        Check((await admin.PostAsync("/AdminGrammar/Delete/" + httpItem.Id, new FormUrlEncodedContent(deleteForm))).StatusCode == HttpStatusCode.Redirect, "HTTP Grammar soft delete");
+        context.ChangeTracker.Clear();
+        Check((await context.LearningItems.AsNoTracking().SingleAsync(x => x.Id == httpItem.Id)).IsDeleted && await context.GrammarLessons.AnyAsync(x => x.LearningItemId == httpItem.Id), "HTTP Grammar deleted parent and retained content");
+        Check((await learner.GetAsync("/grammar/" + httpItem.Id)).StatusCode == HttpStatusCode.NotFound, "HTTP deleted Grammar detail rejected");
     }
 }
 finally {
