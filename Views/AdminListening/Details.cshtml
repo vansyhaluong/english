@@ -1,0 +1,24 @@
+@model English.Models.ViewModels.Listening.ListeningDetailsViewModel
+@{ Layout = "_AdminLayout"; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; ViewData["Title"] = Model.Title; }
+<section class="account-page"><div class="management-card">
+    <h1>@Model.Title</h1><div asp-validation-summary="All" class="account-validation" role="alert"></div>
+    <dl class="account-readonly">
+        <div><dt>@L["ClassificationDescription"]</dt><dd>@Model.Description</dd></div>
+        <div><dt>@L["Levels"]</dt><dd>@Model.Level</dd></div>
+        <div><dt>@L["Topics"]</dt><dd>@Model.Topic</dd></div>
+        <div><dt>@L[Model.YouTubeVideoId is null ? "ListeningLegacyMedia" : "ListeningYouTubeUrl"]</dt><dd>@Model.AudioUrl</dd></div>
+        <div><dt>@L["VocabStatus"]</dt><dd>@L[Model.IsDeleted ? "VocabDeleted" : Model.IsVisible ? "VocabVisible" : "VocabHidden"]</dd></div>
+    </dl>
+    @if (Model.AudioLocked) { <p>@L["ListeningVideoLocked"]</p> }
+    @if (!Model.IsDeleted)
+    {
+        <p><a asp-action="ImportSubtitle" asp-route-id="@Model.Id" asp-route-culture="@culture">@L["ListeningSubtitleImport"]</a></p>
+        <p><a asp-action="Edit" asp-route-id="@Model.Id" asp-route-culture="@culture">@L["ClassificationEdit"]</a> | <a asp-action="Delete" asp-route-id="@Model.Id" asp-route-culture="@culture">@L["ListeningDelete"]</a></p>
+        <form asp-action="Visibility" asp-route-id="@Model.Id" asp-route-culture="@culture" method="post" class="account-form">
+            <input type="hidden" name="Input.RowVersion" value="@Convert.ToBase64String(Model.RowVersion)" />
+            <input type="hidden" name="Input.IsVisible" value="@((!Model.IsVisible).ToString().ToLowerInvariant())" />
+            <button class="btn-brand-primary" type="submit">@L[Model.IsVisible ? "ListeningHide" : "ListeningShow"]</button>
+        </form>
+    }
+    <p><a asp-action="Index" asp-route-culture="@culture">@L["ClassificationBack"]</a></p>
+</div></section>

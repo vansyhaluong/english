@@ -353,26 +353,33 @@ Mỗi bài có:
 
 - Title
 - Description
-- AudioURL
-- Transcript
-- Difficulty hoặc Level nếu cần
+- URL video YouTube (lưu trong trường `AudioUrl` hiện có; nguồn audio legacy được giữ tương thích).
+- Phụ đề SRT/VTT, import thành các bản ghi `TranscriptCue`.
+- Level và Topic bắt buộc theo baseline hiện tại trong PLAN/TASKS.
 
 ## FR-14 — Luyện nghe
 
 Trang bài nghe gồm:
 
-- Audio player.
+- Video player sử dụng YouTube IFrame Player API; có phát/tạm dừng, tua và thời gian.
 - Tiêu đề.
 - Nội dung mô tả.
-- Câu hỏi nghe hiểu.
+- Transcript tương tác, nút câu trước/nghe lại/câu sau.
+- Đánh dấu/bỏ đánh dấu đã học theo tài khoản Student.
+- Danh sách hỗ trợ tìm tiêu đề, lọc Level/Topic và phân trang; Student chỉ đọc bài hiện, chưa xóa.
+- Câu hỏi nghe hiểu nối phase P4, chưa nằm trong player P3-01 hiện tại.
 
 ## FR-15 — Transcript
 
-Học viên có thể chủ động bấm xem transcript.
+Transcript mặc định hiển thị khi bài có cue; học viên có thể ẩn/hiện. Khi phát hoặc tua, câu hiện tại được highlight và tự cuộn; bấm câu để seek theo thời gian millisecond.
 
-Transcript không bắt buộc hiển thị ngay từ đầu.
+Admin import SRT/VTT UTF-8 tối đa 1 MB theo tập định dạng hỗ trợ trong PLAN/TASKS. Parser lưu Sequence/StartMs/EndMs/Text vào `TranscriptCue`; không lưu file phụ đề tải lên mới. Nội dung hiển thị dạng văn bản thuần, không thực thi HTML. Thay cue và tăng revision trong transaction; cue giống hệt không ghi lại.
+
+Ghi nhận nghiệm thu 2026-10-15: người dùng xác nhận đã kiểm thử thủ công Listening dùng YouTube IFrame Player API và hoạt động ổn. Đây là xác nhận chức năng tổng quát, không thay cho PASS từng tiêu chí Admin CRUD, URL validation, parser/rollback/concurrency, progress, HTTP phân quyền/CSRF hoặc mobile. Xem trạng thái và giới hạn chi tiết tại P3-01 trong `docs/TASKS.md`.
 
 ## FR-16 — Câu hỏi Listening
+
+Phạm vi bài tập/chấm điểm thuộc P4; chưa nghiệm thu hoàn thành cùng player P3-01.
 
 Hỗ trợ tối thiểu:
 
@@ -681,9 +688,11 @@ Admin CRUD:
 
 - Title
 - Description
-- AudioURL
-- Transcript
-- Questions
+- URL video YouTube hợp lệ; khi có cue/revision/file phụ đề thì không đổi Video ID.
+- Level và Topic bắt buộc.
+- Import phụ đề SRT/VTT thành `TranscriptCue`.
+- Ẩn/hiện và xóa mềm; mutation yêu cầu quyền Admin, tài khoản hoạt động và chống CSRF phía server.
+- Questions thuộc P4, chưa triển khai/nghiệm thu trong P3-01 hiện tại.
 
 ## FR-39 — Quản lý Speaking
 

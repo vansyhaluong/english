@@ -1,0 +1,95 @@
+﻿/* Opt-in native-select enhancement. Navy defaults match EnglishHub.
+   Set data-theme="light|dark" on the select or an ancestor to choose a theme. */
+.eh-combobox {
+    --cb-surface: #142035; --cb-input: #18263c; --cb-text: #e7edf6;
+    --cb-muted: #9caec4; --cb-border: #94adc32e; --cb-hover: #24364c;
+    --cb-selected: #20384e; --cb-ring: #8bbbdc; --cb-shadow: #02081533;
+    --cb-error: #f08c9b; --cb-scroll: #52667e;
+    position: relative; width: 100%; min-width: 0; color-scheme: dark;
+}
+:where([data-theme="light"], .light) .eh-combobox,
+.eh-combobox[data-theme="light"] {
+    --cb-surface: #fff; --cb-input: #f7f9fc; --cb-text: #17283c;
+    --cb-muted: #64748b; --cb-border: #dce3eb; --cb-hover: #edf3f9;
+    --cb-selected: #e8f1fa; --cb-ring: #6e9abb; --cb-shadow: #16283e14;
+    --cb-error: #c53e54; --cb-scroll: #abbaca; color-scheme: light;
+}
+:where([data-theme="dark"], .dark) .eh-combobox,
+.eh-combobox[data-theme="dark"] {
+    --cb-surface: #142035; --cb-input: #18263c; --cb-text: #e7edf6;
+    --cb-muted: #9caec4; --cb-border: #94adc32e; --cb-hover: #24364c;
+    --cb-selected: #20384e; --cb-ring: #8bbbdc; --cb-shadow: #02081533;
+    --cb-error: #f08c9b; --cb-scroll: #52667e; color-scheme: dark;
+}
+.eh-combobox > .eh-combobox__native {
+    position: absolute; width: 1px; height: 1px; min-height: 0; padding: 0;
+    margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.eh-combobox .eh-combobox__control {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px;
+    padding: 10px 14px; border: 1px solid var(--cb-border); border-radius: 24px;
+    background: var(--cb-surface); color: var(--cb-text); font: inherit;
+    font-size: 14px; line-height: 20px; font-weight: 500; text-align: left;
+    cursor: pointer; box-shadow: 0 1px 2px var(--cb-shadow);
+    transition: background .12s, border-color .12s, box-shadow .12s;
+}
+.eh-combobox .eh-combobox__value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.eh-combobox .eh-combobox__chevron {
+    width: 16px; height: 16px; flex: none; fill: none; stroke: var(--cb-muted);
+    stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
+.eh-combobox .eh-combobox__control:not(:disabled):hover { background: var(--cb-input); border-color: var(--cb-ring); }
+.eh-combobox .eh-combobox__control:focus-visible { outline: 2px solid var(--cb-ring); outline-offset: 2px; }
+.eh-combobox .eh-combobox__control[aria-expanded="true"] { border-color: var(--cb-ring); }
+.eh-combobox .eh-combobox__control[aria-invalid="true"] { border-color: var(--cb-error); }
+.eh-combobox .eh-combobox__control:disabled { opacity: .5; cursor: not-allowed; }
+.eh-combobox .eh-combobox__popup {
+    position: fixed; z-index: 1000; inset: auto; display: flex; flex-direction: column; gap: 4px;
+    box-sizing: border-box; max-height: 360px; overflow: hidden; padding: 4px; margin: 0; min-width: 0;
+    border: 1px solid var(--cb-border); border-radius: 12px; background: var(--cb-surface);
+    box-shadow: 0 4px 6px -1px var(--cb-shadow), 0 2px 4px -2px var(--cb-shadow);
+    color: var(--cb-text); font: inherit; font-size: 14px; line-height: 20px;
+    transform-origin: top center;
+}
+.eh-combobox .eh-combobox__popup[data-side="top"] { transform-origin: bottom center; }
+.eh-combobox .eh-combobox__popup::backdrop { background: transparent; }
+.eh-combobox .eh-combobox__popup[hidden] { display: none; }
+.eh-combobox .eh-combobox__search {
+    flex: none; box-sizing: border-box; width: 100%; min-width: 0; min-height: 34px;
+    margin: 0; padding: 6px 8px; border: 1px solid var(--cb-border); border-radius: 8px;
+    background: var(--cb-input); color: var(--cb-text); font: inherit; font-size: 14px; line-height: 20px;
+    outline: none; box-shadow: none;
+}
+.eh-combobox .eh-combobox__search::placeholder { color: var(--cb-muted); opacity: 1; }
+.eh-combobox .eh-combobox__search:focus { border-color: var(--cb-ring); outline: none; box-shadow: inset 0 0 0 1px var(--cb-border); }
+/* Scroll inside the frame so neither scrollbars nor options clip its corners. */
+.eh-combobox .eh-combobox__list {
+    display: flex; flex-direction: column; gap: 0; min-height: 0; border-radius: 8px;
+    overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
+    scrollbar-width: thin; scrollbar-color: var(--cb-scroll) transparent; padding: 0; margin: 0;
+}
+@supports selector(::-webkit-scrollbar) {
+    .eh-combobox .eh-combobox__list { scrollbar-width: auto; scrollbar-color: auto; }
+}
+.eh-combobox .eh-combobox__list::-webkit-scrollbar { width: 4px; }
+.eh-combobox .eh-combobox__list::-webkit-scrollbar-track { background: transparent; }
+.eh-combobox .eh-combobox__list::-webkit-scrollbar-thumb { background: var(--cb-scroll); border-radius: 4px; }
+.eh-combobox .eh-combobox__list::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+.eh-combobox .eh-combobox__option {
+    position: relative; flex: none; padding: 6px 28px 6px 8px; border-radius: 8px;
+    background: transparent; margin: 0; min-height: 32px; box-sizing: border-box;
+    overflow-wrap: anywhere; cursor: default; font-weight: 400;
+}
+.eh-combobox .eh-combobox__option[aria-selected="true"] { background: var(--cb-selected); }
+.eh-combobox .eh-combobox__option[aria-selected="true"]::after {
+    content: ''; position: absolute; right: 12px; top: 50%; width: 4px; height: 8px;
+    border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-65%) rotate(45deg);
+}
+.eh-combobox .eh-combobox__option.is-active,
+.eh-combobox .eh-combobox__option:not([aria-disabled="true"]):hover { background: var(--cb-hover); }
+.eh-combobox .eh-combobox__option[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+.eh-combobox .eh-combobox__empty { padding: 20px 8px; text-align: center; color: var(--cb-muted); font-weight: 400; }
+.eh-combobox-field { display: grid; gap: 6px; min-width: 0; }
+@media (pointer: coarse) { .eh-combobox .eh-combobox__option { min-height: 40px; padding-block: 10px; } }
+@media (prefers-reduced-motion: reduce) { .eh-combobox .eh-combobox__control { transition: none; } }

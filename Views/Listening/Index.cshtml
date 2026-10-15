@@ -1,52 +1,96 @@
+@using System.Text.Json
 @{
-    ViewData["Title"] = "Nghe & Shadowing";
+    ViewData["Title"] = L["Listening"].Value;
     ViewData["PageClass"] = "listening-page";
-    var lessons = new[]
-    {
-        (Title: "A morning in London", Level: "A1", Topic: "Cuộc sống hằng ngày", Art: "city", Symbol: "☀", Lines: 16),
-        (Title: "At the coffee shop", Level: "A1", Topic: "Giao tiếp", Art: "coffee", Symbol: "☕", Lines: 18),
-        (Title: "My daily routine", Level: "A1", Topic: "Cuộc sống hằng ngày", Art: "home", Symbol: "⌂", Lines: 24),
-        (Title: "A weekend by the sea", Level: "A2", Topic: "Du lịch", Art: "sea", Symbol: "≈", Lines: 22),
-        (Title: "Meeting someone new", Level: "A2", Topic: "Giao tiếp", Art: "talk", Symbol: "❝", Lines: 20),
-        (Title: "Small habits, big changes", Level: "B1", Topic: "Phát triển bản thân", Art: "garden", Symbol: "✿", Lines: 32),
-        (Title: "Finding your way around", Level: "A2", Topic: "Du lịch", Art: "city", Symbol: "↗", Lines: 26),
-        (Title: "The perfect cup of tea", Level: "B1", Topic: "Văn hóa", Art: "coffee", Symbol: "☕", Lines: 28),
-        (Title: "A place to call home", Level: "B1", Topic: "Cuộc sống hằng ngày", Art: "home", Symbol: "⌂", Lines: 34),
-        (Title: "Why we love to travel", Level: "B2", Topic: "Du lịch", Art: "sea", Symbol: "≈", Lines: 42),
-        (Title: "The art of a good conversation", Level: "B2", Topic: "Giao tiếp", Art: "talk", Symbol: "❝", Lines: 38),
-        (Title: "Learning something every day", Level: "B1", Topic: "Phát triển bản thân", Art: "garden", Symbol: "✿", Lines: 30),
-        (Title: "Cities of the future", Level: "C1", Topic: "Khoa học & đời sống", Art: "city", Symbol: "↗", Lines: 56),
-        (Title: "Food brings us together", Level: "B2", Topic: "Văn hóa", Art: "coffee", Symbol: "☕", Lines: 40),
-        (Title: "The meaning of belonging", Level: "C2", Topic: "Văn hóa", Art: "home", Symbol: "⌂", Lines: 64),
-        (Title: "Protecting our oceans", Level: "C1", Topic: "Thiên nhiên", Art: "sea", Symbol: "≈", Lines: 48),
-        (Title: "How stories shape our world", Level: "C2", Topic: "Văn hóa", Art: "talk", Symbol: "❝", Lines: 62),
-        (Title: "A walk in the countryside", Level: "A2", Topic: "Thiên nhiên", Art: "garden", Symbol: "✿", Lines: 24)
-    };
+    var keys = new[] { "Loading", "LoadError", "Unavailable", "Session", "HideTranscript", "ShowTranscript", "Learned", "NotLearned", "Mark", "Unmark", "Saving", "Saved", "SaveError", "Page", "Count", "Cues", "Video", "VideoPending", "VideoReadyError", "VideoApiError", "VideoUnavailable", "VideoEmbedError", "VideoIdentityError", "VideoError" };
+    var labels = keys.ToDictionary(key => key, key => L["ListeningStudent" + key].Value);
+    var english = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "en";
+    labels["Play"] = english ? "Play" : "Phát";
+    labels["Pause"] = english ? "Pause" : "Tạm dừng";
+    labels["Seek"] = english ? "Playback position" : "Vị trí phát";
+    labels["PreviousCue"] = english ? "Previous sentence" : "Câu trước";
+    labels["ReplayCue"] = english ? "Replay sentence" : "Nghe lại câu này";
+    labels["NextCue"] = english ? "Next sentence" : "Câu sau";
 }
-@section Styles { <link rel="stylesheet" href="~/css/listening.css" asp-append-version="true" /> }
-<section class="listening" aria-labelledby="listening-title">
-    <header class="listening-heading">
-        <div class="listening-title"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2 M3 13h4v8H3z M17 13h4v8h-4z" /></svg><h1 id="listening-title">Nghe &amp; Shadowing</h1></div>
-        <a class="listening-guide-link" href="#listening-guide"><span aria-hidden="true">♫</span> Cách luyện nghe</a>
-    </header>
-    <div class="listening-filters" role="search" aria-label="Tìm bài nghe" hidden data-listening-filters>
-        <label class="listening-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><span class="visually-hidden">Tìm theo tên hoặc cấp độ</span><input type="search" id="listening-search" placeholder="Tìm theo tên hoặc cấp độ (A1, B1…)" maxlength="150" /></label>
-        <label><span class="visually-hidden">Lọc theo cấp độ</span><select id="listening-level"><option value="">Tất cả cấp độ</option>@foreach (var level in new[] { "A1", "A2", "B1", "B2", "C1", "C2" }) { <option>@level</option> }</select></label>
-        <label><span class="visually-hidden">Sắp xếp bài nghe</span><select id="listening-sort"><option value="default">Mặc định</option><option value="level">Cấp độ A1 → C2</option><option value="title">Tên bài A → Z</option></select></label>
+@section Styles {
+    <link rel="stylesheet" href="~/css/listening.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/combobox.css" asp-append-version="true" />
+}
+<section class="listening" aria-labelledby="listening-title" data-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+    <header id="listening-heading" class="listening-heading"><h1 id="listening-title"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2M3 13h4v8H3zM17 13h4v8h-4z" /></svg>@L["Listening"]</h1><p>@L["ListeningStudentIntro"]</p></header>
+    <noscript><p>@L["ListeningStudentJavascript"]</p></noscript>
+    <div id="listening-message" role="status" aria-live="polite"></div>
+    <button id="listening-retry" type="button" hidden>@L["ListeningStudentRetry"]</button>
+    <div id="listening-catalog">
+        <form id="listening-filters" class="listening-filters" role="search">
+            <label class="listening-search">@L["ListeningSearch"]<input name="Search" type="search" maxlength="300" /></label>
+            <div class="eh-combobox-field">
+                <label for="listening-level">@L["Levels"]</label>
+                <select id="listening-level" name="LevelId" data-eh-combobox><option value="">@L["ListeningStudentAllLevels"]</option></select>
+            </div>
+            <label>@L["Topics"]<select name="TopicId"><option value="">@L["ListeningStudentAllTopics"]</option></select></label>
+            <button type="submit">@L["ListeningStudentSearch"]</button>
+            <button type="button" id="listening-reset">@L["ListeningStudentReset"]</button>
+        </form>
+        <p id="listening-count" class="listening-muted" role="status"></p>
+        <div id="listening-grid" class="listening-grid"></div>
+        <p id="listening-empty" class="listening-panel" hidden>@L["ListeningEmpty"]</p>
+        <nav id="listening-pagination" class="listening-actions" aria-label="@L["ListeningStudentPagination"]" hidden>
+            <button type="button" id="listening-previous">@L["ListeningStudentPrevious"]</button>
+            <span id="listening-page"></span>
+            <button type="button" id="listening-next">@L["ListeningStudentNext"]</button>
+        </nav>
     </div>
-    <p class="listening-notice">Bộ sưu tập mẫu · Audio và tiến độ học chưa khả dụng.</p>
-    <div class="listening-grid">
-        @for (var i = 0; i < lessons.Length; i++)
-        {
-            var lesson = lessons[i];
-            <article class="listening-card" data-title="@lesson.Title" data-level="@lesson.Level" data-order="@i">
-                <div class="listening-cover listening-cover--@lesson.Art" aria-hidden="true"><span class="listening-level">@lesson.Level</span><span class="listening-cover-symbol">@lesson.Symbol</span><span class="listening-cover-topic">@lesson.Topic</span><span class="listening-wave">▂ ▅ ▃ ▇ ▄ ▂ ▆ ▃ ▅ ▂</span></div>
-                <div class="listening-card-body"><h2 lang="en">@lesson.Title</h2><p><svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2 M12 19v3 M8 22h8"/></svg> @lesson.Lines câu <span>· EnglishHub</span></p></div>
-            </article>
-        }
+    <div id="listening-detail" hidden>
+        <a id="listening-back" class="listening-back" href="?">@L["ListeningStudentBack"]</a>
+        <article id="listening-lesson" hidden>
+            <header class="listening-lesson-header">
+                <div class="listening-lesson-info">
+                    <h1 id="listening-lesson-title" tabindex="-1"></h1>
+                    <p id="listening-meta" class="listening-meta"></p>
+                    <p id="listening-description" class="listening-muted"></p>
+                </div>
+                <div class="listening-progress-actions">
+                    <span id="listening-progress" class="listening-badge"></span>
+                    <button id="listening-mark" type="button" aria-pressed="false"></button>
+                    <span id="listening-save-status" role="status" aria-live="polite"></span>
+                </div>
+            </header>
+            <div class="listening-workspace">
+                <div class="listening-player-panel">
+                    <audio id="listening-audio" controls controlslist="noplaybackrate nodownload" preload="metadata" aria-label="@L["ListeningStudentAudio"]"></audio>
+                    <p id="listening-audio-error" role="alert" hidden>@L["ListeningStudentAudioError"]</p>
+                    <div id="listening-video" class="listening-video" hidden></div>
+                    <div id="listening-player-controls" class="listening-player-controls" hidden>
+                        <button id="listening-play" type="button" aria-label="@labels["Play"]" title="@labels["Play"]" disabled>
+                            <svg class="listening-play-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m8 5 11 7-11 7Z" /></svg>
+                            <svg class="listening-pause-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg>
+                        </button>
+                        <input id="listening-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="@labels["Seek"]" disabled />
+                        <span id="listening-playback-time" class="listening-playback-time">0:00 / 0:00</span>
+                    </div>
+                    <p id="listening-video-status" role="status" aria-live="polite" hidden></p>
+                </div>
+                <section class="listening-transcript-panel" aria-labelledby="listening-transcript-title">
+                    <div class="listening-transcript-heading">
+                        <div><h2 id="listening-transcript-title">@L["ListeningStudentTranscript"]</h2><span id="listening-cue-count" class="listening-muted"></span></div>
+                        <button id="listening-toggle" type="button" aria-expanded="true" aria-controls="listening-transcript">@L["ListeningStudentHideTranscript"]</button>
+                    </div>
+                    <p id="listening-no-cues" hidden>@L["ListeningStudentNoCues"]</p>
+                    <p id="listening-cue-hint" class="listening-muted">@L["ListeningStudentCueHint"]</p>
+                    <div id="listening-transcript" class="listening-transcript" role="region" aria-label="@L["ListeningStudentTranscript"]" tabindex="0"><ol id="listening-cues"></ol></div>
+                    <div id="listening-cue-controls" class="listening-cue-controls" role="group" aria-label="@L["ListeningStudentTranscript"]" hidden>
+                        <button id="listening-cue-previous" type="button" aria-label="@labels["PreviousCue"]" title="@labels["PreviousCue"]" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 5v14m12-14L8 12l10 7Z" /></svg></button>
+                        <button id="listening-cue-replay" type="button" aria-label="@labels["ReplayCue"]" title="@labels["ReplayCue"]" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6" /></svg></button>
+                        <button id="listening-cue-next" type="button" aria-label="@labels["NextCue"]" title="@labels["NextCue"]" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 5v14M6 5l10 7-10 7Z" /></svg></button>
+                    </div>
+                </section>
+            </div>
+        </article>
     </div>
-    <div class="listening-empty" hidden><h2>Không tìm thấy bài nghe</h2><p>Thử tên khác hoặc chọn tất cả cấp độ.</p><button type="button" data-listening-reset>Xóa bộ lọc</button></div>
-    <p class="listening-count" role="status" aria-live="polite">@lessons.Length bài nghe mẫu</p>
-    <details class="listening-guide" id="listening-guide"><summary>Cách luyện nghe &amp; shadowing</summary><ol><li>Chọn bài phù hợp với trình độ của bạn.</li><li>Nghe một lượt để hiểu nội dung, sau đó nghe lại từng câu.</li><li>Đọc theo người nói, chú ý cách phát âm và ngữ điệu.</li></ol><p>Đây là giao diện bộ sưu tập mẫu. Bài nghe sẽ mở khi có audio.</p></details>
 </section>
-@section Scripts { <script src="~/js/listening.js" asp-append-version="true" defer></script> }
+<script id="listening-labels" type="application/json">@Html.Raw(JsonSerializer.Serialize(labels))</script>
+@section Scripts {
+    <script src="~/js/combobox.js" asp-append-version="true" defer></script>
+    <script src="~/js/listening.js" asp-append-version="true" defer></script>
+}

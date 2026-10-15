@@ -3,6 +3,7 @@
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
     var isUsers = controller == "AdminUsers";
+    var isListening = controller is "AdminListening" or "AdminListeningVoa";
     var isProfile = controller == "Account" && action == "Profile";
     var isPassword = controller == "Account" && action == "ChangePassword";
 }
@@ -12,7 +13,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @L["AppName"]</title>
-    <meta name="theme-color" content="#111827" />
+    <meta name="theme-color" content="#15151f" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@800&amp;display=swap" rel="stylesheet" />
@@ -33,6 +34,9 @@
             <span>@L["AppName"]<small>@L["AdminArea"]</small></span>
         </a>
         <nav class="admin-nav">
+            <a class="@(isListening ? "is-active" : null)" asp-controller="AdminListening" asp-action="Index" asp-route-culture="@culture" aria-current="@(isListening ? "page" : null)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-3a8 8 0 0 1 16 0v3M4 12H2v8h4v-8zm16 0h2v8h-4v-8z" /></svg><span>@L["Listening"]</span>
+            </a>
             <a class="@(controller == "AdminGrammar" ? "is-active" : null)" asp-controller="AdminGrammar" asp-action="Index" asp-route-culture="@culture" aria-current="@(controller == "AdminGrammar" ? "page" : null)">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h4" /></svg><span>@L["Grammar"]</span>
             </a>

@@ -14,19 +14,48 @@ revealLinkedDisclosure();
 
 const sceneMotionButton = document.querySelector('[data-scene-motion]');
 if (sceneMotionButton) {
+    const sceneVideo = document.querySelector('[data-scene-video]');
+    const reducedSceneMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let manuallyPaused = false;
+    let videoFailed = false;
     function updateSceneMotion() {
-        document.body.classList.toggle('scene-motion-paused', manuallyPaused || document.hidden);
+        const paused = manuallyPaused || document.hidden || reducedSceneMotion.matches;
+        document.body.classList.toggle('scene-motion-paused', paused);
         sceneMotionButton.textContent = manuallyPaused ? sceneMotionButton.dataset.resumeLabel : sceneMotionButton.dataset.pauseLabel;
         sceneMotionButton.setAttribute('aria-pressed', String(manuallyPaused));
         sceneMotionButton.setAttribute('aria-label', manuallyPaused ? sceneMotionButton.dataset.resumeDescription : sceneMotionButton.dataset.pauseDescription);
+        sceneMotionButton.hidden = !sceneVideo || videoFailed || reducedSceneMotion.matches;
+        if (!sceneVideo || videoFailed) return;
+        if (paused) {
+            sceneVideo.pause();
+            return;
+        }
+        // Load the existing local video only when motion is enabled; the image remains the fallback.
+        if (!sceneVideo.hasAttribute('src')) sceneVideo.src = sceneVideo.dataset.src;
+        sceneVideo.play().catch(error => {
+            if (error.name === 'AbortError' || videoFailed) return;
+            // Browser autoplay restrictions leave a working image and a manual resume control.
+            manuallyPaused = true;
+            updateSceneMotion();
+        });
+    }
+    if (sceneVideo) {
+        sceneVideo.muted = true;
+        sceneVideo.addEventListener('playing', () => sceneVideo.classList.add('is-ready'));
+        sceneVideo.addEventListener('error', () => {
+            videoFailed = true;
+            sceneVideo.classList.remove('is-ready');
+            updateSceneMotion();
+        });
+        window.addEventListener('pagehide', () => sceneVideo.pause());
+        window.addEventListener('pageshow', updateSceneMotion);
     }
     sceneMotionButton.addEventListener('click', () => {
         manuallyPaused = !manuallyPaused;
         updateSceneMotion();
     });
     document.addEventListener('visibilitychange', updateSceneMotion);
-    sceneMotionButton.hidden = false;
+    reducedSceneMotion.addEventListener('change', updateSceneMotion);
     updateSceneMotion();
 }
 

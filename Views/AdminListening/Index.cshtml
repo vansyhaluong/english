@@ -1,0 +1,35 @@
+@using Microsoft.Extensions.Hosting
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment ListeningEnvironment
+@model English.Models.ViewModels.Listening.ListeningListViewModel
+@{ Layout = "_AdminLayout"; ViewData["Title"] = L["Listening"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+<section class="account-page"><div class="management-card">
+    <h1>@L["Listening"]</h1>
+    @if (ListeningEnvironment.IsDevelopment()) { <p><a asp-controller="AdminListeningVoa" asp-action="Index" asp-route-culture="@culture">@L["ListeningVoaTitle"]</a></p> }
+    @if (TempData["ListeningMessage"] is string message) { <p class="account-success" role="status">@message</p> }
+    <p><a asp-action="Create" asp-route-culture="@culture">@L["ListeningCreate"]</a></p>
+    <form asp-action="Index" method="get" class="account-form">
+        <input type="hidden" name="culture" value="@culture" />
+        <div class="account-field"><label for="listening-search">@L["ListeningSearch"]</label><input id="listening-search" type="search" name="Search" value="@Model.Query.Search" maxlength="300" /></div>
+        <div class="account-field"><label for="listening-level">@L["Levels"]</label><select id="listening-level" name="LevelId"><option value="">@L["VocabAll"]</option>@foreach (var option in Model.Choices.Levels) { <option value="@option.Id" selected="@(Model.Query.LevelId == option.Id)">@option.Name</option> }</select></div>
+        <div class="account-field"><label for="listening-topic">@L["Topics"]</label><select id="listening-topic" name="TopicId"><option value="">@L["VocabAll"]</option>@foreach (var option in Model.Choices.Topics) { <option value="@option.Id" selected="@(Model.Query.TopicId == option.Id)">@option.Name</option> }</select></div>
+        <div class="account-field"><label for="listening-visible">@L["VocabVisible"]</label><select id="listening-visible" name="IsVisible"><option value="">@L["VocabAll"]</option><option value="true" selected="@(Model.Query.IsVisible == true)">@L["VocabVisible"]</option><option value="false" selected="@(Model.Query.IsVisible == false)">@L["VocabHidden"]</option></select></div>
+        <div class="account-field"><label for="listening-deleted">@L["VocabDeleted"]</label><select id="listening-deleted" name="IsDeleted"><option value="">@L["VocabAll"]</option><option value="false" selected="@(Model.Query.IsDeleted == false)">@L["ListeningNotDeleted"]</option><option value="true" selected="@(Model.Query.IsDeleted == true)">@L["VocabDeleted"]</option></select></div>
+        <button type="submit" class="btn-brand-primary">@L["VocabFilter"]</button><a asp-action="Index" asp-route-culture="@culture">@L["VocabClear"]</a>
+    </form>
+    @if (Model.Items.Count == 0) { <p>@L["ListeningEmpty"]</p> }
+    else
+    {
+        <div class="management-table-wrap"><table class="management-table"><thead><tr><th>@L["ListeningTitle"]</th><th>@L["Levels"] / @L["Topics"]</th><th>@L["VocabStatus"]</th><th>@L["ClassificationActions"]</th></tr></thead><tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr><td>@item.Title</td><td>@item.Level / @item.Topic</td><td>@L[item.IsDeleted ? "VocabDeleted" : item.IsVisible ? "VocabVisible" : "VocabHidden"]</td>
+                <td><a asp-action="Details" asp-route-id="@item.Id" asp-route-culture="@culture">@L["VocabDetails"]</a>@if (!item.IsDeleted) { <br /><a asp-action="Edit" asp-route-id="@item.Id" asp-route-culture="@culture">@L["ClassificationEdit"]</a><br /><a asp-action="Delete" asp-route-id="@item.Id" asp-route-culture="@culture">@L["ListeningDelete"]</a> }</td></tr>
+        }
+        </tbody></table></div>
+    }
+    <nav aria-label="@L["VocabPages"]">
+        @if (Model.Query.Page > 1) { <a asp-action="Index" asp-route-page="@(Model.Query.Page - 1)" asp-route-search="@Model.Query.Search" asp-route-levelId="@Model.Query.LevelId" asp-route-topicId="@Model.Query.TopicId" asp-route-isVisible="@Model.Query.IsVisible" asp-route-isDeleted="@Model.Query.IsDeleted" asp-route-culture="@culture">@L["VocabPrevious"]</a> }
+        <span>@Model.Query.Page / @Model.TotalPages</span>
+        @if (Model.Query.Page < Model.TotalPages) { <a asp-action="Index" asp-route-page="@(Model.Query.Page + 1)" asp-route-search="@Model.Query.Search" asp-route-levelId="@Model.Query.LevelId" asp-route-topicId="@Model.Query.TopicId" asp-route-isVisible="@Model.Query.IsVisible" asp-route-isDeleted="@Model.Query.IsDeleted" asp-route-culture="@culture">@L["VocabNext"]</a> }
+    </nav>
+</div></section>
