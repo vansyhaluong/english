@@ -22,6 +22,7 @@
     <a class="skip-link" href="#main-content">@PageLabel("SkipToContent", "Chuyển đến nội dung chính")</a>
     <div aria-hidden="true" class="bg-scene-container">
         <img src="~/images/night.jpg" asp-append-version="true" alt="" class="bg-scene-img" fetchpriority="high" />
+        <video class="bg-scene-video" data-scene-video data-src="@Url.Content("~/images/anim-castle-night.webm")" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video>
         <div class="scene-scrim"></div>
     </div>
     <partial name="_LandingNavigation" />

@@ -216,4 +216,115 @@
   <data name="GrammarListening" xml:space="preserve"><value>Luyện nghe</value></data>
   <data name="GrammarReading" xml:space="preserve"><value>Luyện đọc</value></data>
   <data name="GrammarExam" xml:space="preserve"><value>Luyện thi</value></data>
+  <data name="Listening" xml:space="preserve"><value>Luyện nghe</value></data>
+  <data name="ListeningRequired" xml:space="preserve"><value>Nhập nội dung bắt buộc.</value></data>
+  <data name="ListeningTooLong" xml:space="preserve"><value>Nội dung vượt quá độ dài cho phép.</value></data>
+  <data name="ListeningClassificationRequired" xml:space="preserve"><value>Chọn trình độ và chủ đề hợp lệ.</value></data>
+  <data name="ListeningConflict" xml:space="preserve"><value>Dữ liệu đã thay đổi hoặc không thể lưu. Tải lại và thử lại.</value></data>
+  <data name="ListeningInvalidAudioUrl" xml:space="preserve"><value>URL audio phải là địa chỉ HTTP hoặc HTTPS tuyệt đối.</value></data>
+  <data name="ListeningAudioLocked" xml:space="preserve"><value>Không thể đổi URL audio vì bài có phụ đề hoặc lịch sử transcript. Bạn vẫn có thể sửa metadata khác.</value></data>
+  <data name="ListeningAudioHint" xml:space="preserve"><value>Nhập URL HTTP hoặc HTTPS tuyệt đối của audio bài nghe.</value></data>
+  <data name="ListeningTitle" xml:space="preserve"><value>Tiêu đề bài nghe</value></data>
+  <data name="ListeningAudioUrl" xml:space="preserve"><value>URL audio</value></data>
+  <data name="ListeningCreate" xml:space="preserve"><value>Tạo bài nghe</value></data>
+  <data name="ListeningEdit" xml:space="preserve"><value>Sửa bài nghe</value></data>
+  <data name="ListeningSearch" xml:space="preserve"><value>Tìm theo tiêu đề bài nghe</value></data>
+  <data name="ListeningEmpty" xml:space="preserve"><value>Không có bài nghe phù hợp.</value></data>
+  <data name="ListeningDelete" xml:space="preserve"><value>Xóa bài nghe</value></data>
+  <data name="ListeningDeletePrompt" xml:space="preserve"><value>Xóa mềm bài nghe này? Metadata audio, phụ đề và lịch sử học sẽ được giữ lại.</value></data>
+  <data name="ListeningHide" xml:space="preserve"><value>Ẩn bài nghe</value></data>
+  <data name="ListeningShow" xml:space="preserve"><value>Hiện bài nghe</value></data>
+  <data name="ListeningNotDeleted" xml:space="preserve"><value>Chưa xóa</value></data>
+  <data name="ListeningSubtitleImport" xml:space="preserve"><value>Nhập / thay thế phụ đề</value></data>
+  <data name="ListeningSubtitleFile" xml:space="preserve"><value>File phụ đề SRT/VTT</value></data>
+  <data name="ListeningSubtitleHint" xml:space="preserve"><value>SRT hoặc WebVTT cơ bản, UTF-8 có/không BOM, tối đa 1 MB (1.048.576 byte). Cho phép cue nhiều dòng; không overlap. Không hỗ trợ NOTE, STYLE, REGION, cue settings hoặc annotation VTT.</value></data>
+  <data name="ListeningSubtitleCurrent" xml:space="preserve"><value>Revision hiện tại: {0}. Số cue: {1}.</value></data>
+  <data name="ListeningSubtitlePolicy" xml:space="preserve"><value>Chỉ lưu cue vào database, không lưu file tải lên. Cue thay đổi sẽ thay toàn bộ phụ đề và tăng revision 1; cue giống hệt không thay đổi dữ liệu. File/StoredFile cũ được giữ lại.</value></data>
+  <data name="ListeningSubtitleRequired" xml:space="preserve"><value>Chọn file phụ đề.</value></data>
+  <data name="ListeningSubtitleExtension" xml:space="preserve"><value>Chỉ nhận tên file SRT hoặc VTT, không nhận đường dẫn.</value></data>
+  <data name="ListeningSubtitleSize" xml:space="preserve"><value>File phụ đề không được vượt quá 1 MB (1.048.576 byte).</value></data>
+  <data name="ListeningSubtitleEmpty" xml:space="preserve"><value>File không có cue phụ đề hợp lệ.</value></data>
+  <data name="ListeningSubtitleReadFailed" xml:space="preserve"><value>Không đọc được file tải lên. Chọn lại file và thử lại.</value></data>
+  <data name="ListeningSubtitleEncoding" xml:space="preserve"><value>File phải là UTF-8 hợp lệ; chỉ cho phép BOM ở đầu file.</value></data>
+  <data name="ListeningSubtitleVttHeader" xml:space="preserve"><value>Dòng {0}: VTT phải bắt đầu bằng WEBVTT, không kèm metadata.</value></data>
+  <data name="ListeningSubtitleStructure" xml:space="preserve"><value>Dòng {0}: cấu trúc phụ đề không hợp lệ hoặc thiếu dòng trống phân cách cue.</value></data>
+  <data name="ListeningSubtitleSequence" xml:space="preserve"><value>Dòng {0}: sequence SRT phải liên tục từ 1 theo thứ tự file.</value></data>
+  <data name="ListeningSubtitleTimestamp" xml:space="preserve"><value>Dòng {0}: timestamp không hợp lệ; bắt đầu phải từ 0, kết thúc phải sau bắt đầu và nằm trong giới hạn mili giây của database.</value></data>
+  <data name="ListeningSubtitleOverlap" xml:space="preserve"><value>Dòng {0}: cue bị overlap hoặc sai thứ tự thời gian.</value></data>
+  <data name="ListeningSubtitleCueEmpty" xml:space="preserve"><value>Dòng {0}: nội dung cue không được để trống.</value></data>
+  <data name="ListeningSubtitleVttUnsupported" xml:space="preserve"><value>Dòng {0}: NOTE, STYLE, REGION, cue settings hoặc annotation VTT chưa được hỗ trợ. Nội dung không được tự động bỏ hoặc sửa.</value></data>
+  <data name="ListeningSubtitleRevisionLimit" xml:space="preserve"><value>Revision đã đạt giới hạn database; không thể thay phụ đề.</value></data>
+  <data name="ListeningSubtitleSaveFailed" xml:space="preserve"><value>Không lưu được phụ đề. Transaction được rollback; tải lại dữ liệu trước khi thử lại.</value></data>
+  <data name="ListeningSubtitleImported" xml:space="preserve"><value>Đã nhập phụ đề vào database.</value></data>
+  <data name="ListeningSubtitleUnchanged" xml:space="preserve"><value>Cue giống hệt phụ đề hiện tại; không thay đổi dữ liệu hoặc revision.</value></data>
+  <data name="ListeningStudentIntro" xml:space="preserve"><value>Chọn bài nghe, nghe lại từng câu và theo dõi tiến độ của bạn.</value></data>
+  <data name="ListeningStudentJavascript" xml:space="preserve"><value>Bật JavaScript để tải bài nghe và sử dụng phụ đề.</value></data>
+  <data name="ListeningStudentLoading" xml:space="preserve"><value>Đang tải bài nghe…</value></data>
+  <data name="ListeningStudentLoadError" xml:space="preserve"><value>Không tải được bài nghe. Vui lòng thử lại.</value></data>
+  <data name="ListeningStudentUnavailable" xml:space="preserve"><value>Bài nghe không tồn tại hoặc không còn được hiển thị.</value></data>
+  <data name="ListeningStudentSession" xml:space="preserve"><value>Phiên đăng nhập đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại bằng tài khoản học viên.</value></data>
+  <data name="ListeningStudentRetry" xml:space="preserve"><value>Thử lại</value></data>
+  <data name="ListeningStudentAllLevels" xml:space="preserve"><value>Tất cả cấp độ</value></data>
+  <data name="ListeningStudentAllTopics" xml:space="preserve"><value>Tất cả chủ đề</value></data>
+  <data name="ListeningStudentSearch" xml:space="preserve"><value>Tìm kiếm</value></data>
+  <data name="ListeningStudentReset" xml:space="preserve"><value>Xóa bộ lọc</value></data>
+  <data name="ListeningStudentPagination" xml:space="preserve"><value>Phân trang bài nghe</value></data>
+  <data name="ListeningStudentPrevious" xml:space="preserve"><value>Trang trước</value></data>
+  <data name="ListeningStudentNext" xml:space="preserve"><value>Trang sau</value></data>
+  <data name="ListeningStudentBack" xml:space="preserve"><value>← Danh sách bài nghe</value></data>
+  <data name="ListeningStudentAudio" xml:space="preserve"><value>Audio bài nghe</value></data>
+  <data name="ListeningStudentAudioError" xml:space="preserve"><value>Không phát được audio. Hãy kiểm tra kết nối và tải lại trang; nếu vẫn lỗi, thử bài nghe khác.</value></data>
+  <data name="ListeningStudentTranscript" xml:space="preserve"><value>Phụ đề</value></data>
+  <data name="ListeningStudentNoCues" xml:space="preserve"><value>Bài nghe chưa có phụ đề. Bạn vẫn có thể nghe audio.</value></data>
+  <data name="ListeningStudentCueHint" xml:space="preserve"><value>Bấm vào câu để tua audio đến mốc tương ứng. Câu đang phát sẽ được tô sáng và tự cuộn vào vùng hiển thị.</value></data>
+  <data name="ListeningStudentHideTranscript" xml:space="preserve"><value>Ẩn phụ đề</value></data>
+  <data name="ListeningStudentShowTranscript" xml:space="preserve"><value>Hiện phụ đề</value></data>
+  <data name="ListeningStudentLearned" xml:space="preserve"><value>Đã học</value></data>
+  <data name="ListeningStudentNotLearned" xml:space="preserve"><value>Chưa học</value></data>
+  <data name="ListeningStudentMark" xml:space="preserve"><value>Đánh dấu đã học</value></data>
+  <data name="ListeningStudentUnmark" xml:space="preserve"><value>Đánh dấu chưa học</value></data>
+  <data name="ListeningStudentSaving" xml:space="preserve"><value>Đang lưu…</value></data>
+  <data name="ListeningStudentSaved" xml:space="preserve"><value>Đã lưu trạng thái học.</value></data>
+  <data name="ListeningStudentSaveError" xml:space="preserve"><value>Không lưu được trạng thái học. Vui lòng tải lại bài và thử lại.</value></data>
+  <data name="ListeningStudentPage" xml:space="preserve"><value>Trang {0} / {1}</value></data>
+  <data name="ListeningStudentCount" xml:space="preserve"><value>{0} bài nghe</value></data>
+  <data name="ListeningStudentCues" xml:space="preserve"><value>{0} câu phụ đề</value></data>
+  <data name="ListeningAudioFile" xml:space="preserve"><value>File MP3</value></data>
+  <data name="ListeningAudioUploadHint" xml:space="preserve"><value>Chọn MP3 hợp lệ, tối đa 20 MB. Khi sửa metadata, để trống để giữ audio hiện tại. Nếu lưu thất bại, hãy chọn lại file trước khi gửi lại.</value></data>
+  <data name="ListeningAudioRequired" xml:space="preserve"><value>Chọn file MP3 cho bài nghe mới.</value></data>
+  <data name="ListeningAudioInvalid" xml:space="preserve"><value>File phải là MP3 có cấu trúc frame hợp lệ, không rỗng, tối đa 20 MB; tên file không được chứa đường dẫn.</value></data>
+  <data name="ListeningAudioSaveFailed" xml:space="preserve"><value>Không lưu được bài nghe hoặc file audio. Tải lại bài trước khi thử lại.</value></data>
+  <data name="ListeningAudioCommitUnknown" xml:space="preserve"><value>Không xác nhận được kết quả lưu database. File mới được giữ để tránh mất audio. Dừng và kiểm tra bài đã được lưu hay chưa trước khi thử lại.</value></data>
+  <data name="ListeningDatabaseTarget" xml:space="preserve"><value>Đã chặn Listening: cấu hình phải trỏ chính xác tới LAPTOP-8RQB10J4 / English_P2_Test và database phải ONLINE, READ_WRITE. Không thay đổi cấu hình tự động.</value></data>
+  <data name="ListeningDatabaseSchema" xml:space="preserve"><value>Đã chặn ghi: schema Listening không khớp EF Core hoặc không xác minh được khóa, quan hệ và constraints. Cần kiểm tra trước khi tiếp tục.</value></data>
+  <data name="ListeningDatabaseUnverified" xml:space="preserve"><value>Không xác minh được database bằng kết nối EF Core hiện có. Đã chặn ghi; không tự sửa kết nối hoặc database.</value></data>
+  <data name="ListeningDatabaseVerified" xml:space="preserve"><value>Đã xác minh database và schema Listening bằng truy vấn chỉ đọc.</value></data>
+  <data name="ListeningVoaTitle" xml:space="preserve"><value>Nhập 5 bài VOA đã chuẩn bị</value></data>
+  <data name="ListeningVoaPolicy" xml:space="preserve"><value>Chỉ Development/Admin, chỉ English_P2_Test. Đọc lesson-1 đến lesson-5 tại chỗ, không sao chép audio. Phụ đề giữ ACCEPTED_WITH_LIMITATIONS: chưa nghe nghiệm thu đầy đủ nội dung và đồng bộ thời gian. Nút nhập sẽ tạo cả 5 bài trong một transaction.</value></data>
+  <data name="ListeningVoaDevelopmentOnly" xml:space="preserve"><value>Chức năng này chỉ hoạt động trong Development.</value></data>
+  <data name="ListeningVoaClassification" xml:space="preserve"><value>Phải có duy nhất Level A1 và Topic Daily Life. Chưa ghi dữ liệu; không tự tạo phân loại.</value></data>
+  <data name="ListeningVoaDuplicate" xml:space="preserve"><value>Phát hiện bài trùng tiêu đề, URL audio hoặc nguồn VOA, kể cả bài đã xóa mềm. Đã chặn nhập; không ghi đè bài cũ.</value></data>
+  <data name="ListeningVoaCheckFailed" xml:space="preserve"><value>Không xác minh được đủ 5 bộ nguồn hoặc dữ liệu đối chiếu. Kiểm tra file, source.json, SHA-256, MP3, SRT và ACCEPTED_WITH_LIMITATIONS trước khi tiếp tục. Chưa ghi dữ liệu.</value></data>
+  <data name="ListeningVoaReady" xml:space="preserve"><value>Kiểm tra chỉ đọc thành công. Chưa nhập dữ liệu. Số cue và revision bên dưới là giá trị dự kiến; POST sẽ kiểm tra lại toàn bộ.</value></data>
+  <data name="ListeningVoaImported" xml:space="preserve"><value>Đã nhập đủ 5 bài VOA và phụ đề trong một transaction. Nguồn giữ ACCEPTED_WITH_LIMITATIONS.</value></data>
+  <data name="ListeningVoaImportFailed" xml:space="preserve"><value>Không nhập được 5 bài. Transaction không được commit; không ghi đè bài cũ. Dừng kiểm tra nguyên nhân trước khi thử lại.</value></data>
+  <data name="ListeningVoaCommitUnknown" xml:space="preserve"><value>Không xác nhận được kết quả commit. Không bấm nhập lại trước khi kiểm tra danh sách bài; các kiểm tra trùng vẫn được áp dụng.</value></data>
+  <data name="ListeningVoaCueCount" xml:space="preserve"><value>Số cue</value></data>
+  <data name="ListeningVoaImport" xml:space="preserve"><value>Nhập đúng 5 bài VOA</value></data>
+  <data name="ListeningYouTubeUrl" xml:space="preserve"><value>URL YouTube</value></data>
+  <data name="ListeningYouTubeHint" xml:space="preserve"><value>Dán URL video YouTube dùng HTTPS. URL đúng định dạng không đảm bảo video còn tồn tại hoặc cho phép nhúng.</value></data>
+  <data name="ListeningInvalidYouTubeUrl" xml:space="preserve"><value>Nhập URL HTTPS thuộc youtube.com hoặc youtu.be, chứa đúng một Video ID hợp lệ gồm 11 ký tự và không có thông tin đăng nhập.</value></data>
+  <data name="ListeningVideoLocked" xml:space="preserve"><value>Không thể đổi Video ID hoặc nguồn media cũ vì bài đã có phụ đề hoặc lịch sử transcript. Bạn vẫn có thể sửa metadata khác.</value></data>
+  <data name="ListeningLegacyMedia" xml:space="preserve"><value>Nguồn media hiện có</value></data>
+  <data name="ListeningLegacyVideoHint" xml:space="preserve"><value>Để trống để giữ nguồn media hiện có. Chỉ có thể thay bằng URL YouTube khi bài chưa có lịch sử transcript.</value></data>
+  <data name="ListeningVideoSaveFailed" xml:space="preserve"><value>Không lưu được bài nghe. Tải lại bài trước khi thử lại.</value></data>
+  <data name="ListeningVideoCommitUnknown" xml:space="preserve"><value>Không xác nhận được kết quả lưu. Kiểm tra bài nghe trước khi thử lại.</value></data>
+  <data name="ListeningStudentVideo" xml:space="preserve"><value>Video YouTube của bài nghe</value></data>
+  <data name="ListeningStudentVideoPending" xml:space="preserve"><value>Đang tải trình phát YouTube. Có thể tua bằng phụ đề khi trình phát sẵn sàng.</value></data>
+  <data name="ListeningStudentVideoReadyError" xml:space="preserve"><value>Trình phát YouTube chưa sẵn sàng. Tải lại trang để thử lại; bạn vẫn có thể đọc transcript.</value></data>
+  <data name="ListeningStudentVideoApiError" xml:space="preserve"><value>Không tải được YouTube Player API. Kiểm tra kết nối và tải lại trang. Bạn vẫn có thể đọc transcript.</value></data>
+  <data name="ListeningStudentVideoUnavailable" xml:space="preserve"><value>Video không khả dụng; có thể đã bị xóa hoặc chuyển sang riêng tư. Bạn vẫn có thể đọc transcript.</value></data>
+  <data name="ListeningStudentVideoEmbedError" xml:space="preserve"><value>Chủ video không cho phép phát video trên website này. Bạn vẫn có thể đọc transcript.</value></data>
+  <data name="ListeningStudentVideoIdentityError" xml:space="preserve"><value>YouTube từ chối trình phát vì thiếu thông tin định danh website cần thiết. Bạn vẫn có thể đọc transcript.</value></data>
+  <data name="ListeningStudentVideoError" xml:space="preserve"><value>Không phát được video YouTube. Tải lại trang để thử lại; bạn vẫn có thể đọc transcript.</value></data>
 </root>

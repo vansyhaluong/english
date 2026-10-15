@@ -1,0 +1,22 @@
+@model English.Models.ViewModels.Listening.ListeningSubtitleViewModel
+@{ Layout = "_AdminLayout"; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; ViewData["Title"] = L["ListeningSubtitleImport"]; }
+<section class="account-page"><div class="account-card">
+    <h1>@L["ListeningSubtitleImport"]</h1>
+    <h2>@Model.Item.Title</h2>
+    <p>@L["ListeningSubtitleCurrent", Model.Item.TranscriptRevision, Model.Item.CueCount]</p>
+    <p>@L["ListeningSubtitlePolicy"]</p>
+    <form asp-action="ImportSubtitle" asp-route-id="@Model.Item.Id" asp-route-culture="@culture" method="post" enctype="multipart/form-data" class="account-form">
+        <div asp-validation-summary="All" class="account-validation" role="alert"></div>
+        <input asp-for="Input.RowVersion" type="hidden" />
+        <input asp-for="Input.ExpectedRevision" type="hidden" />
+        <div class="account-field">
+            <label asp-for="Input.File">@L["ListeningSubtitleFile"]</label>
+            <input asp-for="Input.File" type="file" accept=".srt,.vtt" required aria-describedby="subtitle-file-hint" />
+            <span asp-validation-for="Input.File"></span>
+        </div>
+        <p id="subtitle-file-hint">@L["ListeningSubtitleHint"]</p>
+        <button type="submit" class="btn-brand-primary">@L["ListeningSubtitleImport"]</button>
+    </form>
+    <p><a asp-action="ImportSubtitle" asp-route-id="@Model.Item.Id" asp-route-culture="@culture">@L["ClassificationReload"]</a></p>
+    <p><a asp-action="Details" asp-route-id="@Model.Item.Id" asp-route-culture="@culture">@L["VocabDetails"]</a> | <a asp-action="Index" asp-route-culture="@culture">@L["ClassificationBack"]</a></p>
+</div></section>

@@ -15,3 +15,6 @@ appsettings.Development.json
 
 TestResults/
 coverage/
+
+# Listening lesson media and import data
+/Data/Listening/

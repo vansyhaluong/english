@@ -216,4 +216,115 @@
   <data name="GrammarListening" xml:space="preserve"><value>Listening</value></data>
   <data name="GrammarReading" xml:space="preserve"><value>Reading</value></data>
   <data name="GrammarExam" xml:space="preserve"><value>Exam practice</value></data>
+  <data name="Listening" xml:space="preserve"><value>Listening</value></data>
+  <data name="ListeningRequired" xml:space="preserve"><value>Enter the required content.</value></data>
+  <data name="ListeningTooLong" xml:space="preserve"><value>The content exceeds the allowed length.</value></data>
+  <data name="ListeningClassificationRequired" xml:space="preserve"><value>Select a valid level and topic.</value></data>
+  <data name="ListeningConflict" xml:space="preserve"><value>The data changed or could not be saved. Reload and try again.</value></data>
+  <data name="ListeningInvalidAudioUrl" xml:space="preserve"><value>Audio URL must be an absolute HTTP or HTTPS URL.</value></data>
+  <data name="ListeningAudioLocked" xml:space="preserve"><value>Audio URL cannot be changed because this lesson has subtitles or transcript history. Other metadata can still be edited.</value></data>
+  <data name="ListeningAudioHint" xml:space="preserve"><value>Enter the absolute HTTP or HTTPS URL of the lesson audio.</value></data>
+  <data name="ListeningTitle" xml:space="preserve"><value>Lesson title</value></data>
+  <data name="ListeningAudioUrl" xml:space="preserve"><value>Audio URL</value></data>
+  <data name="ListeningCreate" xml:space="preserve"><value>Create listening lesson</value></data>
+  <data name="ListeningEdit" xml:space="preserve"><value>Edit listening lesson</value></data>
+  <data name="ListeningSearch" xml:space="preserve"><value>Search by lesson title</value></data>
+  <data name="ListeningEmpty" xml:space="preserve"><value>No matching listening lessons.</value></data>
+  <data name="ListeningDelete" xml:space="preserve"><value>Delete listening lesson</value></data>
+  <data name="ListeningDeletePrompt" xml:space="preserve"><value>Soft delete this lesson? Audio metadata, subtitles and learning history will be retained.</value></data>
+  <data name="ListeningHide" xml:space="preserve"><value>Hide lesson</value></data>
+  <data name="ListeningShow" xml:space="preserve"><value>Show lesson</value></data>
+  <data name="ListeningNotDeleted" xml:space="preserve"><value>Not deleted</value></data>
+  <data name="ListeningSubtitleImport" xml:space="preserve"><value>Import / replace subtitles</value></data>
+  <data name="ListeningSubtitleFile" xml:space="preserve"><value>SRT/VTT subtitle file</value></data>
+  <data name="ListeningSubtitleHint" xml:space="preserve"><value>SRT or basic WebVTT, UTF-8 with/without BOM, up to 1 MB (1,048,576 bytes). Multiline cues allowed; no overlaps. VTT NOTE, STYLE, REGION, cue settings and annotations are unsupported.</value></data>
+  <data name="ListeningSubtitleCurrent" xml:space="preserve"><value>Current revision: {0}. Cue count: {1}.</value></data>
+  <data name="ListeningSubtitlePolicy" xml:space="preserve"><value>Only cues are stored in the database; the uploaded file is not saved. Changed cues replace all subtitles and increment the revision by 1; identical cues change nothing. Old files/StoredFile records are retained.</value></data>
+  <data name="ListeningSubtitleRequired" xml:space="preserve"><value>Select a subtitle file.</value></data>
+  <data name="ListeningSubtitleExtension" xml:space="preserve"><value>Only SRT/VTT file names are accepted, without paths.</value></data>
+  <data name="ListeningSubtitleSize" xml:space="preserve"><value>The subtitle file must not exceed 1 MB (1,048,576 bytes).</value></data>
+  <data name="ListeningSubtitleEmpty" xml:space="preserve"><value>The file contains no valid subtitle cues.</value></data>
+  <data name="ListeningSubtitleReadFailed" xml:space="preserve"><value>The uploaded file could not be read. Select it again and retry.</value></data>
+  <data name="ListeningSubtitleEncoding" xml:space="preserve"><value>The file must be valid UTF-8; a BOM is allowed only at the beginning.</value></data>
+  <data name="ListeningSubtitleVttHeader" xml:space="preserve"><value>Line {0}: VTT must start with WEBVTT without metadata.</value></data>
+  <data name="ListeningSubtitleStructure" xml:space="preserve"><value>Line {0}: invalid subtitle structure or missing blank separator between cues.</value></data>
+  <data name="ListeningSubtitleSequence" xml:space="preserve"><value>Line {0}: SRT sequence numbers must be consecutive from 1 in file order.</value></data>
+  <data name="ListeningSubtitleTimestamp" xml:space="preserve"><value>Line {0}: invalid timestamp; start must be nonnegative, end must follow start, and milliseconds must fit the database range.</value></data>
+  <data name="ListeningSubtitleOverlap" xml:space="preserve"><value>Line {0}: cues overlap or are out of chronological order.</value></data>
+  <data name="ListeningSubtitleCueEmpty" xml:space="preserve"><value>Line {0}: cue text must not be empty.</value></data>
+  <data name="ListeningSubtitleVttUnsupported" xml:space="preserve"><value>Line {0}: VTT NOTE, STYLE, REGION, cue settings or annotations are unsupported. Content is not silently discarded or rewritten.</value></data>
+  <data name="ListeningSubtitleRevisionLimit" xml:space="preserve"><value>The revision reached the database limit; subtitles cannot be replaced.</value></data>
+  <data name="ListeningSubtitleSaveFailed" xml:space="preserve"><value>Subtitles could not be saved. The transaction is rolled back; reload the data before retrying.</value></data>
+  <data name="ListeningSubtitleImported" xml:space="preserve"><value>Subtitles imported into the database.</value></data>
+  <data name="ListeningSubtitleUnchanged" xml:space="preserve"><value>Cues are identical to the current subtitles; data and revision were not changed.</value></data>
+  <data name="ListeningStudentIntro" xml:space="preserve"><value>Choose a lesson, replay each sentence and track your progress.</value></data>
+  <data name="ListeningStudentJavascript" xml:space="preserve"><value>Enable JavaScript to load lessons and use the transcript.</value></data>
+  <data name="ListeningStudentLoading" xml:space="preserve"><value>Loading lessons…</value></data>
+  <data name="ListeningStudentLoadError" xml:space="preserve"><value>Could not load the lesson data. Please retry.</value></data>
+  <data name="ListeningStudentUnavailable" xml:space="preserve"><value>This lesson is unavailable or no longer visible.</value></data>
+  <data name="ListeningStudentSession" xml:space="preserve"><value>Your session has expired or access is denied. Please sign in again with a student account.</value></data>
+  <data name="ListeningStudentRetry" xml:space="preserve"><value>Retry</value></data>
+  <data name="ListeningStudentAllLevels" xml:space="preserve"><value>All levels</value></data>
+  <data name="ListeningStudentAllTopics" xml:space="preserve"><value>All topics</value></data>
+  <data name="ListeningStudentSearch" xml:space="preserve"><value>Search</value></data>
+  <data name="ListeningStudentReset" xml:space="preserve"><value>Clear filters</value></data>
+  <data name="ListeningStudentPagination" xml:space="preserve"><value>Listening lesson pages</value></data>
+  <data name="ListeningStudentPrevious" xml:space="preserve"><value>Previous</value></data>
+  <data name="ListeningStudentNext" xml:space="preserve"><value>Next</value></data>
+  <data name="ListeningStudentBack" xml:space="preserve"><value>← All listening lessons</value></data>
+  <data name="ListeningStudentAudio" xml:space="preserve"><value>Lesson audio</value></data>
+  <data name="ListeningStudentAudioError" xml:space="preserve"><value>Audio could not be played. Check your connection and reload the page; if the problem persists, try another lesson.</value></data>
+  <data name="ListeningStudentTranscript" xml:space="preserve"><value>Transcript</value></data>
+  <data name="ListeningStudentNoCues" xml:space="preserve"><value>This lesson has no transcript yet. You can still listen to the audio.</value></data>
+  <data name="ListeningStudentCueHint" xml:space="preserve"><value>Select a sentence to seek to its timestamp. The current sentence is highlighted and scrolls into view.</value></data>
+  <data name="ListeningStudentHideTranscript" xml:space="preserve"><value>Hide transcript</value></data>
+  <data name="ListeningStudentShowTranscript" xml:space="preserve"><value>Show transcript</value></data>
+  <data name="ListeningStudentLearned" xml:space="preserve"><value>Learned</value></data>
+  <data name="ListeningStudentNotLearned" xml:space="preserve"><value>Not learned</value></data>
+  <data name="ListeningStudentMark" xml:space="preserve"><value>Mark as learned</value></data>
+  <data name="ListeningStudentUnmark" xml:space="preserve"><value>Mark as not learned</value></data>
+  <data name="ListeningStudentSaving" xml:space="preserve"><value>Saving…</value></data>
+  <data name="ListeningStudentSaved" xml:space="preserve"><value>Learning status saved.</value></data>
+  <data name="ListeningStudentSaveError" xml:space="preserve"><value>Could not save learning status. Reload the lesson and try again.</value></data>
+  <data name="ListeningStudentPage" xml:space="preserve"><value>Page {0} of {1}</value></data>
+  <data name="ListeningStudentCount" xml:space="preserve"><value>{0} listening lessons</value></data>
+  <data name="ListeningStudentCues" xml:space="preserve"><value>{0} transcript cues</value></data>
+  <data name="ListeningAudioFile" xml:space="preserve"><value>MP3 file</value></data>
+  <data name="ListeningAudioUploadHint" xml:space="preserve"><value>Choose a valid MP3 up to 20 MB. Leave empty when editing metadata to retain the current audio. Reselect the file before retrying a failed save.</value></data>
+  <data name="ListeningAudioRequired" xml:space="preserve"><value>Choose an MP3 for the new lesson.</value></data>
+  <data name="ListeningAudioInvalid" xml:space="preserve"><value>The file must contain valid MP3 frames, be nonempty and at most 20 MB; its name must not contain a path.</value></data>
+  <data name="ListeningAudioSaveFailed" xml:space="preserve"><value>The lesson or audio file could not be saved. Reload the lesson before retrying.</value></data>
+  <data name="ListeningAudioCommitUnknown" xml:space="preserve"><value>The database commit outcome could not be confirmed. The new file was retained to avoid losing referenced audio. Stop and check whether the lesson was saved before retrying.</value></data>
+  <data name="ListeningDatabaseTarget" xml:space="preserve"><value>Listening is blocked: the target must be LAPTOP-8RQB10J4 / English_P2_Test, ONLINE and READ_WRITE. Configuration is never changed automatically.</value></data>
+  <data name="ListeningDatabaseSchema" xml:space="preserve"><value>Writes blocked: the Listening schema does not match EF Core or its keys, relationships and constraints could not be verified. Review before continuing.</value></data>
+  <data name="ListeningDatabaseUnverified" xml:space="preserve"><value>The database could not be verified through the existing EF Core connection. Writes are blocked; the connection and database were not modified.</value></data>
+  <data name="ListeningDatabaseVerified" xml:space="preserve"><value>Database and Listening schema verified with read-only queries.</value></data>
+  <data name="ListeningVoaTitle" xml:space="preserve"><value>Import the five prepared VOA lessons</value></data>
+  <data name="ListeningVoaPolicy" xml:space="preserve"><value>Development/Admin only, English_P2_Test only. Reads lesson-1 through lesson-5 in place, without copying audio. Subtitles retain ACCEPTED_WITH_LIMITATIONS: full human content and timing review has not been completed. Import creates all five lessons in one transaction.</value></data>
+  <data name="ListeningVoaDevelopmentOnly" xml:space="preserve"><value>This feature is available only in Development.</value></data>
+  <data name="ListeningVoaClassification" xml:space="preserve"><value>Exactly one A1 level and one Daily Life topic are required. No data was written; classifications are not created automatically.</value></data>
+  <data name="ListeningVoaDuplicate" xml:space="preserve"><value>An existing title, audio URL or VOA source was found, including soft-deleted lessons. Import blocked; existing lessons are not overwritten.</value></data>
+  <data name="ListeningVoaCheckFailed" xml:space="preserve"><value>The five source sets or database checks could not be verified. Review files, source.json, SHA-256, MP3, SRT and ACCEPTED_WITH_LIMITATIONS before proceeding. No data was written.</value></data>
+  <data name="ListeningVoaReady" xml:space="preserve"><value>Read-only checks passed. No data has been imported. Cue counts and revisions below are planned values; POST repeats every check.</value></data>
+  <data name="ListeningVoaImported" xml:space="preserve"><value>All five VOA lessons and transcripts were imported in one transaction. Source status remains ACCEPTED_WITH_LIMITATIONS.</value></data>
+  <data name="ListeningVoaImportFailed" xml:space="preserve"><value>The five lessons could not be imported. The transaction was not committed; existing lessons were not overwritten. Stop and investigate before retrying.</value></data>
+  <data name="ListeningVoaCommitUnknown" xml:space="preserve"><value>The commit outcome could not be confirmed. Check the lesson list before retrying; duplicate checks remain enforced.</value></data>
+  <data name="ListeningVoaCueCount" xml:space="preserve"><value>Cue count</value></data>
+  <data name="ListeningVoaImport" xml:space="preserve"><value>Import the five VOA lessons</value></data>
+  <data name="ListeningYouTubeUrl" xml:space="preserve"><value>YouTube URL</value></data>
+  <data name="ListeningYouTubeHint" xml:space="preserve"><value>Paste an HTTPS YouTube video URL. A valid URL does not guarantee that the video is available or allows embedding.</value></data>
+  <data name="ListeningInvalidYouTubeUrl" xml:space="preserve"><value>Enter an HTTPS youtube.com or youtu.be URL containing exactly one valid 11-character video ID, without login information.</value></data>
+  <data name="ListeningVideoLocked" xml:space="preserve"><value>The video ID or legacy media source cannot be changed because this lesson has subtitles or transcript history. Other metadata can still be edited.</value></data>
+  <data name="ListeningLegacyMedia" xml:space="preserve"><value>Existing media source</value></data>
+  <data name="ListeningLegacyVideoHint" xml:space="preserve"><value>Leave blank to retain the existing media source. A YouTube URL can replace it only when the lesson has no transcript history.</value></data>
+  <data name="ListeningVideoSaveFailed" xml:space="preserve"><value>The lesson could not be saved. Reload it before retrying.</value></data>
+  <data name="ListeningVideoCommitUnknown" xml:space="preserve"><value>The save outcome could not be confirmed. Check the lesson before retrying.</value></data>
+  <data name="ListeningStudentVideo" xml:space="preserve"><value>Lesson YouTube video</value></data>
+  <data name="ListeningStudentVideoPending" xml:space="preserve"><value>The YouTube player is loading. Seeking will be available when it is ready.</value></data>
+  <data name="ListeningStudentVideoReadyError" xml:space="preserve"><value>The YouTube player did not become ready. Reload the page to retry; the transcript remains available.</value></data>
+  <data name="ListeningStudentVideoApiError" xml:space="preserve"><value>The YouTube Player API could not be loaded. Check your connection and reload the page. You can still read the transcript.</value></data>
+  <data name="ListeningStudentVideoUnavailable" xml:space="preserve"><value>This video is unavailable; it may have been deleted or made private. You can still read the transcript.</value></data>
+  <data name="ListeningStudentVideoEmbedError" xml:space="preserve"><value>The video owner does not allow playback on this website. You can still read the transcript.</value></data>
+  <data name="ListeningStudentVideoIdentityError" xml:space="preserve"><value>YouTube rejected the player because required website identification is missing. You can still read the transcript.</value></data>
+  <data name="ListeningStudentVideoError" xml:space="preserve"><value>The YouTube video could not be played. Reload the page to retry; the transcript remains available.</value></data>
 </root>

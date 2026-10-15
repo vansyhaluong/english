@@ -1,0 +1,23 @@
+@model English.Models.ListeningVoaReport
+@{ Layout = "_AdminLayout"; ViewData["Title"] = L["ListeningVoaTitle"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+<section class="account-page"><div class="management-card">
+    <h1>@L["ListeningVoaTitle"]</h1>
+    <p>@L["ListeningVoaPolicy"]</p>
+    <p role="status">@L[Model.Message]</p>
+    @if (Model.Items.Count > 0)
+    {
+        <div class="management-table-wrap"><table class="management-table">
+            <thead><tr><th>ID</th><th>@L["ListeningTitle"]</th><th>@L["ListeningAudioUrl"]</th><th>@L["ListeningVoaCueCount"]</th><th>Revision</th></tr></thead>
+            <tbody>@foreach (var item in Model.Items)
+            { <tr><td>@(item.Id?.ToString() ?? "—")</td><td>@item.Title</td><td>@item.AudioUrl</td><td>@item.CueCount</td><td>@item.Revision</td></tr> }</tbody>
+        </table></div>
+    }
+    @if (Model.CanImport)
+    {
+        <form asp-action="Import" asp-route-culture="@culture" method="post">
+            <button type="submit" class="btn-brand-primary">@L["ListeningVoaImport"]</button>
+        </form>
+    }
+    <p><a asp-action="Index" asp-route-culture="@culture">@L["ClassificationReload"]</a></p>
+    <p><a asp-controller="AdminListening" asp-action="Index" asp-route-culture="@culture">@L["ClassificationBack"]</a></p>
+</div></section>

@@ -87,6 +87,11 @@ builder.Services.AddScoped<IClassificationService, ClassificationService>();
 builder.Services.AddScoped<IVocabularyService, VocabularyService>();
 builder.Services.AddScoped<GrammarHtmlSanitizer>();
 builder.Services.AddScoped<IGrammarService, GrammarService>();
+builder.Services.AddScoped<IListeningService, ListeningService>();
+builder.Services.AddSingleton<SubtitleParser>();
+builder.Services.AddScoped<ListeningDatabaseGuard>();
+builder.Services.AddScoped<ListeningAudioStorage>();
+builder.Services.AddScoped<ListeningVoaService>();
 builder.Services.AddScoped<IAuthorizationHandler, ActiveAccountHandler>();
 builder.Services.AddSingleton<IFileStorage, LocalFileStorage>();
 builder.Services.AddSingleton<IMediaUrlValidator, MediaUrlValidator>();
@@ -130,6 +135,7 @@ app.UseRequestLocalization(
 app.UseStatusCodePagesWithReExecute("/Home/Status", "?code={0}");
 app.UseRouting();
 
+app.UseMiddleware<ListeningDatabaseSafetyMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
