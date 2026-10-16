@@ -1,0 +1,24 @@
+@model AdminChapterFormPage
+@{ ViewData["Title"] = L[Model.ChapterId.HasValue ? "BooksChapterEdit" : "BooksChapterCreate"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+<section class="management-card books-editor">
+    <header class="books-heading"><div><p class="books-eyebrow">@Model.BookTitle</p><h1>@ViewData["Title"]</h1></div><a class="books-button" asp-action="Chapters" asp-route-bookId="@Model.BookId" asp-route-culture="@culture">@L["BooksBack"]</a></header>
+    <p class="books-note">@L["BooksPlainTextHint"]</p>
+    <form asp-action="@(Model.ChapterId.HasValue ? "EditChapter" : "CreateChapter")" asp-route-bookId="@Model.BookId" asp-route-chapterId="@Model.ChapterId" asp-route-culture="@culture" method="post" class="account-form books-form">
+        <input asp-for="Input.RowVersion" type="hidden" />
+        <div class="books-form-row books-chapter-title"><div class="account-field"><label asp-for="Input.Title">@L["BooksChapterTitle"]</label><input asp-for="Input.Title" maxlength="300" required /><span asp-validation-for="Input.Title"></span></div><div class="account-field"><label asp-for="Input.DisplayOrder">@L["BooksOrder"]</label><input asp-for="Input.DisplayOrder" type="number" min="1" max="2147483647" required /><span asp-validation-for="Input.DisplayOrder"></span></div></div>
+        <p class="books-muted">@L["BooksOrderHint"]</p>
+        <div class="account-field"><label asp-for="Input.ContentEn">@L["BooksEnglish"]</label><textarea asp-for="Input.ContentEn" rows="16" lang="en" required></textarea><span asp-validation-for="Input.ContentEn"></span></div>
+        <div class="account-field"><label asp-for="Input.TranslationVi">@L["BooksTranslation"]</label><textarea asp-for="Input.TranslationVi" rows="12" lang="vi"></textarea><span asp-validation-for="Input.TranslationVi"></span></div>
+        <input asp-for="Input.VocabularyNotes" type="hidden" />
+        @if (Model.ChapterId.HasValue)
+        {
+            <a class="books-button" asp-action="Vocabulary" asp-route-bookId="@Model.BookId" asp-route-chapterId="@Model.ChapterId" asp-route-culture="@culture">@(culture == "vi" ? "Quản lý ghi chú từ vựng" : "Manage vocabulary notes") →</a>
+        }
+        else
+        {
+            <p class="books-muted">@(culture == "vi" ? "Lưu chương trước để thêm ghi chú từ vựng." : "Save the chapter before adding vocabulary notes.")</p>
+        }
+        <label class="books-check"><input asp-for="Input.IsVisible" /> @L["VocabVisible"]</label>
+        <div class="books-actions"><button class="btn-brand-primary" type="submit">@L["SaveChanges"]</button><a class="books-button" asp-action="@(Model.ChapterId.HasValue ? "EditChapter" : "CreateChapter")" asp-route-bookId="@Model.BookId" asp-route-chapterId="@Model.ChapterId" asp-route-culture="@culture">@L["BooksReload"]</a></div>
+    </form>
+</section>

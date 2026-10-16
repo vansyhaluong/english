@@ -468,6 +468,31 @@ Sau khi nộp:
 
 ---
 
+## Books — Đọc sách theo chương (P3-03)
+
+Hiện trạng đối chiếu code ngày 2026-10-16; không thay việc nghiệm thu runtime hoặc tự mở rộng baseline. Kết quả, giới hạn và các điểm chờ duyệt được ghi tại [P3-03 trong TASKS.md](TASKS.md#7-p3--listening-reading-và-books).
+
+Luồng Admin hiện có:
+
+- Quản lý sách theo Topic, không Level: tạo/sửa Title, Author, Description, ảnh bìa; ẩn/hiện, xóa mềm và xem danh sách có tìm/lọc/phân trang.
+- Quản lý chương theo DisplayOrder: thêm/sửa nội dung tiếng Anh dạng văn bản thuần, lưu bản dịch tùy chọn, ẩn/hiện/xóa mềm và đổi thứ tự. Chương đã xóa vẫn giữ thứ tự; chưa có UI khôi phục.
+- Mở “Ghi chú từ vựng” từ danh sách hoặc form chương; thêm/sửa/xóa từ/cụm từ, nghĩa tiếng Việt, IPA/loại từ tùy chọn. Lưu ghi chú riêng có kiểm tra phiên bản, giữ nguyên ContentEn/TranslationVi và dữ liệu legacy chưa đọc được; không yêu cầu tự nhập JSON.
+
+Luồng Student hiện có:
+
+- Vào thư viện `/books/library`, chọn sách trong carousel 3D, xem thông tin/danh sách chương và chọn chương hoặc Đọc tiếp để sang trang đọc riêng.
+- Đọc hai trang trên desktop, một trang trên màn hình nhỏ; trang trước/sau, chương trước/sau và mục lục. Đổi cỡ chữ/resize tính lại số trang và cố gắng giữ vị trí nội dung; không có bài tập sách, PDF/EPUB.
+- Chọn từ/cụm đã được Admin ghi chú để xem nghĩa, IPA, loại từ. Đây là tra ghi chú của chương, chưa phải từ điển cho mọi từ. Popup dưới từ, thiếu chỗ thì đè lên vùng từ; có bàn phím, đóng và icon loa dùng Web Speech API, phụ thuộc hỗ trợ giọng của thiết bị.
+- Đánh dấu/bỏ đã đọc bằng thao tác riêng; tiến độ chỉ tính chương hiện/chưa xóa. Đọc tiếp nhớ chương gần nhất, không lưu trang/scroll; lật đến cuối không tự đánh dấu.
+
+Phân quyền và giới hạn:
+
+- AdminOnly/StudentOnly kèm tài khoản active phía server; các thao tác ghi dùng POST và CSRF. Student chỉ được lấy sách/chương hiện, chưa xóa; dữ liệu người dùng lấy từ claims. Cấu hình Books hiện khóa vào server/database test được chỉ định, không phải cấu hình phát hành production đã nghiệm thu.
+- Admin đã có nơi lưu bản dịch nhưng reader chưa có UI xem bản dịch; đối chiếu baseline “dịch tùy chọn” còn chờ xác nhận BKS-Q01, không ghi là tính năng đã hoàn thành. Trạng thái Browser Back/Đọc tiếp còn nghi vấn BKS-Q02, chưa xác minh runtime.
+- Phần xử lý ảnh đã được người dùng xác nhận kiểm thử; không kiểm thử lại trong lượt này. Chưa có đủ bằng chứng nghiệm thu chức năng toàn module; giữ P3-03 và Gate P3 chưa đóng.
+
+---
+
 # 14. Module Writing
 
 ## FR-23 — Danh sách chủ đề Writing

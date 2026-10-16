@@ -1,0 +1,32 @@
+@model AdminChaptersPage
+@{ ViewData["Title"] = L["BooksChapters"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; var orderIndex = 0; }
+<section class="management-card">
+    <header class="books-heading"><div><p class="books-eyebrow">@L["BooksChapters"]</p><h1>@Model.Book.Title</h1><p>@Model.Book.Author · @Model.Book.Topic</p></div><div class="books-actions"><a class="books-button" asp-action="Index" asp-route-culture="@culture">@L["BooksBack"]</a>@if (!Model.Book.IsDeleted) { <a class="books-button" asp-action="Edit" asp-route-bookId="@Model.Book.Id" asp-route-culture="@culture">@L["BooksEdit"]</a><a class="btn-brand-primary" asp-action="CreateChapter" asp-route-bookId="@Model.Book.Id" asp-route-culture="@culture">@L["BooksChapterCreate"]</a> }</div></header>
+    @if (Model.Book.IsDeleted) { <p class="books-note">@L["BooksReadOnlyDeleted"]</p> }
+    else if (!Model.Book.IsVisible) { <p class="books-note">@L["BooksBookHiddenHint"]</p> }
+    @if (Model.Chapters.Count == 0) { <div class="books-empty">@L["BooksEmptyChapters"]</div> }
+    else {
+        if (!Model.Book.IsDeleted && Model.Chapters.Any(c => !c.IsDeleted)) {
+            <form id="books-order-form" asp-action="Reorder" asp-route-bookId="@Model.Book.Id" asp-route-culture="@culture" method="post" class="books-order-toolbar"><p id="books-order-hint">@L["BooksOrderHint"]</p><button type="submit" class="btn-brand-primary">@L["BooksSaveOrder"]</button></form>
+        }
+        <div class="management-table-wrap"><table class="management-table"><thead><tr><th>@L["BooksOrder"]</th><th>@L["BooksChapterTitle"]</th><th>@L["BooksStatus"]</th><th>@L["ClassificationActions"]</th></tr></thead><tbody>
+        @foreach (var chapter in Model.Chapters) {
+            <tr><td>
+                @if (!Model.Book.IsDeleted && !chapter.IsDeleted) {
+                    <input form="books-order-form" type="hidden" name="Input.Chapters[@orderIndex].ChapterId" value="@chapter.Id" />
+                    <input form="books-order-form" type="hidden" name="Input.Chapters[@orderIndex].RowVersion" value="@Convert.ToBase64String(chapter.RowVersion)" />
+                    <input form="books-order-form" class="books-order-input" type="number" name="Input.Chapters[@orderIndex].DisplayOrder" value="@chapter.DisplayOrder" min="1" max="2147483647" required aria-label="@L["BooksOrderFor", chapter.Title]" aria-describedby="books-order-hint" />
+                    orderIndex++;
+                } else { <span class="books-order-value">@chapter.DisplayOrder</span> }
+            </td><td class="books-title">@chapter.Title</td><td><span class="books-badge @(chapter.IsDeleted ? "is-deleted" : chapter.IsVisible ? "is-visible" : "")">@L[chapter.IsDeleted ? "VocabDeleted" : chapter.IsVisible ? "VocabVisible" : "VocabHidden"]</span></td><td><div class="books-actions">
+                @if (!Model.Book.IsDeleted && !chapter.IsDeleted) {
+                    <a class="books-button" asp-action="EditChapter" asp-route-bookId="@Model.Book.Id" asp-route-chapterId="@chapter.Id" asp-route-culture="@culture">@L["ClassificationEdit"]</a>
+                    <a class="books-button" asp-action="Vocabulary" asp-route-bookId="@Model.Book.Id" asp-route-chapterId="@chapter.Id" asp-route-culture="@culture">@(culture == "vi" ? "Ghi chú từ vựng" : "Vocabulary notes")</a>
+                    <form asp-action="ChapterVisibility" asp-route-bookId="@Model.Book.Id" asp-route-chapterId="@chapter.Id" asp-route-culture="@culture" method="post"><input type="hidden" name="Input.RowVersion" value="@Convert.ToBase64String(chapter.RowVersion)" /><input type="hidden" name="Input.IsVisible" value="@((!chapter.IsVisible).ToString().ToLowerInvariant())" /><button class="books-button" type="submit">@L[chapter.IsVisible ? "ListeningHide" : "ListeningShow"]</button></form>
+                    <a class="books-button books-danger" asp-action="DeleteChapter" asp-route-bookId="@Model.Book.Id" asp-route-chapterId="@chapter.Id" asp-route-culture="@culture">@L["BooksDeleteConfirm"]</a>
+                } else { <span class="books-muted">—</span> }
+            </div></td></tr>
+        }
+        </tbody></table></div>
+    }
+</section>

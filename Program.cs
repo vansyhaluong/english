@@ -88,6 +88,8 @@ builder.Services.AddScoped<IVocabularyService, VocabularyService>();
 builder.Services.AddScoped<GrammarHtmlSanitizer>();
 builder.Services.AddScoped<IGrammarService, GrammarService>();
 builder.Services.AddScoped<IListeningService, ListeningService>();
+builder.Services.AddScoped<IBooksService, BooksService>();
+builder.Services.AddScoped<BooksDatabaseGuard>();
 builder.Services.AddSingleton<SubtitleParser>();
 builder.Services.AddScoped<ListeningDatabaseGuard>();
 builder.Services.AddScoped<ListeningAudioStorage>();
@@ -136,6 +138,7 @@ app.UseStatusCodePagesWithReExecute("/Home/Status", "?code={0}");
 app.UseRouting();
 
 app.UseMiddleware<ListeningDatabaseSafetyMiddleware>();
+app.UseMiddleware<BooksDatabaseSafetyMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -44,6 +44,9 @@
             <a class="@(controller == "Listening" ? "is-active" : null)" asp-controller="Listening" asp-action="Index" asp-route-culture="@culture">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2M3 13h4v8H3zM17 13h4v8h-4z" /></svg><span>@L["GrammarListening"]</span>
             </a>
+            <a class="@(controller == "StudentBooks" ? "is-active" : null)" asp-controller="StudentBooks" asp-action="Index" asp-route-culture="@culture" aria-current="@(controller == "StudentBooks" ? "page" : null)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h14v18H4zM4 17h14M8 3v14M18 5h2v16h-2" /></svg><span>@L["Books"]</span>
+            </a>
             <a class="@(isProfile ? "is-active" : null)" asp-controller="Account" asp-action="Profile" asp-route-culture="@culture" aria-current="@(isProfile ? "page" : null)">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg><span>@L["Profile"]</span>
             </a>

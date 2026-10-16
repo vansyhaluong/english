@@ -1,0 +1,66 @@
+@model AdminChapterVocabularyPage
+@{
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var vi = culture == "vi";
+    ViewData["Title"] = vi ? "Ghi chú từ vựng" : "Vocabulary notes";
+}
+<section class="management-card books-editor" data-vocabulary-editor data-culture="@culture">
+    <header class="books-heading"><div><p class="books-eyebrow">@Model.BookTitle</p><h1>@ViewData["Title"]</h1><p>@Model.ChapterTitle</p></div><a class="books-button" asp-action="EditChapter" asp-route-bookId="@Model.BookId" asp-route-chapterId="@Model.ChapterId" asp-route-culture="@culture">@L["BooksBack"]</a></header>
+    <p class="books-note">@(vi ? "Ghi chú áp dụng cho mọi lần xuất hiện khớp trong chương, không phân biệt hoa/thường. Khi các cụm chồng nhau, ưu tiên cụm dài nhất tại cùng vị trí. Tối đa 200 ghi chú; lưu ở đây không thay đổi nội dung chương." : "Notes apply to every matching occurrence, ignoring case. Overlapping phrases prefer the longest match at the same position. Up to 200 notes; saving here preserves the chapter text.")</p>
+    @if (Model.LegacyText is not null)
+    {
+        <details class="books-legacy"><summary>@(vi ? "Ghi chú cũ được giữ nguyên (chưa dùng để highlight)" : "Original notes preserved (not used for highlighting)")</summary><pre>@Model.LegacyText</pre></details>
+    }
+    <form class="account-form books-form" data-note-composer>
+        <fieldset class="books-vocabulary-row">
+            <legend data-note-editor-title>@(vi ? "Thêm ghi chú" : "Add note")</legend>
+            <div class="books-form-row">
+                <label class="account-field">@(vi ? "Từ / cụm từ" : "Word / phrase")<input data-draft-field="Word" maxlength="160" required lang="en" /></label>
+                <label class="account-field">@(vi ? "Nghĩa tiếng Việt" : "Vietnamese meaning")<textarea data-draft-field="MeaningVi" maxlength="2000" rows="2" required lang="vi"></textarea></label>
+                <label class="account-field">IPA <input data-draft-field="Ipa" maxlength="120" /></label>
+                <label class="account-field">@(vi ? "Loại từ" : "Part of speech")<input data-draft-field="PartOfSpeech" maxlength="80" /></label>
+            </div>
+            <div class="books-actions books-vocabulary-editor-actions">
+                <button class="books-button" type="submit" data-add-note disabled>+ @(vi ? "Thêm vào danh sách" : "Add to list")</button>
+                <button class="books-button" type="button" data-cancel-note hidden>@(vi ? "Hủy sửa" : "Cancel edit")</button>
+            </div>
+        </fieldset>
+    </form>
+    <p class="books-muted" data-vocabulary-message role="status" aria-live="polite"></p>
+    <form method="post" asp-action="Vocabulary" asp-route-bookId="@Model.BookId" asp-route-chapterId="@Model.ChapterId" asp-route-culture="@culture" class="account-form books-form" data-vocabulary-form>
+        <input asp-for="Input.RowVersion" type="hidden" />
+        <h2 class="books-vocabulary-list-title">@(vi ? "Danh sách ghi chú" : "Vocabulary notes") (<span data-note-count>@Model.Input.Entries.Count</span>/200)</h2>
+        <p class="books-muted" data-vocabulary-empty hidden="@(Model.Input.Entries.Count > 0)">@(vi ? "Chưa có ghi chú. Nhập từ và nghĩa ở form phía trên rồi thêm vào danh sách." : "No notes yet. Enter a word and meaning above, then add it to the list.")</p>
+        <div class="management-table-wrap">
+            <table class="management-table books-vocabulary-table" aria-label="@(vi ? "Danh sách ghi chú từ vựng" : "Vocabulary notes list")">
+                <thead><tr><th scope="col">#</th><th scope="col">@(vi ? "Từ / cụm từ" : "Word / phrase")</th><th scope="col">@(vi ? "Nghĩa tiếng Việt" : "Vietnamese meaning")</th><th scope="col">IPA</th><th scope="col">@(vi ? "Loại từ" : "Part of speech")</th><th scope="col">@L["ClassificationActions"]</th></tr></thead>
+                <tbody data-vocabulary-rows>
+                    @for (var i = 0; i < Model.Input.Entries.Count; i++)
+                    {
+                        <tr data-vocabulary-row>
+                            <td data-note-number>@(i + 1)</td>
+                            <td><span data-copy-field="Word">@Model.Input.Entries[i].Word</span><input asp-for="Input.Entries[i].Word" data-field="Word" type="hidden" /></td>
+                            <td><span data-copy-field="MeaningVi">@Model.Input.Entries[i].MeaningVi</span><input asp-for="Input.Entries[i].MeaningVi" data-field="MeaningVi" type="hidden" /></td>
+                            <td><span data-copy-field="Ipa">@Model.Input.Entries[i].Ipa</span><input asp-for="Input.Entries[i].Ipa" data-field="Ipa" type="hidden" /></td>
+                            <td><span data-copy-field="PartOfSpeech">@Model.Input.Entries[i].PartOfSpeech</span><input asp-for="Input.Entries[i].PartOfSpeech" data-field="PartOfSpeech" type="hidden" /></td>
+                            <td><div class="books-actions"><button class="books-button" type="button" data-edit-note>@L["ClassificationEdit"]</button><button class="books-button books-danger" type="button" data-remove-note>@(vi ? "Xóa" : "Remove")</button></div></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <p class="books-muted">@(vi ? "Bấm Lưu thay đổi để lưu toàn bộ danh sách. Thêm, sửa hoặc xóa trong bảng chưa tự lưu." : "Choose Save changes to save the full list. Adding, editing or removing a row does not save it yet.")</p>
+        <div class="books-actions"><button class="btn-brand-primary" type="submit">@L["SaveChanges"]</button></div>
+    </form>
+    <noscript><p>@(vi ? "Bật JavaScript để thêm, sửa hoặc xóa ghi chú." : "Enable JavaScript to add, edit or remove notes.")</p></noscript>
+    <template data-vocabulary-template>
+        <tr data-vocabulary-row>
+            <td data-note-number></td>
+            <td><span data-copy-field="Word"></span><input data-field="Word" type="hidden" /></td>
+            <td><span data-copy-field="MeaningVi"></span><input data-field="MeaningVi" type="hidden" /></td>
+            <td><span data-copy-field="Ipa"></span><input data-field="Ipa" type="hidden" /></td>
+            <td><span data-copy-field="PartOfSpeech"></span><input data-field="PartOfSpeech" type="hidden" /></td>
+            <td><div class="books-actions"><button class="books-button" type="button" data-edit-note>@L["ClassificationEdit"]</button><button class="books-button books-danger" type="button" data-remove-note>@(vi ? "Xóa" : "Remove")</button></div></td>
+        </tr>
+    </template>
+</section>

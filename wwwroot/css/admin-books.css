@@ -1,0 +1,70 @@
+.admin-books { --books-muted: var(--area-muted); max-width: 1280px; margin-inline: auto; }
+.admin-books .books-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 24px; }
+.admin-books .books-heading > div:first-child { min-width: 0; flex: 1 1 260px; }
+.admin-books h1 { overflow-wrap: anywhere; }
+.admin-books .books-heading p { margin-top: 8px; color: var(--books-muted); }
+.admin-books .books-eyebrow { color: var(--area-accent-strong); font-size: 12px; font-weight: 800; margin-bottom: 8px; overflow-wrap: anywhere; }
+.admin-books .books-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: end; }
+.admin-books .books-search { grid-column: 1 / -1; }
+.admin-books .books-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.admin-books .books-actions form { margin: 0; }
+.admin-books .books-button { display: inline-flex; justify-content: center; align-items: center; min-height: 38px; padding: 8px 12px; border: 1px solid var(--area-border); border-radius: 10px; background: transparent; color: var(--area-text); font: inherit; font-size: 13px; line-height: 1.4; text-decoration: none; cursor: pointer; }
+.admin-books .books-button:hover { background: rgb(196 166 255 / 10%); border-color: var(--area-accent); }
+.admin-books .books-danger { color: #ffb4b4; border-color: rgb(255 180 180 / 30%); }
+.admin-books .books-danger:hover { background: rgb(143 29 23 / 20%); border-color: #ffb4b4; }
+.admin-books .management-table .books-title { min-width: 180px; max-width: 360px; white-space: normal; overflow-wrap: anywhere; font-weight: 700; }
+.admin-books .management-table .books-meta { min-width: 140px; max-width: 240px; white-space: normal; overflow-wrap: anywhere; }
+.admin-books .books-meta span, .admin-books .books-muted { color: var(--books-muted); }
+.admin-books .management-table .books-actions { min-width: 220px; }
+.admin-books .management-table td a + a { margin-left: 0; }
+.admin-books .books-badge { display: inline-flex; padding: 4px 10px; border: 1px solid var(--area-border); border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--books-muted); }
+.admin-books .books-badge.is-visible { color: #baf7c6; border-color: rgb(116 220 139 / 30%); background: rgb(37 115 55 / 15%); }
+.admin-books .books-badge.is-deleted { color: #ffb4b4; border-color: rgb(255 180 180 / 30%); }
+.admin-books .books-empty { margin-top: 24px; padding: 36px 16px; border: 1px dashed var(--area-border); border-radius: 14px; text-align: center; color: var(--books-muted); }
+.admin-books .books-form { margin-top: 20px; }
+.admin-books [data-cover-preview] [hidden] { display: none; }
+.admin-books .books-cover-preview { display: grid; place-items: center; width: 160px; aspect-ratio: 2 / 3; overflow: hidden; border: 1px solid var(--area-border); border-radius: 10px; background: var(--area-input); color: var(--books-muted); text-align: center; }
+.admin-books .books-cover-preview img { width: 100%; height: 100%; object-fit: contain; }
+.admin-books .books-cover-preview > span { padding: 16px; }
+.admin-books .books-cover-field small { color: var(--books-muted); }
+.admin-books .books-title-cover { display: flex; align-items: center; gap: 12px; }
+.admin-books .books-cover-thumbnail { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 64px; overflow: hidden; border: 1px solid var(--area-border); border-radius: 4px; background: var(--area-input); color: var(--books-muted); }
+.admin-books .books-cover-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.admin-books .books-form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.admin-books .books-chapter-title { grid-template-columns: minmax(0, 1fr) 140px; }
+.admin-books .account-field { min-width: 0; }
+.admin-books .account-field textarea { line-height: 1.7; resize: vertical; min-height: 100px; }
+.admin-books .books-check { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.admin-books .books-check input { width: 18px; height: 18px; }
+.admin-books .books-note { padding: 12px 16px; margin-block: 16px; border: 1px solid var(--area-border); border-radius: 12px; background: rgb(196 166 255 / 6%); color: var(--books-muted); line-height: 1.6; }
+.admin-books .books-order-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 24px; }
+.admin-books .books-order-toolbar p { flex: 1 1 280px; color: var(--books-muted); font-size: 13px; line-height: 1.6; }
+.admin-books .books-order-input { width: 90px; min-height: 40px; padding: 8px; border: 1px solid var(--area-border); border-radius: 10px; background: var(--area-input); color: var(--area-text); font: inherit; }
+.admin-books .books-order-value { display: inline-block; padding: 8px; color: var(--books-muted); }
+.admin-books .books-delete { max-width: 680px; margin-inline: auto; }
+.admin-books .books-delete > p { margin-block: 16px; line-height: 1.7; }
+.admin-books .account-validation { margin-bottom: 16px; }
+.admin-books .validation-summary-valid { display: none; }
+.admin-books :focus-visible { outline: 2px solid var(--area-accent); outline-offset: 3px; }
+/* Keep shared combobox behavior; scope the Admin palette to Books only. */
+.admin-books .eh-combobox { --cb-surface: #222131; --cb-input: #191923; --cb-text: var(--area-text); --cb-muted: var(--area-muted); --cb-border: var(--area-border); --cb-ring: var(--area-accent); --cb-hover: #353047; --cb-selected: #302a40; }
+.admin-books .eh-combobox .eh-combobox__value { color: var(--cb-text); font-size: inherit; }
+.admin-books .books-vocabulary-row { min-width: 0; margin: 0 0 18px; padding: 18px; border: 1px solid var(--area-border); border-radius: 12px; }
+.admin-books .books-vocabulary-row legend { padding-inline: 8px; color: var(--books-muted); font-size: 13px; }
+.admin-books .books-vocabulary-editor-actions { margin-top: 16px; }
+.admin-books .books-vocabulary-row textarea { min-height: 70px; }
+.admin-books .books-vocabulary-list-title { margin: 8px 0 16px; font-size: 18px; }
+.admin-books .books-vocabulary-table td { max-width: 340px; white-space: pre-wrap; overflow-wrap: anywhere; vertical-align: top; }
+.admin-books .books-vocabulary-table td:nth-child(2) { min-width: 140px; font-weight: 700; }
+.admin-books .books-vocabulary-table td:nth-child(3) { min-width: 200px; }
+.admin-books .books-vocabulary-table .books-actions { min-width: 130px; }
+.admin-books .books-vocabulary-table tr.is-editing { background: rgb(196 166 255 / 8%); }
+.admin-books [data-vocabulary-editor] [hidden] { display: none !important; }
+.admin-books .books-legacy { margin: 16px 0; padding: 14px; border: 1px solid var(--area-border); border-radius: 10px; color: var(--books-muted); }
+.admin-books .books-legacy pre { max-height: 260px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+@media (max-width: 640px) {
+    .admin-books .books-filters, .admin-books .books-form-row { grid-template-columns: minmax(0, 1fr); }
+    .admin-books .books-heading { gap: 12px; }
+    .admin-books .books-heading > div:first-child { flex-basis: 100%; }
+    .admin-books .books-order-toolbar .btn-brand-primary { width: 100%; }
+}

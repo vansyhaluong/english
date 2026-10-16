@@ -1,0 +1,64 @@
+@model English.Models.ViewModels.Books.StudentBookReaderPageModel
+@{
+    Layout = "_StudentBooksLayout";
+    ViewData["Title"] = L["Books"];
+    var vi = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "vi";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/student-book-reader.css" asp-append-version="true" />
+}
+<main class="reader-scene" data-book-reader data-book-id="@Model.BookId" data-chapter-id="@Model.ChapterId"
+      data-culture="@CultureInfo.CurrentUICulture.Name" data-api="@Url.Content("~/books/")" aria-labelledby="reader-book-title">
+    <header class="reader-masthead">
+        <a class="reader-brand" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentUICulture.Name">EnglishHub<span>THE READING ROOM</span></a>
+        <a class="reader-return" asp-action="Index" asp-route-culture="@CultureInfo.CurrentUICulture.Name">← @(vi ? "Tủ sách" : "Library")</a>
+    </header>
+    <section class="reader-heading">
+        <p class="reader-eyebrow" data-reader-topic>Books</p>
+        <h1 id="reader-book-title" data-reader-title>@(vi ? "Đang mở sách…" : "Opening book…")</h1>
+        <p class="reader-author" data-reader-author></p>
+    </section>
+    <div class="reader-toolbar" aria-label="@(vi ? "Tùy chọn đọc" : "Reading options")">
+        <label class="reader-chapter-picker"><span>@(vi ? "Mục lục" : "Contents")</span><select data-reader-chapters disabled aria-label="@(vi ? "Chọn chương" : "Choose a chapter")"></select></label>
+        <label class="reader-font-picker"><span>Aa</span><select data-reader-font aria-label="@(vi ? "Cỡ chữ" : "Text size")"><option value="18">18</option><option value="21" selected>21</option><option value="24">24</option><option value="28">28</option></select></label>
+        <button class="reader-mark" type="button" data-reader-mark disabled>@(vi ? "Đánh dấu đã đọc" : "Mark as read")</button>
+    </div>
+    <div class="reader-notice"><p data-reader-status role="status">@(vi ? "Đang tải nội dung…" : "Loading content…")</p><button class="reader-button" type="button" data-reader-retry hidden>@(vi ? "Thử lại" : "Try again")</button></div>
+    <section class="reader-paper" aria-label="@(vi ? "Sách đang mở" : "Open book")" aria-busy="true">
+        <div class="reader-leaf reader-leaf-left">
+            <header class="reader-running-head"><span data-reader-chapter-title></span><span class="reader-ornament" aria-hidden="true">✦</span></header>
+            <div class="reader-page" data-reader-page lang="en" tabindex="0" aria-label="@(vi ? "Trang bên trái" : "Left page")"></div>
+            <footer class="reader-folio"><span>ENGLISHHUB</span><span data-reader-folio-left></span></footer>
+        </div>
+        <div class="reader-leaf reader-leaf-right">
+            <header class="reader-running-head"><span data-reader-running-title></span><span class="reader-ornament" aria-hidden="true">✦</span></header>
+            <div class="reader-page" data-reader-page-next lang="en" tabindex="0" aria-label="@(vi ? "Trang bên phải" : "Right page")"></div>
+            <footer class="reader-folio"><span data-reader-folio-right></span><span class="reader-end-note" data-reader-end-note></span></footer>
+        </div>
+        <span class="reader-ribbon" aria-hidden="true"></span>
+    </section>
+    <nav class="reader-footer" aria-label="@(vi ? "Điều hướng trang" : "Page navigation")">
+        <button class="reader-turn" type="button" data-reader-prev disabled>← @(vi ? "Trang trước" : "Previous page")</button>
+        <div class="reader-position"><span data-reader-count role="status" aria-live="polite" aria-atomic="true">—</span><span class="reader-page-hint">@(vi ? "Lật từng trang, đọc theo nhịp của bạn" : "One page at a time, at your own pace")</span></div>
+        <button class="reader-turn" type="button" data-reader-next disabled>@(vi ? "Trang sau" : "Next page") →</button>
+    </nav>
+    <div class="reader-bottom"><span data-reader-progress></span><span>ENGLISHHUB · BOOKS</span></div>
+    <noscript><p>@(vi ? "Bật JavaScript để đọc sách." : "Enable JavaScript to read this book.")</p></noscript>
+    <dialog class="vocabulary-popup" id="book-vocabulary-popup" aria-labelledby="vocabulary-word" data-vocabulary-popup>
+        <button class="vocabulary-close" type="button" data-vocabulary-close aria-label="@(vi ? "Đóng ghi chú" : "Close note")">×</button>
+        <p class="vocabulary-eyebrow">@(vi ? "Ghi chú từ vựng" : "Vocabulary note")</p>
+        <div class="vocabulary-word-row">
+            <h2 id="vocabulary-word" data-vocabulary-word lang="en"></h2>
+            <button class="vocabulary-speak" type="button" data-vocabulary-speak aria-label="@(vi ? "Nghe phát âm" : "Listen to pronunciation")" title="@(vi ? "Nghe phát âm" : "Listen to pronunciation")">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 5 6 9H3v6h3l5 4V5Z" /><path d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14" /></svg>
+            </button>
+        </div>
+        <p class="vocabulary-pronunciation"><span data-vocabulary-ipa></span><span data-vocabulary-pos></span></p>
+        <p class="vocabulary-meaning" data-vocabulary-meaning lang="vi"></p>
+        <p class="vocabulary-speech-status" data-vocabulary-speech-status role="status"></p>
+    </dialog>
+</main>
+@section Scripts {
+    <script src="~/js/book-vocabulary.js" asp-append-version="true" defer></script>
+    <script src="~/js/student-book-reader.js" asp-append-version="true" defer></script>
+}
