@@ -1,0 +1,75 @@
+@{
+    Layout = "_StudentBooksLayout";
+    ViewData["Title"] = L["Books"];
+    var vi = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "vi";
+}
+<main class="stage student-books" data-student-books data-api="@Url.Action("Index", "Books")"
+         data-details="@Url.Content("~/books/")" data-read-base="@Url.Content("~/books/library/")" data-culture="@CultureInfo.CurrentUICulture.Name"
+         aria-labelledby="books-heading" aria-roledescription="carousel">
+    <header class="topbar">
+        <a class="brand" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">EnglishHub</a>
+        <div class="nav-actions">
+            <button class="icon-button" type="button" data-menu-toggle aria-label="@(vi ? "Mở menu" : "Open menu")" aria-controls="books-menu" aria-expanded="false"><span class="menu-glyph" aria-hidden="true"></span></button>
+            <span class="ticket-button" data-position role="status" aria-live="polite" aria-atomic="true"></span>
+        </div>
+    </header>
+    <h1 id="books-heading" class="hero-word">Books</h1>
+    <p class="library-message" data-message role="status">@(vi ? "Đang tải sách…" : "Loading books…")</p>
+    <button class="library-retry" type="button" data-retry hidden>@(vi ? "Thử lại" : "Try again")</button>
+    <div class="gallery" data-gallery aria-label="@(vi ? "Chọn sách" : "Choose a book")" aria-busy="true"></div>
+    <div class="library-controls" data-dock hidden>
+        <button class="icon-button previous-book" type="button" data-previous aria-label="@(vi ? "Sách trước" : "Previous book")" disabled>←</button>
+        <button class="icon-button next-book" type="button" data-next aria-label="@(vi ? "Sách tiếp theo" : "Next book")" disabled>→</button>
+    </div>
+    <template data-book-template>
+        <button class="book-card" type="button" data-slot="hidden" tabindex="-1">
+            <span class="book" aria-hidden="true">
+                <span class="book-shadow"></span><span class="book-back"></span><span class="page-block"></span>
+                <span class="page-fan"><i></i><i></i><i></i><i></i></span>
+                <span class="front-cover">
+                    <img class="cover-image" alt="" loading="eager" referrerpolicy="no-referrer" hidden />
+                    <span class="cover-copy">
+                        <span class="cover-kicker"></span><span class="cover-title"></span>
+                        <span class="cover-subtitle"></span><span></span><span class="cover-footer">EnglishHub</span>
+                    </span>
+                </span>
+                <span class="open-badge">@(vi ? "Mở sách" : "Read")</span>
+            </span>
+        </button>
+    </template>
+    <section class="detail-panel" data-detail-panel aria-labelledby="book-detail-title" aria-hidden="true" inert>
+        <p class="detail-kicker" data-detail-topic></p>
+        <h2 class="detail-title" id="book-detail-title" data-detail-title></h2>
+        <div class="detail-scroll" data-detail-scroll tabindex="0" aria-label="@(vi ? "Chi tiết sách" : "Book details")">
+            <p class="detail-description" data-detail-author></p>
+            <p class="detail-description book-description" data-detail-description></p>
+            <section class="doc-section">
+                <h3 class="doc-label">@(vi ? "Các chương" : "Chapters")</h3>
+                <p class="doc-review" data-detail-status role="status"></p>
+                <a class="reader-button" data-start-reading hidden>@(vi ? "Đọc tiếp" : "Continue reading") →</a>
+                <ol class="doc-steps" data-detail-chapters></ol>
+            </section>
+        </div>
+    </section>
+    <button class="close-button" type="button" data-close tabindex="-1" aria-label="@(vi ? "Đóng chi tiết" : "Close details")">×</button>
+    <div class="blossom-field" aria-hidden="true">
+        @for (var i = 0; i < 9; i++)
+        {
+            <span class="blossom" style="--blossom-x: @(4 + i * 11)%; --blossom-size: @(16 + i % 4 * 5)px; --blossom-r: @(i * 18)deg; --blossom-duration: @(9 + i % 4)s; --blossom-delay: -@(i + 1)s;"><i></i><i></i><i></i><i></i><i></i></span>
+        }
+    </div>
+    <nav class="menu-layer" id="books-menu" data-menu-layer aria-label="@(vi ? "Điều hướng" : "Navigation")" aria-hidden="true" inert>
+        <ul class="menu-list">
+            <li><a class="menu-link" asp-controller="Home" asp-action="Index" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">@(vi ? "Trang chủ" : "Home")</a></li>
+            <li><a class="menu-link" href="#books-heading" data-menu-close>@(vi ? "Tủ sách" : "Library")</a></li>
+            <li><a class="menu-link" asp-controller="Account" asp-action="Profile" asp-route-culture="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">@(vi ? "Hồ sơ" : "Profile")</a></li>
+        </ul>
+    </nav>
+    <noscript><p class="library-message">@(vi ? "Bật JavaScript để duyệt tủ sách." : "Enable JavaScript to browse the library.")</p></noscript>
+</main>
+@section Styles {
+    <link rel="stylesheet" href="~/css/student-book-reader.css" asp-append-version="true" />
+}
+@section Scripts {
+    <script src="~/js/student-books.js" asp-append-version="true" defer></script>
+}

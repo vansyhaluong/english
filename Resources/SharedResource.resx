@@ -327,4 +327,59 @@
   <data name="ListeningStudentVideoEmbedError" xml:space="preserve"><value>Chủ video không cho phép phát video trên website này. Bạn vẫn có thể đọc transcript.</value></data>
   <data name="ListeningStudentVideoIdentityError" xml:space="preserve"><value>YouTube từ chối trình phát vì thiếu thông tin định danh website cần thiết. Bạn vẫn có thể đọc transcript.</value></data>
   <data name="ListeningStudentVideoError" xml:space="preserve"><value>Không phát được video YouTube. Tải lại trang để thử lại; bạn vẫn có thể đọc transcript.</value></data>
+  <data name="Books" xml:space="preserve"><value>Đọc sách</value></data>
+  <data name="BooksManage" xml:space="preserve"><value>Quản lý sách</value></data>
+  <data name="BooksIntro" xml:space="preserve"><value>Quản lý sách theo chủ đề và biên tập nội dung từng chương.</value></data>
+  <data name="BooksCreate" xml:space="preserve"><value>Thêm sách</value></data>
+  <data name="BooksEdit" xml:space="preserve"><value>Sửa sách</value></data>
+  <data name="BooksTitle" xml:space="preserve"><value>Tên sách</value></data>
+  <data name="BooksAuthor" xml:space="preserve"><value>Tác giả</value></data>
+  <data name="BooksCoverUrl" xml:space="preserve"><value>URL ảnh bìa (tùy chọn)</value></data>
+  <data name="BooksSearch" xml:space="preserve"><value>Tìm theo tên sách hoặc tác giả</value></data>
+  <data name="BooksStatus" xml:space="preserve"><value>Trạng thái hiển thị</value></data>
+  <data name="BooksActiveOnly" xml:space="preserve"><value>Chưa xóa</value></data>
+  <data name="BooksNoResults" xml:space="preserve"><value>Không có sách phù hợp. Hãy đổi bộ lọc hoặc thêm sách mới.</value></data>
+  <data name="BooksChapters" xml:space="preserve"><value>Quản lý chương</value></data>
+  <data name="BooksChapterCreate" xml:space="preserve"><value>Thêm chương</value></data>
+  <data name="BooksChapterEdit" xml:space="preserve"><value>Sửa chương</value></data>
+  <data name="BooksChapterTitle" xml:space="preserve"><value>Tên chương</value></data>
+  <data name="BooksOrder" xml:space="preserve"><value>Thứ tự</value></data>
+  <data name="BooksOrderFor" xml:space="preserve"><value>Thứ tự chương: {0}</value></data>
+  <data name="BooksOrderHint" xml:space="preserve"><value>Thứ tự phải là số nguyên dương và không trùng trong sách, kể cả chương đã xóa. Để hoán đổi, sửa các số ở danh sách chương rồi bấm Lưu thứ tự.</value></data>
+  <data name="BooksSaveOrder" xml:space="preserve"><value>Lưu thứ tự</value></data>
+  <data name="BooksEnglish" xml:space="preserve"><value>Nội dung tiếng Anh</value></data>
+  <data name="BooksTranslation" xml:space="preserve"><value>Bản dịch tiếng Việt (tùy chọn)</value></data>
+  <data name="BooksNotes" xml:space="preserve"><value>Ghi chú từ vựng (tùy chọn)</value></data>
+  <data name="BooksPlainTextHint" xml:space="preserve"><value>Nhập văn bản thuần. Nội dung giữ xuống dòng; không hỗ trợ định dạng HTML, PDF hoặc EPUB.</value></data>
+  <data name="BooksEmptyChapters" xml:space="preserve"><value>Sách chưa có chương nào.</value></data>
+  <data name="BooksReadOnlyDeleted" xml:space="preserve"><value>Sách đã xóa mềm. Bạn có thể xem danh sách chương nhưng không thể chỉnh sửa.</value></data>
+  <data name="BooksBookHiddenHint" xml:space="preserve"><value>Sách đang ẩn với học viên. Bạn vẫn có thể biên tập các chương.</value></data>
+  <data name="BooksDeleteTitle" xml:space="preserve"><value>Xác nhận xóa mềm</value></data>
+  <data name="BooksDeleteBookPrompt" xml:space="preserve"><value>Bạn có chắc muốn xóa mềm sách này? Học viên sẽ không còn truy cập được sách và các chương bên trong.</value></data>
+  <data name="BooksDeleteChapterPrompt" xml:space="preserve"><value>Bạn có chắc muốn xóa mềm chương này? Học viên sẽ không còn truy cập được chương.</value></data>
+  <data name="BooksDeleteNotice" xml:space="preserve"><value>Nội dung, dấu đã đọc và vị trí đọc của học viên được giữ lại. Thao tác chỉ thực hiện khi bạn bấm xác nhận bên dưới.</value></data>
+  <data name="BooksDeleteConfirm" xml:space="preserve"><value>Xóa mềm</value></data>
+  <data name="BooksBack" xml:space="preserve"><value>Quay lại</value></data>
+  <data name="BooksReload" xml:space="preserve"><value>Tải lại dữ liệu đã lưu</value></data>
+  <data name="BooksSaved" xml:space="preserve"><value>Đã lưu thay đổi.</value></data>
+  <data name="BooksDeleted" xml:space="preserve"><value>Đã xóa mềm nội dung.</value></data>
+  <data name="BooksShowing" xml:space="preserve"><value>{0} sách · Trang {1}/{2}</value></data>
+  <data name="BooksConflict" xml:space="preserve"><value>Dữ liệu đã thay đổi hoặc thao tác bị xung đột. Hãy tải lại dữ liệu đã lưu, kiểm tra và thử lại.</value></data>
+  <data name="BooksInvalidInput" xml:space="preserve"><value>Dữ liệu chưa hợp lệ. Vui lòng kiểm tra các trường và thử lại.</value></data>
+  <data name="BooksFieldInvalid" xml:space="preserve"><value>Vui lòng nhập giá trị hợp lệ; kiểm tra trường bắt buộc, độ dài hoặc khoảng giá trị.</value></data>
+  <data name="BooksRequired" xml:space="preserve"><value>Vui lòng nhập đủ các trường bắt buộc.</value></data>
+  <data name="BooksInvalidCoverUrl" xml:space="preserve"><value>Ảnh bìa phải là URL HTTP/HTTPS hợp lệ, không có thông tin đăng nhập hoặc khoảng trắng.</value></data>
+  <data name="BooksTopicNotFound" xml:space="preserve"><value>Chủ đề không còn tồn tại. Hãy tải lại danh sách và chọn chủ đề khác.</value></data>
+  <data name="BooksOrderInUse" xml:space="preserve"><value>Thứ tự này đã được chương khác sử dụng, kể cả chương đã xóa. Chọn số còn trống hoặc dùng Lưu thứ tự tại danh sách chương để hoán đổi.</value></data>
+  <data name="BooksDuplicateOrderOrChapter" xml:space="preserve"><value>Danh sách có chương hoặc thứ tự bị trùng. Hãy kiểm tra lại trước khi lưu.</value></data>
+  <data name="BooksNoFreeOrder" xml:space="preserve"><value>Không còn vị trí trống để đổi thứ tự an toàn. Thao tác chưa được lưu.</value></data>
+  <data name="BooksOrderInvalid" xml:space="preserve"><value>Thứ tự chương phải là số nguyên từ 1 đến 2147483647. Dữ liệu đã được tải lại, chưa lưu thay đổi.</value></data>
+  <data name="BooksCoverImage" xml:space="preserve"><value>Ảnh bìa sách</value></data>
+  <data name="BooksCoverPreview" xml:space="preserve"><value>Xem trước ảnh bìa</value></data>
+  <data name="BooksCoverMissing" xml:space="preserve"><value>Chưa có ảnh bìa</value></data>
+  <data name="BooksCoverHint" xml:space="preserve"><value>Chọn ảnh JPG, PNG hoặc WebP, tối đa 2 MB. Không chọn ảnh mới để giữ nguyên bìa hiện tại.</value></data>
+  <data name="BooksCoverTooLarge" xml:space="preserve"><value>Ảnh phải có dung lượng lớn hơn 0 và không quá 2 MB.</value></data>
+  <data name="BooksCoverInvalidContent" xml:space="preserve"><value>Vui lòng chọn ảnh JPG, PNG hoặc WebP hợp lệ, không bị hỏng.</value></data>
+  <data name="BooksCoverSaveFailed" xml:space="preserve"><value>Không lưu được sách cùng ảnh bìa. Vui lòng chọn lại ảnh và thử lại.</value></data>
+  <data name="BooksCoverReselect" xml:space="preserve"><value>Nếu đã chọn ảnh mới, hãy chọn lại trước khi lưu. Bìa đã lưu vẫn được giữ nguyên.</value></data>
 </root>

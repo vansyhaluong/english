@@ -1,0 +1,16 @@
+@{ Layout = "_AdminLayout"; }
+@section Styles {
+    <link rel="stylesheet" href="~/css/combobox.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-books.css" asp-append-version="true" />
+}
+<div class="admin-books">
+    @if (TempData["BooksSuccess"] is string success) { <p class="account-success" role="status">@success</p> }
+    @if (TempData["BooksError"] is string error) { <p class="account-error" role="alert">@error</p> }
+    <div asp-validation-summary="All" class="account-validation" role="alert"></div>
+    @RenderBody()
+</div>
+@section Scripts {
+    <script src="~/js/combobox.js" asp-append-version="true" defer></script>
+    <script src="~/js/admin-book-cover.js" asp-append-version="true" defer></script>
+    <script src="~/js/admin-book-vocabulary.js" asp-append-version="true" defer></script>
+}

@@ -27,7 +27,7 @@
             <a asp-controller="Listening" asp-action="Index" asp-route-culture="@culture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2 M3 13h4v8H3z M17 13h4v8h-4z" /></svg>Nghe &amp; Shadowing</a>
             <a href="#translate-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h12 M7 2v3 M4 14 12 5 M5 8l6 6 M14 21l4-10 4 10 M16 17h4" /></svg>Dịch tiếng Anh</a>
             <a href="#ai-coach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 21h8 M4 16 16 4l4 4L8 20l-5 1z" /></svg>Luyện viết cùng AI</a>
-            <a href="#reading-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v18H4z M8 3v7l3-2 3 2V3" /></svg>Đọc sách</a>
+            <a asp-controller="StudentBooks" asp-action="Index" asp-route-culture="@culture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v18H4z M8 3v7l3-2 3 2V3" /></svg>Đọc sách</a>
             <a href="#conversation-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3h14v11H7l-4 4z M17 8h4v13l-4-3h-6v-4" /></svg>Hội thoại</a>
             <a href="#exam-showcase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5z M6 11v6c4 3 8 3 12 0v-6" /></svg>Luyện thi</a>
         </nav>
@@ -127,7 +127,7 @@
 
         <!-- 3. Đọc sách -->
         <div class="glass-card glass-card-interactive">
-            <a href="#reading-showcase" class="feature-card">
+            <a asp-controller="StudentBooks" asp-action="Index" asp-route-culture="@culture" class="feature-card">
                 <div class="feature-icon-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M10 2v8l3-3 3 3V2"></path>
@@ -326,7 +326,7 @@
                     <p class="showcase-desc">
                         120 tác phẩm văn học và báo chí được chia theo trình độ A1–C1. Gặp từ lạ thì chạm vào để xem nghĩa và nghe phát âm ngay trên trang, không phải rời khỏi mạch đọc để tra từ điển.
                     </p>
-                    <a href="#features" class="showcase-link">
+                    <a asp-controller="StudentBooks" asp-action="Index" asp-route-culture="@culture" class="showcase-link">
                         Vào thư viện sách
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14"></path>

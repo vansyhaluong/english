@@ -1,0 +1,39 @@
+@model AdminBooksIndexPage
+@{ ViewData["Title"] = L["BooksManage"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+<section class="management-card" aria-labelledby="books-heading">
+    <header class="books-heading"><div><h1 id="books-heading">@L["BooksManage"]</h1><p>@L["BooksIntro"]</p></div><a class="btn-brand-primary" asp-action="Create" asp-route-culture="@culture">@L["BooksCreate"]</a></header>
+    <form asp-action="Index" method="get" class="books-filters">
+        <input type="hidden" name="culture" value="@culture" />
+        <div class="account-field books-search"><label for="books-search">@L["BooksSearch"]</label><input id="books-search" type="search" name="Search" value="@Model.Query.Search" maxlength="300" /></div>
+        <div class="account-field"><label for="books-topic">@L["Topics"]</label><select id="books-topic" name="TopicId" data-eh-combobox><option value="">@L["VocabAll"]</option>@foreach (var topic in Model.Topics) { <option value="@topic.Id" selected="@(topic.Id == Model.Query.TopicId)">@topic.Name</option> }</select></div>
+        <div class="account-field"><label for="books-visible">@L["BooksStatus"]</label><select id="books-visible" name="IsVisible" data-eh-combobox><option value="">@L["VocabAll"]</option><option value="true" selected="@(Model.Query.IsVisible == true)">@L["VocabVisible"]</option><option value="false" selected="@(Model.Query.IsVisible == false)">@L["VocabHidden"]</option></select></div>
+        <div class="account-field"><label for="books-deleted">@L["VocabDeleted"]</label><select id="books-deleted" name="IsDeleted" data-eh-combobox><option value="">@L["VocabAll"]</option><option value="false" selected="@(Model.Query.IsDeleted == false)">@L["BooksActiveOnly"]</option><option value="true" selected="@(Model.Query.IsDeleted == true)">@L["VocabDeleted"]</option></select></div>
+        <div class="books-actions"><button type="submit" class="btn-brand-primary">@L["VocabFilter"]</button><a class="books-button" asp-action="Index" asp-route-culture="@culture">@L["VocabClear"]</a></div>
+    </form>
+    @if (Model.Books.Items.Count == 0) { <div class="books-empty">@L["BooksNoResults"]</div> }
+    else {
+        <div class="management-table-wrap"><table class="management-table"><thead><tr><th>@L["BooksTitle"]</th><th>@L["BooksAuthor"] / @L["Topics"]</th><th>@L["BooksStatus"]</th><th>@L["ClassificationActions"]</th></tr></thead><tbody>
+        @foreach (var book in Model.Books.Items) {
+            <tr><td class="books-title"><div class="books-title-cover">
+                @{ var coverUrl = BookCoverPath.DisplayUrl(book.CoverUrl); var coverSource = coverUrl?.StartsWith(BookCoverPath.Prefix, StringComparison.Ordinal) == true ? Url.Content("~" + coverUrl) : coverUrl; }
+                <span class="books-cover-thumbnail" data-cover-preview>
+                    <img src="@coverSource" alt="" loading="lazy" data-cover-image hidden="@(coverSource is null)" referrerpolicy="no-referrer" />
+                    <span data-cover-fallback hidden="@(coverSource is not null)" role="img" aria-label="@L["BooksCoverMissing"]">▤</span>
+                </span>
+                <a asp-action="Chapters" asp-route-bookId="@book.Id" asp-route-culture="@culture">@book.Title</a>
+            </div></td><td class="books-meta">@book.Author<br /><span>@book.Topic</span></td><td><span class="books-badge @(book.IsDeleted ? "is-deleted" : book.IsVisible ? "is-visible" : "")">@L[book.IsDeleted ? "VocabDeleted" : book.IsVisible ? "VocabVisible" : "VocabHidden"]</span></td>
+            <td><div class="books-actions"><a class="books-button" asp-action="Chapters" asp-route-bookId="@book.Id" asp-route-culture="@culture">@L["BooksChapters"]</a>
+            @if (!book.IsDeleted) {
+                <a class="books-button" asp-action="Edit" asp-route-bookId="@book.Id" asp-route-culture="@culture">@L["ClassificationEdit"]</a>
+                <form asp-action="Visibility" asp-route-bookId="@book.Id" asp-route-culture="@culture" method="post"><input type="hidden" name="Input.RowVersion" value="@Convert.ToBase64String(book.RowVersion)" /><input type="hidden" name="Input.IsVisible" value="@((!book.IsVisible).ToString().ToLowerInvariant())" /><button class="books-button" type="submit">@L[book.IsVisible ? "ListeningHide" : "ListeningShow"]</button></form>
+                <a class="books-button books-danger" asp-action="Delete" asp-route-bookId="@book.Id" asp-route-culture="@culture">@L["BooksDeleteConfirm"]</a>
+            }</div></td></tr>
+        }
+        </tbody></table></div>
+    }
+    <nav aria-label="@L["VocabPages"]">
+        @if (Model.Books.Page > 1) { <a asp-action="Index" asp-route-page="@(Model.Books.Page - 1)" asp-route-search="@Model.Query.Search" asp-route-topicId="@Model.Query.TopicId" asp-route-isVisible="@Model.Query.IsVisible" asp-route-isDeleted="@Model.Query.IsDeleted" asp-route-culture="@culture">@L["VocabPrevious"]</a> }
+        <span>@L["BooksShowing", Model.Books.TotalCount, Model.Books.Page, Model.Books.TotalPages]</span>
+        @if (Model.Books.Page < Model.Books.TotalPages) { <a asp-action="Index" asp-route-page="@(Model.Books.Page + 1)" asp-route-search="@Model.Query.Search" asp-route-topicId="@Model.Query.TopicId" asp-route-isVisible="@Model.Query.IsVisible" asp-route-isDeleted="@Model.Query.IsDeleted" asp-route-culture="@culture">@L["VocabNext"]</a> }
+    </nav>
+</section>

@@ -1,0 +1,35 @@
+@model AdminBookFormPage
+@{ ViewData["Title"] = L[Model.BookId.HasValue ? "BooksEdit" : "BooksCreate"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+<section class="management-card books-editor">
+    <header class="books-heading"><h1>@ViewData["Title"]</h1><a class="books-button" asp-action="Index" asp-route-culture="@culture">@L["BooksBack"]</a></header>
+    <form asp-action="@(Model.BookId.HasValue ? "Edit" : "Create")" asp-route-bookId="@Model.BookId" asp-route-culture="@culture" method="post" enctype="multipart/form-data" class="account-form books-form" data-book-cover-form>
+        <input asp-for="Input.RowVersion" type="hidden" />
+        <div class="account-field"><label asp-for="Input.Title">@L["BooksTitle"]</label><input asp-for="Input.Title" maxlength="300" required /><span asp-validation-for="Input.Title"></span></div>
+        <div class="books-form-row">
+            <div class="account-field"><label asp-for="Input.Author">@L["BooksAuthor"]</label><input asp-for="Input.Author" maxlength="200" required /><span asp-validation-for="Input.Author"></span></div>
+            <div class="account-field"><label asp-for="Input.TopicId">@L["Topics"]</label><select asp-for="Input.TopicId" data-eh-combobox required><option value="">@L["VocabSelect"]</option>@foreach (var topic in Model.Topics) { <option value="@topic.Id">@topic.Name</option> }</select><span asp-validation-for="Input.TopicId"></span></div>
+        </div>
+        <div class="account-field"><label asp-for="Input.Description">@L["ClassificationDescription"]</label><textarea asp-for="Input.Description" rows="4"></textarea><span asp-validation-for="Input.Description"></span></div>
+        @{
+            var coverUrl = BookCoverPath.DisplayUrl(Model.CurrentCoverUrl);
+            var coverSource = coverUrl?.StartsWith(BookCoverPath.Prefix, StringComparison.Ordinal) == true
+                ? Url.Content("~" + coverUrl) : coverUrl;
+        }
+        <div class="account-field books-cover-field">
+            <label asp-for="Input.CoverImage">@L["BooksCoverImage"]</label>
+            <div class="books-cover-preview" data-cover-preview>
+                <img src="@coverSource" alt="@L["BooksCoverPreview"]" data-cover-image hidden="@(coverSource is null)" referrerpolicy="no-referrer" />
+                <span data-cover-fallback hidden="@(coverSource is not null)">@L["BooksCoverMissing"]</span>
+            </div>
+            <input asp-for="Input.CoverImage" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                   aria-describedby="book-cover-hint book-cover-error" data-cover-input
+                   data-size-error="@L["BooksCoverTooLarge"]" data-type-error="@L["BooksCoverInvalidContent"]" />
+            <small id="book-cover-hint">@L["BooksCoverHint"]</small>
+            <span asp-validation-for="Input.CoverImage"></span>
+            <span id="book-cover-error" data-cover-error role="alert"></span>
+            @if (!ViewData.ModelState.IsValid) { <small>@L["BooksCoverReselect"]</small> }
+        </div>
+        <label class="books-check"><input asp-for="Input.IsVisible" /> @L["VocabVisible"]</label>
+        <div class="books-actions"><button class="btn-brand-primary" type="submit">@L["SaveChanges"]</button><a class="books-button" asp-action="@(Model.BookId.HasValue ? "Edit" : "Create")" asp-route-bookId="@Model.BookId" asp-route-culture="@culture">@L["BooksReload"]</a></div>
+    </form>
+</section>

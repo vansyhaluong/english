@@ -1,0 +1,12 @@
+@model AdminBookDeletePage
+@{ ViewData["Title"] = L["BooksDeleteTitle"]; var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+<section class="management-card books-delete">
+    <p class="books-eyebrow">@L["BooksDeleteTitle"]</p><h1>@Model.Title</h1>
+    <p>@L[Model.ChapterId.HasValue ? "BooksDeleteChapterPrompt" : "BooksDeleteBookPrompt"]</p>
+    <p class="books-note">@L["BooksDeleteNotice"]</p>
+    <form asp-action="@(Model.ChapterId.HasValue ? "DeleteChapter" : "Delete")" asp-route-bookId="@Model.BookId" asp-route-chapterId="@Model.ChapterId" asp-route-culture="@culture" method="post" class="books-actions">
+        <input asp-for="Input.RowVersion" type="hidden" />
+        <button class="books-button books-danger" type="submit">@L["BooksDeleteConfirm"]</button>
+        <a class="books-button" asp-action="Chapters" asp-route-bookId="@Model.BookId" asp-route-culture="@culture">@L["BooksBack"]</a>
+    </form>
+</section>

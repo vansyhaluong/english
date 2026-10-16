@@ -327,4 +327,59 @@
   <data name="ListeningStudentVideoEmbedError" xml:space="preserve"><value>The video owner does not allow playback on this website. You can still read the transcript.</value></data>
   <data name="ListeningStudentVideoIdentityError" xml:space="preserve"><value>YouTube rejected the player because required website identification is missing. You can still read the transcript.</value></data>
   <data name="ListeningStudentVideoError" xml:space="preserve"><value>The YouTube video could not be played. Reload the page to retry; the transcript remains available.</value></data>
+  <data name="Books" xml:space="preserve"><value>Books</value></data>
+  <data name="BooksManage" xml:space="preserve"><value>Manage books</value></data>
+  <data name="BooksIntro" xml:space="preserve"><value>Organize books by topic and edit their chapters.</value></data>
+  <data name="BooksCreate" xml:space="preserve"><value>Add book</value></data>
+  <data name="BooksEdit" xml:space="preserve"><value>Edit book</value></data>
+  <data name="BooksTitle" xml:space="preserve"><value>Book title</value></data>
+  <data name="BooksAuthor" xml:space="preserve"><value>Author</value></data>
+  <data name="BooksCoverUrl" xml:space="preserve"><value>Cover image URL (optional)</value></data>
+  <data name="BooksSearch" xml:space="preserve"><value>Search by title or author</value></data>
+  <data name="BooksStatus" xml:space="preserve"><value>Visibility</value></data>
+  <data name="BooksActiveOnly" xml:space="preserve"><value>Not deleted</value></data>
+  <data name="BooksNoResults" xml:space="preserve"><value>No books match. Change your filters or add a book.</value></data>
+  <data name="BooksChapters" xml:space="preserve"><value>Manage chapters</value></data>
+  <data name="BooksChapterCreate" xml:space="preserve"><value>Add chapter</value></data>
+  <data name="BooksChapterEdit" xml:space="preserve"><value>Edit chapter</value></data>
+  <data name="BooksChapterTitle" xml:space="preserve"><value>Chapter title</value></data>
+  <data name="BooksOrder" xml:space="preserve"><value>Order</value></data>
+  <data name="BooksOrderFor" xml:space="preserve"><value>Order for chapter: {0}</value></data>
+  <data name="BooksOrderHint" xml:space="preserve"><value>Use unique positive integers within this book, including deleted chapters. To swap orders, edit the numbers in the chapter list and select Save order.</value></data>
+  <data name="BooksSaveOrder" xml:space="preserve"><value>Save order</value></data>
+  <data name="BooksEnglish" xml:space="preserve"><value>English content</value></data>
+  <data name="BooksTranslation" xml:space="preserve"><value>Vietnamese translation (optional)</value></data>
+  <data name="BooksNotes" xml:space="preserve"><value>Vocabulary notes (optional)</value></data>
+  <data name="BooksPlainTextHint" xml:space="preserve"><value>Enter plain text. Line breaks are preserved; HTML formatting, PDF and EPUB are not supported.</value></data>
+  <data name="BooksEmptyChapters" xml:space="preserve"><value>This book has no chapters yet.</value></data>
+  <data name="BooksReadOnlyDeleted" xml:space="preserve"><value>This book is deleted. You can view the chapter list but cannot edit it.</value></data>
+  <data name="BooksBookHiddenHint" xml:space="preserve"><value>This book is hidden from students. You can still edit its chapters.</value></data>
+  <data name="BooksDeleteTitle" xml:space="preserve"><value>Confirm soft delete</value></data>
+  <data name="BooksDeleteBookPrompt" xml:space="preserve"><value>Delete this book? Students will no longer be able to access it or its chapters.</value></data>
+  <data name="BooksDeleteChapterPrompt" xml:space="preserve"><value>Delete this chapter? Students will no longer be able to access it.</value></data>
+  <data name="BooksDeleteNotice" xml:space="preserve"><value>Content, read marks and reading positions are retained. Nothing is deleted until you confirm below.</value></data>
+  <data name="BooksDeleteConfirm" xml:space="preserve"><value>Soft delete</value></data>
+  <data name="BooksBack" xml:space="preserve"><value>Back</value></data>
+  <data name="BooksReload" xml:space="preserve"><value>Reload saved data</value></data>
+  <data name="BooksSaved" xml:space="preserve"><value>Changes saved.</value></data>
+  <data name="BooksDeleted" xml:space="preserve"><value>Content soft-deleted.</value></data>
+  <data name="BooksShowing" xml:space="preserve"><value>{0} books · Page {1}/{2}</value></data>
+  <data name="BooksConflict" xml:space="preserve"><value>The data changed or a conflict occurred. Reload the saved data, review it and try again.</value></data>
+  <data name="BooksInvalidInput" xml:space="preserve"><value>The data is invalid. Check the fields and try again.</value></data>
+  <data name="BooksFieldInvalid" xml:space="preserve"><value>Enter a valid value. Check required fields, length and allowed range.</value></data>
+  <data name="BooksRequired" xml:space="preserve"><value>Complete the required fields.</value></data>
+  <data name="BooksInvalidCoverUrl" xml:space="preserve"><value>Use a valid HTTP/HTTPS cover URL without credentials or whitespace.</value></data>
+  <data name="BooksTopicNotFound" xml:space="preserve"><value>The topic no longer exists. Reload the list and choose another topic.</value></data>
+  <data name="BooksOrderInUse" xml:space="preserve"><value>Another chapter, including a deleted chapter, uses this order. Choose a free number or use Save order in the chapter list to swap orders.</value></data>
+  <data name="BooksDuplicateOrderOrChapter" xml:space="preserve"><value>The list contains duplicate chapters or orders. Review it before saving.</value></data>
+  <data name="BooksNoFreeOrder" xml:space="preserve"><value>No free position is available for a safe reorder. Nothing was saved.</value></data>
+  <data name="BooksOrderInvalid" xml:space="preserve"><value>Chapter order must be an integer from 1 to 2147483647. The data was reloaded; no changes were saved.</value></data>
+  <data name="BooksCoverImage" xml:space="preserve"><value>Book cover image</value></data>
+  <data name="BooksCoverPreview" xml:space="preserve"><value>Cover image preview</value></data>
+  <data name="BooksCoverMissing" xml:space="preserve"><value>No cover image</value></data>
+  <data name="BooksCoverHint" xml:space="preserve"><value>Choose a JPG, PNG or WebP image, up to 2 MB. Leave empty to keep the current cover.</value></data>
+  <data name="BooksCoverTooLarge" xml:space="preserve"><value>The image must be larger than 0 and no more than 2 MB.</value></data>
+  <data name="BooksCoverInvalidContent" xml:space="preserve"><value>Choose a valid JPG, PNG or WebP image that is not corrupted.</value></data>
+  <data name="BooksCoverSaveFailed" xml:space="preserve"><value>Unable to save the book and cover image. Select the image again and retry.</value></data>
+  <data name="BooksCoverReselect" xml:space="preserve"><value>If you selected a new image, select it again before saving. The saved cover is retained.</value></data>
 </root>

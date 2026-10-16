@@ -20,10 +20,12 @@
         var isGrammar = link.Target == "grammar-showcase";
         var grammarController = User.IsInRole("Admin") ? "AdminGrammar" : "Grammar";
         var isListening = link.Target == "listening-showcase";
+        var isReading = link.Target == "reading-showcase";
 
         var href = isGrammar ? Url.Action("Index", grammarController, new { culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName })
             : isVocabulary ? Url.Action("Index", "Vocabulary", new { culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName })
             : isListening ? Url.Action("Index", "Listening", new { culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName })
+            : isReading ? Url.Action("Index", "StudentBooks", new { culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName })
             : Url.Action("Index", "Home") + "#" + link.Target;
         var controller = ViewContext.RouteData.Values["controller"]?.ToString();
         var current = (isGrammar && controller == grammarController) || (isVocabulary && controller == "Vocabulary") || (isListening && controller == "Listening");
